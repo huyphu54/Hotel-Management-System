@@ -1,0 +1,71 @@
+﻿@model IEnumerable<HotelManagement.Models.LoaiPhong>
+
+@{
+    ViewData["Title"] = "RoomType";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>RoomType</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                Tên Loại Phòng
+            </th>
+            <th>
+                Tiện Nghi
+            </th>
+            <th>
+                Số Tiền Cọc
+            </th>
+            <th>
+                Giá
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tfoot >
+        <tr>
+            <th>
+                Tên Loại Phòng
+            </th>
+            <th>
+                Tiện Nghi
+            </th>
+            <th>
+                Số Tiền Cọc
+            </th>
+            <th>
+                Giá
+            </th>
+            <th></th>
+        </tr>
+    </tfoot>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenLoaiPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TienNghi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoTienCoc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gia)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaLp">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaLp">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaLp">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
