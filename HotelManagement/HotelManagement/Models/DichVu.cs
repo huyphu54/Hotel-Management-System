@@ -8,7 +8,8 @@ public partial class DichVu
     public int MaDichVu { get; set; }
 
     public string? TenDichVu { get; set; }
-    public double? Gia {  get; set; }
+
+    public double? Gia { get; set; }
 
     public virtual ICollection<PhongDichVu> PhongDichVus { get; set; } = new List<PhongDichVu>();
 }

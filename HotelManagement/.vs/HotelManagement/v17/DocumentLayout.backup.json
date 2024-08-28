@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "E:\\Hotel-Management-System\\HotelManagement\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\views\\shared\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\views\\shared\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\controllers\\roomrentalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\controllers\\roomrentalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\views\\homeadmin\\room.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\views\\homeadmin\\room.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\views\\roomrental\\booking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\views\\roomrental\\booking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\views\\homeadmin\\roomtype.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\views\\homeadmin\\roomtype.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\views\\roomrental\\roomrental.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\views\\roomrental\\roomrental.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\controllers\\roomcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\controllers\\roomcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\controllers\\homeadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\controllers\\homeadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\models\\loaiphong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\models\\loaiphong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\views\\roomrental\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\views\\roomrental\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|e:\\hotel-management-system\\hotelmanagement\\hotelmanagement\\areas\\admin\\views\\roomrental\\addservice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B258FD40-0E42-456C-B957-B3ACE421A300}|HotelManagement\\HotelManagement.csproj|solutionrelative:hotelmanagement\\areas\\admin\\views\\roomrental\\addservice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,68 +46,88 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_LayoutAdmin.cshtml",
-              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\Shared\\_LayoutAdmin.cshtml",
-              "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Views\\Shared\\_LayoutAdmin.cshtml",
-              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\Shared\\_LayoutAdmin.cshtml",
-              "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Views\\Shared\\_LayoutAdmin.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABkAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-24T18:29:02.941Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "RoomType.cshtml",
-              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\HomeAdmin\\RoomType.cshtml",
-              "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Views\\HomeAdmin\\RoomType.cshtml",
-              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\HomeAdmin\\RoomType.cshtml",
-              "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Views\\HomeAdmin\\RoomType.cshtml",
-              "ViewState": "AgIAABUAAAAAAAAAAAAwwB4AAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-24T18:28:51.824Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "LoaiPhong.cs",
-              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Models\\LoaiPhong.cs",
-              "RelativeDocumentMoniker": "HotelManagement\\Models\\LoaiPhong.cs",
-              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Models\\LoaiPhong.cs",
-              "RelativeToolTip": "HotelManagement\\Models\\LoaiPhong.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-24T18:27:50.207Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "HomeAdminController.cs",
               "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Controllers\\HomeAdminController.cs",
               "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Controllers\\HomeAdminController.cs",
               "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Controllers\\HomeAdminController.cs",
               "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Controllers\\HomeAdminController.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAowCsAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAmwE8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T18:17:02.603Z",
+              "WhenOpened": "2024-08-28T07:30:38.492Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RoomRentalController.cs",
+              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Controllers\\RoomRentalController.cs",
+              "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Controllers\\RoomRentalController.cs",
+              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Controllers\\RoomRentalController.cs",
+              "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Controllers\\RoomRentalController.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAAC4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-27T18:24:04.646Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Room.cshtml",
-              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\HomeAdmin\\Room.cshtml",
-              "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Views\\HomeAdmin\\Room.cshtml",
-              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\HomeAdmin\\Room.cshtml",
-              "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Views\\HomeAdmin\\Room.cshtml",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAwwEAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "RoomRental.cshtml",
+              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\RoomRental\\RoomRental.cshtml",
+              "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Views\\RoomRental\\RoomRental.cshtml",
+              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\RoomRental\\RoomRental.cshtml",
+              "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Views\\RoomRental\\RoomRental.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAH0AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-24T17:05:38.692Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-27T19:01:22.714Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\RoomRental\\Details.cshtml",
+              "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Views\\RoomRental\\Details.cshtml",
+              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\RoomRental\\Details.cshtml",
+              "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Views\\RoomRental\\Details.cshtml",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAGYAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-27T19:04:40.531Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Booking.cshtml",
+              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\RoomRental\\Booking.cshtml",
+              "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Views\\RoomRental\\Booking.cshtml",
+              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\RoomRental\\Booking.cshtml",
+              "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Views\\RoomRental\\Booking.cshtml",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAABYAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-27T18:22:12.347Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RoomController.cs",
+              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Controllers\\RoomController.cs",
+              "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Controllers\\RoomController.cs",
+              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Controllers\\RoomController.cs",
+              "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Controllers\\RoomController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-27T20:59:26.981Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AddService.cshtml",
+              "DocumentMoniker": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\RoomRental\\AddService.cshtml",
+              "RelativeDocumentMoniker": "HotelManagement\\Areas\\Admin\\Views\\RoomRental\\AddService.cshtml",
+              "ToolTip": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\Areas\\Admin\\Views\\RoomRental\\AddService.cshtml",
+              "RelativeToolTip": "HotelManagement\\Areas\\Admin\\Views\\RoomRental\\AddService.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAA8AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-27T17:00:08.828Z"
             }
           ]
         }

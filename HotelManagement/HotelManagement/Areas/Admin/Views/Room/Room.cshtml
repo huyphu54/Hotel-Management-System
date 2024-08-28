@@ -1,0 +1,94 @@
+﻿@using HotelManagement.Models
+@model X.PagedList.IPagedList<HotelManagement.Models.Phong>
+@using X.PagedList
+@{
+    ViewData["Title"] = "Room";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Danh Sách Phòng</h1>
+
+<p>
+    <a asp-action="EditRoom" class="btn btn-success">Create New</a>
+</p>
+<table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
+    <thead class="thead-light">
+        <tr>
+            <th>Số Phòng</th>
+            <th>Loại Phòng</th>
+            <th>Tầng</th>
+            <th>Tình Trạng</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Số Phòng</th>
+            <th>Loại Phòng</th>
+            <th>Tầng</th>
+            <th>Tình Trạng</th>
+            <th></th>
+        </tr>
+    </tfoot>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var statusClass = "";
+            if (item.MaTinhTrangNavigation.TenTinhTrang == "Đang Còn Trống")
+            {
+                statusClass = "bg-gradient-success text-white font-weight-bold";  // Nền xanh, chữ trắng
+            }
+            else if (item.MaTinhTrangNavigation.TenTinhTrang == "Đang Sửa Chữa")
+            {
+                statusClass = "bg-gradient-warning text-white font-weight-bold";  // Nền vàng, chữ trắng
+            }
+            else if (item.MaTinhTrangNavigation.TenTinhTrang == "Đang Sử Dụng")
+            {
+                statusClass = "bg-gradient-danger text-white font-weight-bold";   // Nền đỏ, chữ trắng
+            }
+            <tr >
+                <td class="@statusClass">@Html.DisplayFor(modelItem => item.SoPhong)</td>
+                <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaLpNavigation.TenLoaiPhong)</td>
+                <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaTangNavigation.TenTang)</td>
+                <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaTinhTrangNavigation.TenTinhTrang)</td>
+                <td class="text-end">
+                    <a class="btn btn-primary" asp-action="EditRoom" asp-route-maPhong="@item.MaPhong">Edit</a>
+                    <a class="btn btn-info" asp-action="BookingDetail" asp-route-id="@item.MaPhong">Details</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-MaPhong="@item.MaPhong" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-sm-12 col-md-5">
+        <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite">
+            Showing @Model.PageNumber to @Model.PageCount of @Model.TotalItemCount entries
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="dataTableHover_paginate">
+            <ul class="pagination">
+                @if (Model.PageNumber > 1)
+                {
+                    <li class="paginate_button page-item previous">
+                        <a class="page-link" href="@Url.Action("Room","Room", new { page = Model.PageNumber - 1 })">Previous</a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    <li class="paginate_button page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Room","Room", new { page = i })">@i</a>
+                    </li>
+                }
+                @if (Model.PageNumber < Model.PageCount)
+                {
+                    <li class="paginate_button page-item next">
+                        <a class="page-link" href="@Url.Action("Room","Room", new { page = Model.PageNumber + 1 })">Next</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

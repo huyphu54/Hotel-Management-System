@@ -5,7 +5,7 @@ namespace HotelManagement.Models;
 
 public partial class HoaDon
 {
-    public string MaHoaDon { get; set; } = null!;
+    public int MaHoaDon { get; set; }
 
     public int MaPhieuThue { get; set; }
 

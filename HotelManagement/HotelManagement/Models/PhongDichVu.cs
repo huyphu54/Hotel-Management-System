@@ -5,6 +5,8 @@ namespace HotelManagement.Models;
 
 public partial class PhongDichVu
 {
+    public int MaChiTiet { get; set; }
+
     public int MaPhieuThue { get; set; }
 
     public int MaDichVu { get; set; }

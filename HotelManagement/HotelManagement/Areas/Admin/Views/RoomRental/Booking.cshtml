@@ -1,0 +1,73 @@
+﻿@model HotelManagement.Models.DatPhong
+@{
+    ViewData["Title"] = "Booking";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Booking</h1>
+
+<h4>DatPhong</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+        <form method="post" asp-action="Booking">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             <div class="form-group">
+                 <label  class="control-label">Phòng</label>
+                 <select asp-for="MaPhong" class="form-control" asp-items="ViewBag.MaPhong"></select>
+             </div>
+            <div class="form-group">
+                <label  class="control-label">Tên Khách Hàng</label>
+                <select asp-for="MaKh" class ="form-control" asp-items="ViewBag.MaKh"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Nhân Viên</label>
+                <select asp-for="MaNv" class ="form-control" asp-items="ViewBag.MaNv"></select>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Loại Hình Đặt</label>
+                <select asp-for="MaLoaiHinhDat" class ="form-control" asp-items="ViewBag.MaLoaiHinhDat"></select>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Ngày Nhận</label>
+                <input asp-for="NgayNhan" class="form-control" type="date" />
+                <span asp-validation-for="NgayNhan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Ngày Trả</label>
+                <input asp-for="NgayTra" class="form-control" type="date" />
+                <span asp-validation-for="NgayTra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Giờ Nhận</label>
+                <input asp-for="GioNhan" class="form-control" type="time" value="14:00" />
+                <span asp-validation-for="GioNhan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Giờ Trả</label>
+                <input asp-for="GioTra" class="form-control" type="time" value="12:00" />
+                <span asp-validation-for="GioTra" class="text-danger"></span>
+            </div>
+
+      
+            <div class="form-group">
+                <label  class="control-label">Số Người Ở</label>
+                <input asp-for="SoNguoiO" class="form-control" />
+                <span asp-validation-for="SoNguoiO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Loại Hình Đặt</label>
+                <select asp-for="MaTinhTrangDat" class="form-control" asp-items="ViewBag.MaTinhTrangDat"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="RoomRental" asp-area="Admin">Back to List</a>
+</div>
+

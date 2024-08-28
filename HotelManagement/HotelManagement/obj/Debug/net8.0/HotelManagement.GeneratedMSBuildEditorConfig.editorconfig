@@ -26,6 +26,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = E:\Hotel-Management-System\HotelManagement\HotelManagement
 build_property._RazorSourceGeneratorDebug = 
 
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/HomeAdmin/AddCustomer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXEFkZEN1c3RvbWVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/HomeAdmin/Customer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXEN1c3RvbWVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -34,12 +38,48 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/HomeAdmin/Room.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXFJvb20uY3NodG1s
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/HomeAdmin/_CustomerTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXF9DdXN0b21lclRhYmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/HomeAdmin/RoomType.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXFJvb21UeXBlLmNzaHRtbA==
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/Login/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTG9naW5cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/RoomRental/AddService.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVJlbnRhbFxBZGRTZXJ2aWNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/RoomRental/Booking.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVJlbnRhbFxCb29raW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/RoomRental/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVJlbnRhbFxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/RoomRental/RoomRental.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVJlbnRhbFxSb29tUmVudGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/Room/AddRoomType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVxBZGRSb29tVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/Room/EditRoom.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVxFZGl0Um9vbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/Room/EditRoomType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVxFZGl0Um9vbVR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/Room/Room.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVxSb29tLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/Room/RoomType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVxSb29tVHlwZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml]

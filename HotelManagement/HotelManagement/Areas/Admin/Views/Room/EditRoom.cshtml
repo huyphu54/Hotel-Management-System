@@ -1,0 +1,48 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelManagement.Models.Phong
+
+@{
+    ViewData["Title"] = "EditRoom";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>EditRoom</h1>
+
+<h4>Phong</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="EditRoom">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaPhong" />
+            <div class="form-group">
+                <label asp-for="SoPhong" class="control-label"></label>
+                <input asp-for="SoPhong" class="form-control" />
+                <span asp-validation-for="SoPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaTang" class="control-label"></label>
+                <select asp-for="MaTang" class="form-control" asp-items="ViewBag.MaTang"></select>
+                <span asp-validation-for="MaTang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaLp" class="control-label"></label>
+                <select asp-for="MaLp" class="form-control" asp-items="ViewBag.MaLp"></select>
+                <span asp-validation-for="MaLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaTinhTrang" class="control-label"></label>
+                <select asp-for="MaTinhTrang" class="form-control" asp-items="ViewBag.MaTinhTrang"></select>
+                <span asp-validation-for="MaTinhTrang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

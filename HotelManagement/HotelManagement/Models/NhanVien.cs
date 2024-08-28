@@ -7,13 +7,19 @@ public partial class NhanVien
 {
     public int MaNv { get; set; }
 
-    public string HoTenNv { get; set; } = null!;
+    public int MaPb { get; set; }
+
+    public string? HoTenNv { get; set; }
+
+    public string? NamSinh { get; set; }
+
+    public string? GioiTinh { get; set; }
 
     public string? Email { get; set; }
 
     public string? Sdt { get; set; }
 
-    public string MaPb { get; set; } = null!;
+    public string? ChucVu { get; set; }
 
     public virtual ICollection<DatPhong> DatPhongs { get; set; } = new List<DatPhong>();
 

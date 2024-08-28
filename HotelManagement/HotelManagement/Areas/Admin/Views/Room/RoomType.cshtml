@@ -4,11 +4,11 @@
     ViewData["Title"] = "RoomType";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <h1>RoomType</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="AddRoomType">Create New</a>
 </p>
 <table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
     <thead class="thead-light">
@@ -28,7 +28,7 @@
             <th></th>
         </tr>
     </thead>
-    <tfoot >
+    <tfoot>
         <tr>
             <th>
                 Tên Loại Phòng
@@ -46,26 +46,27 @@
         </tr>
     </tfoot>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenLoaiPhong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TienNghi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoTienCoc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gia)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaLp">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaLp">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaLp">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenLoaiPhong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TienNghi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoTienCoc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gia)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="EditRoomType" asp-route-maLoaiPhong="@item.MaLp">Edit</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-maLoaiPhong="@item.MaLp">Details</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-maLoaiPhong="@item.MaLp">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

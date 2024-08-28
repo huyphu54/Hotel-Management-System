@@ -1,0 +1,59 @@
+﻿@model X.PagedList.IPagedList<HotelManagement.Models.KhachHang>
+<table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
+    <thead class="thead-light">
+        <tr role="row">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Birth</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>Nation</th>
+            <th>Identity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr role="row" class="even">
+                <td>@item.MaKh</td>
+                <td>@item.HoTenKh</td>
+                <td>@item.NamSinh</td>
+                <td>@item.Email</td>
+                <td>@item.Sdt</td>
+                <td>@item.QuocTich</td>
+                <td>@item.Cccd</td>
+            </tr>
+        }
+    </tbody>
+    <div class="row">
+        <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite">
+                Showing @Model.PageNumber to @Model.PageCount of @Model.TotalItemCount entries
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers" id="dataTableHover_paginate">
+                <ul class="pagination">
+                    @if (Model.PageNumber > 1)
+                    {
+                        <li class="paginate_button page-item previous">
+                            <a class="page-link" href="@Url.Action("Customer", "HomeAdmin", new { page = Model.PageNumber - 1 })">Previous</a>
+                        </li>
+                    }
+                    @for (int i = 1; i <= Model.PageCount; i++)
+                    {
+                        <li class="paginate_button page-item @(i == Model.PageNumber ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Customer", "HomeAdmin", new { page = i })">@i</a>
+                        </li>
+                    }
+                    @if (Model.PageNumber < Model.PageCount)
+                    {
+                        <li class="paginate_button page-item next">
+                            <a class="page-link" href="@Url.Action("Customer", "HomeAdmin", new { page = Model.PageNumber + 1 })">Next</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</table>

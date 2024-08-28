@@ -39,6 +39,10 @@ public partial class QlksContext : DbContext
 
     public virtual DbSet<Tang> Tangs { get; set; }
 
+    public virtual DbSet<TinhTrangDat> TinhTrangDats { get; set; }
+
+    public virtual DbSet<TinhTrangPhong> TinhTrangPhongs { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -53,10 +57,8 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("DatPhong");
 
-            entity.Property(e => e.MaPhieuThue).ValueGeneratedNever();
             entity.Property(e => e.MaKh).HasColumnName("MaKH");
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
-            entity.Property(e => e.TinhTrang).HasMaxLength(50);
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.DatPhongs)
                 .HasForeignKey(d => d.MaKh)
@@ -77,6 +79,11 @@ public partial class QlksContext : DbContext
                 .HasForeignKey(d => d.MaPhong)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RoomRentalDetail_Room");
+
+            entity.HasOne(d => d.MaTinhTrangDatNavigation).WithMany(p => p.DatPhongs)
+                .HasForeignKey(d => d.MaTinhTrangDat)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DatPhong_TinhTrangDat");
         });
 
         modelBuilder.Entity<DichVu>(entity =>
@@ -85,7 +92,6 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("DichVu");
 
-            entity.Property(e => e.MaDichVu).ValueGeneratedNever();
             entity.Property(e => e.TenDichVu).HasMaxLength(50);
         });
 
@@ -95,9 +101,6 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("HoaDon");
 
-            entity.Property(e => e.MaHoaDon)
-                .HasMaxLength(10)
-                .IsFixedLength();
             entity.Property(e => e.TinhTrang).HasMaxLength(50);
 
             entity.HasOne(d => d.MaPhieuThueNavigation).WithMany(p => p.HoaDons)
@@ -112,9 +115,7 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("KhachHang");
 
-            entity.Property(e => e.MaKh)
-                .ValueGeneratedNever()
-                .HasColumnName("MaKH");
+            entity.Property(e => e.MaKh).HasColumnName("MaKH");
             entity.Property(e => e.Cccd)
                 .HasMaxLength(15)
                 .HasColumnName("CCCD");
@@ -135,7 +136,6 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("LoaiHinhDat");
 
-            entity.Property(e => e.MaLoaiHinhDat).ValueGeneratedNever();
             entity.Property(e => e.TenLoaiHinhDat)
                 .HasMaxLength(50)
                 .IsFixedLength();
@@ -147,14 +147,12 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("LoaiPhong");
 
-            entity.Property(e => e.MaLp)
-                .ValueGeneratedNever()
-                .HasColumnName("MaLP");
+            entity.Property(e => e.MaLp).HasColumnName("MaLP");
             entity.Property(e => e.TenLoaiPhong)
-                .HasMaxLength(10)
+                .HasMaxLength(100)
                 .IsFixedLength();
             entity.Property(e => e.TienNghi)
-                .HasMaxLength(50)
+                .HasMaxLength(500)
                 .IsFixedLength();
         });
 
@@ -164,17 +162,17 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("NhanVien");
 
-            entity.Property(e => e.MaNv)
-                .ValueGeneratedNever()
-                .HasColumnName("MaNV");
-            entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.HoTenNv)
+            entity.Property(e => e.MaNv).HasColumnName("MaNV");
+            entity.Property(e => e.ChucVu)
                 .HasMaxLength(50)
+                .IsFixedLength();
+            entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.GioiTinh).HasMaxLength(50);
+            entity.Property(e => e.HoTenNv)
+                .HasMaxLength(200)
                 .HasColumnName("HoTenNV");
-            entity.Property(e => e.MaPb)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("MaPB");
+            entity.Property(e => e.MaPb).HasColumnName("MaPB");
+            entity.Property(e => e.NamSinh).HasMaxLength(5);
             entity.Property(e => e.Sdt)
                 .HasMaxLength(12)
                 .HasColumnName("SDT");
@@ -191,11 +189,8 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("Phong");
 
-            entity.Property(e => e.MaPhong).ValueGeneratedNever();
             entity.Property(e => e.MaLp).HasColumnName("MaLP");
-            entity.Property(e => e.SoPhong)
-                .HasMaxLength(10)
-                .IsFixedLength();
+            entity.Property(e => e.SoPhong).HasMaxLength(50);
 
             entity.HasOne(d => d.MaLpNavigation).WithMany(p => p.Phongs)
                 .HasForeignKey(d => d.MaLp)
@@ -206,6 +201,11 @@ public partial class QlksContext : DbContext
                 .HasForeignKey(d => d.MaTang)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Phong_Tang");
+
+            entity.HasOne(d => d.MaTinhTrangNavigation).WithMany(p => p.Phongs)
+                .HasForeignKey(d => d.MaTinhTrang)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Phong_TinhTrangPhong");
         });
 
         modelBuilder.Entity<PhongBan>(entity =>
@@ -214,10 +214,7 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("PhongBan");
 
-            entity.Property(e => e.MaPb)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("MaPB");
+            entity.Property(e => e.MaPb).HasColumnName("MaPB");
             entity.Property(e => e.TenPb)
                 .HasMaxLength(50)
                 .HasColumnName("TenPB");
@@ -225,7 +222,7 @@ public partial class QlksContext : DbContext
 
         modelBuilder.Entity<PhongDichVu>(entity =>
         {
-            entity.HasKey(e => new { e.MaPhieuThue, e.MaDichVu }).HasName("PK_Room_Service");
+            entity.HasKey(e => e.MaChiTiet);
 
             entity.ToTable("Phong_DichVu");
 
@@ -246,10 +243,7 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("PhongHuy");
 
-            entity.Property(e => e.MaPhongHuy)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.LyDo).HasMaxLength(50);
+            entity.Property(e => e.LyDo).HasMaxLength(200);
 
             entity.HasOne(d => d.MaPhieuThueNavigation).WithMany(p => p.PhongHuys)
                 .HasForeignKey(d => d.MaPhieuThue)
@@ -263,17 +257,32 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("Tang");
 
-            entity.Property(e => e.MaTang).ValueGeneratedNever();
             entity.Property(e => e.TenTang).HasMaxLength(15);
+        });
+
+        modelBuilder.Entity<TinhTrangDat>(entity =>
+        {
+            entity.HasKey(e => e.MaTinhTrangDat);
+
+            entity.ToTable("TinhTrangDat");
+
+            entity.Property(e => e.TenTinhTrangDat).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<TinhTrangPhong>(entity =>
+        {
+            entity.HasKey(e => e.MaTinhTrang);
+
+            entity.ToTable("TinhTrangPhong");
+
+            entity.Property(e => e.TenTinhTrang).HasMaxLength(50);
         });
 
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Uid).HasName("PK_SystemAccount");
 
-            entity.Property(e => e.Uid)
-                .ValueGeneratedNever()
-                .HasColumnName("UID");
+            entity.Property(e => e.Uid).HasColumnName("UID");
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
             entity.Property(e => e.MatKhau).HasMaxLength(50);
             entity.Property(e => e.TaiKhoan).HasMaxLength(50);

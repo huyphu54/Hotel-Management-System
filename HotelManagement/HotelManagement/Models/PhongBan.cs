@@ -5,7 +5,7 @@ namespace HotelManagement.Models;
 
 public partial class PhongBan
 {
-    public string MaPb { get; set; } = null!;
+    public int MaPb { get; set; }
 
     public string? TenPb { get; set; }
 

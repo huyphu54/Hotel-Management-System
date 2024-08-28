@@ -1,0 +1,48 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelManagement.Models.LoaiPhong
+
+@{
+    ViewData["Title"] = "AddRoomType";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>AddRoomType</h1>
+
+<h4>LoaiPhong</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="AddRoomType">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="TenLoaiPhong" class="control-label"></label>
+                <input asp-for="TenLoaiPhong" class="form-control" />
+                <span asp-validation-for="TenLoaiPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TienNghi" class="control-label"></label>
+                <input asp-for="TienNghi" class="form-control" />
+                <span asp-validation-for="TienNghi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoTienCoc" class="control-label"></label>
+                <input asp-for="SoTienCoc" class="form-control" />
+                <span asp-validation-for="SoTienCoc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gia" class="control-label"></label>
+                <input asp-for="Gia" class="form-control" />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
