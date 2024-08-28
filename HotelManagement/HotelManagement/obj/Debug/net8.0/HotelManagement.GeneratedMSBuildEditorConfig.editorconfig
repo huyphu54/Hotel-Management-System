@@ -58,6 +58,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVJlbnRhbFxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/RoomRental/EditRental.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVJlbnRhbFxFZGl0UmVudGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Hotel-Management-System/HotelManagement/HotelManagement/Areas/Admin/Views/RoomRental/RoomRental.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9vbVJlbnRhbFxSb29tUmVudGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

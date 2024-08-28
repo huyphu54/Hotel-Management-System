@@ -24,26 +24,73 @@ namespace HotelManagement.Areas.Admin.Controllers
             return View(lstPhieuDat);
         }
 
+
+        [Route("Editrental")]
+        [HttpGet]
+        public IActionResult EditRental(int? maPhieuThue)
+        {
+            ViewBag.MaPhong = new SelectList(db.Phongs.ToList(), "MaPhong", "SoPhong");
+            ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats.ToList(), "MaTinhTrangDat", "TenTinhTrangDat");
+            var phieuThue=  db.DatPhongs.Find(maPhieuThue);
+            return View(phieuThue);
+
+        }
+
+        [Route("Editrental")]
+        [HttpPost]
+        public IActionResult EditRental(DatPhong datPhong)
+        {
+            var updateStatus = db.DatPhongs.Find(datPhong.MaPhieuThue);
+
+            updateStatus.MaTinhTrangDat = datPhong.MaTinhTrangDat;
+            
+            var phongUpdate = db.Phongs.FirstOrDefault(p => p.MaPhong == datPhong.MaPhong);
+            if (phongUpdate == null)
+            {
+                return NotFound("Phòng không tồn tại hoặc không hợp lệ.");
+            }
+            if (updateStatus.MaTinhTrangDat == 2)
+            {
+                phongUpdate.MaTinhTrang = 1;
+            }
+
+            else if (updateStatus.MaTinhTrangDat == 3)
+            {
+                phongUpdate.MaTinhTrang = 2;
+            }
+
+            else if(updateStatus.MaTinhTrangDat==1 || updateStatus.MaTinhTrangDat == 4)
+            {
+                ModelState.AddModelError("", "Không thể thay đổi tình trạng do phòng đã thanh toán");
+                return View(datPhong);
+            }
+
+            db.Entry(updateStatus).State = EntityState.Modified;
+            db.Entry(phongUpdate).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("RoomRental", "RoomRental");
+        }
+
         [Route("booking")]
         [HttpGet]
-
-            public IActionResult Booking(int? roomId)
-            {
-                DatPhong booking = new DatPhong();
-                if (roomId.HasValue)
-                {
-                    booking.MaPhong = roomId.Value;
-                }
+       
+        public IActionResult Booking(int? roomId)
+        {
+            DatPhong booking = new DatPhong();
+            if (roomId.HasValue)
+              {
+                booking.MaPhong = roomId.Value;
+              }
               
-                ViewBag.MaKh = new SelectList(db.KhachHangs, "MaKh", "HoTenKh");
-                ViewBag.MaNv = new SelectList(db.NhanViens, "MaNv", "HoTenNv");
-                ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
-                var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
-                ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
-                ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats, "MaTinhTrangDat", "TenTinhTrangDat");
+             ViewBag.MaKh = new SelectList(db.KhachHangs, "MaKh", "HoTenKh");
+             ViewBag.MaNv = new SelectList(db.NhanViens, "MaNv", "HoTenNv");
+             ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
+             var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
+             ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
+             ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats, "MaTinhTrangDat", "TenTinhTrangDat");
            
             return View(booking);
-           }
+         }
         
         [Route("booking")]
         [HttpPost]
@@ -71,7 +118,8 @@ namespace HotelManagement.Areas.Admin.Controllers
             return View(book);
 
         }
-   
+
+
         [HttpGet("addservice")]
         public IActionResult AddService(int? maPhieuThue)
         {

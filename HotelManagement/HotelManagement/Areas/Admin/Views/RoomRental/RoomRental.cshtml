@@ -20,9 +20,7 @@
             <th>
                 Loại Hình Đặt
             </th>
-            <th>
-                Lễ Tân
-            </th>
+           
             <th>
                 Số Phòng
             </th>
@@ -32,12 +30,7 @@
             <th>
                 Ngày Trả
             </th>
-            <th>
-                Giờ Nhận
-            </th>
-            <th>
-                Giờ Trả
-            </th>
+          
             <th>
                 Số Người ở
             </th>
@@ -57,9 +50,6 @@
                 Loại Hình Đặt
             </th>
             <th>
-                Lễ Tân
-            </th>
-            <th>
                 Số Phòng
             </th>
             <th>
@@ -68,12 +58,7 @@
             <th>
                 Ngày Trả
             </th>
-            <th>
-                Giờ Nhận
-            </th>
-            <th>
-                Giờ Trả
-            </th>
+          
             <th>
                 Số Người ở
             </th>
@@ -94,9 +79,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MaLoaiHinhDatNavigation.TenLoaiHinhDat)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNvNavigation.HoTenNv)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.MaPhongNavigation.SoPhong)
             </td>
@@ -105,18 +88,20 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NgayTra)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GioNhan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GioTra)
-            </td>
+            </td>    
             <td>
                 @Html.DisplayFor(modelItem => item.SoNguoiO)
             </td>
             <td>
-               @Html.DisplayFor(modelItem => item.MaTinhTrangDatNavigation.TenTinhTrangDat)
+                <div>
+                   @Html.DisplayFor(modelItem => item.MaTinhTrangDatNavigation.TenTinhTrangDat)
+                </div>
+
+                <div>
+                   <a asp-action="EditRental" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Cập Nhật</a>
+                </div>
+               
+                
             </td>
             
             <td>
