@@ -11,9 +11,28 @@
 <p>
     <a asp-action="EditRoom" class="btn btn-success">Create New</a>
 </p>
+<form asp-action="Room" method="get">
+    <div id="dataTableHover_filter" class="dataTables_filter">
+        <label>
+            Tìm Phòng
+            <input type="search" name="searchTinhTrang" value="@ViewBag.SearchTinhTrang" class="form-control form-control-sm" placeholder="Nhập Tình Trạng Phòng" aria-controls="dataTableHover">
+        </label>
+        <label>
+            Tìm Loại Phòng
+            <input type="search" name="searchLoaiPhong" value="@ViewBag.SearchLoaiPhong" class="form-control form-control-sm" placeholder="Nhập Loại Phòng" aria-controls="dataTableHover">
+        </label>
+        <label>
+            Tìm Tầng
+            <input type="search" name="searchTang" value="@ViewBag.SearchTang" class="form-control form-control-sm" placeholder="Nhập Số T" aria-controls="dataTableHover">
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-primary">Search</button>
+    </div>
+</form>
 <table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
     <thead class="thead-light">
         <tr>
+            <th>ID</th>
             <th>Số Phòng</th>
             <th>Loại Phòng</th>
             <th>Tầng</th>
@@ -47,6 +66,7 @@
                 statusClass = "bg-gradient-danger text-white font-weight-bold";   // Nền đỏ, chữ trắng
             }
             <tr >
+                <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaPhong)</td>
                 <td class="@statusClass">@Html.DisplayFor(modelItem => item.SoPhong)</td>
                 <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaLpNavigation.TenLoaiPhong)</td>
                 <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaTangNavigation.TenTang)</td>

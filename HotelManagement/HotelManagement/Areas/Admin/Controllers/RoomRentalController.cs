@@ -14,17 +14,38 @@ namespace HotelManagement.Areas.Admin.Controllers
     {
         QlksContext db = new QlksContext();
         [Route("")]
+        //Danh sách phiếu thuê
         [Route("Roomrental")]
-        public IActionResult RoomRental(int? page)
+        public IActionResult RoomRental(int? page, string searchKhachHang, string searchLoaiHinhDat, string searchTinhTrang)
         {
             int pageSize = 10;
             int pageNumber = page ?? 1;
             var listPhieuDat = db.DatPhongs.Include(p => p.MaKhNavigation).Include(p => p.MaNvNavigation).Include(p => p.MaPhongNavigation).Include(p => p.MaLoaiHinhDatNavigation).Include(p => p.MaTinhTrangDatNavigation).AsNoTracking().OrderBy(x => x.MaPhieuThue).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchKhachHang))
+            {
+                listPhieuDat = listPhieuDat.Where(pd => pd.MaKhNavigation.HoTenKh.Contains(searchKhachHang))
+                    .OrderBy(x => x.MaPhieuThue);
+            }
+            if (!string.IsNullOrEmpty(searchLoaiHinhDat))
+            {
+                listPhieuDat = listPhieuDat.Where(pd => pd.MaLoaiHinhDatNavigation.TenLoaiHinhDat.Contains(searchLoaiHinhDat))
+                    .OrderBy(x => x.MaPhieuThue);
+            }
+            if (!string.IsNullOrEmpty(searchTinhTrang))
+            {
+                listPhieuDat = listPhieuDat.Where(pd => pd.MaTinhTrangDatNavigation.TenTinhTrangDat.Contains(searchTinhTrang))
+                    .OrderBy(x => x.MaPhieuThue);
+            }
+
+            ViewBag.SearchKhachHang = searchKhachHang;
+            ViewBag.SearchLoaiHinhDat = searchLoaiHinhDat;
+            ViewBag.SearchTinhTrang = searchTinhTrang;
             PagedList <DatPhong> lstPhieuDat = new PagedList<DatPhong>(listPhieuDat, pageNumber, pageSize);
             return View(lstPhieuDat);
         }
 
-
+        //Thay đổi chi tiết phiếu thuê
         [Route("Editrental")]
         [HttpGet]
         public IActionResult EditRental(int? maPhieuThue)
@@ -55,9 +76,17 @@ namespace HotelManagement.Areas.Admin.Controllers
             {
                 return NotFound("Phòng không tồn tại hoặc không hợp lệ.");
             }
-            
+     
+
             if (updateStatus.MaTinhTrangDat == 2)
             {
+                if (phongUpdate.MaTinhTrang == 1)
+                {
+                    ModelState.AddModelError("", "Phòng này hiện đang có người thuê");
+                    ViewBag.MaPhong = new SelectList(db.Phongs.ToList(), "MaPhong", "SoPhong");
+                    ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats.ToList(), "MaTinhTrangDat", "TenTinhTrangDat");
+                    return View(datPhong);
+                }
                 phongUpdate.MaTinhTrang = 1;
             }
 
@@ -78,9 +107,9 @@ namespace HotelManagement.Areas.Admin.Controllers
             return RedirectToAction("RoomRental", "RoomRental");
         }
 
+        //Thêm Phiếu Thuê mới
         [Route("booking")]
         [HttpGet]
-       
         public IActionResult Booking(int? roomId)
         {
             DatPhong booking = new DatPhong();
@@ -101,17 +130,24 @@ namespace HotelManagement.Areas.Admin.Controllers
         
         [Route("booking")]
         [HttpPost]
-        public IActionResult Booking(DatPhong book)
+        public IActionResult Booking(DatPhong datPhong)
         {
-            db.DatPhongs.Add(book);
-            var room = db.Phongs.FirstOrDefault(p => p.MaPhong == book.MaPhong);
-
-            if (room.MaTinhTrang == 2)
+            db.DatPhongs.Add(datPhong);
+            var phong = db.Phongs.Include(dp => dp.MaLpNavigation).FirstOrDefault(p => p.MaPhong == datPhong.MaPhong);
+            var loaiPhong = phong.MaLpNavigation;
+           
+            if (datPhong.SoNguoiO > loaiPhong.SoNguoiOToiDa)
             {
-                if (book.MaTinhTrangDat != 1)
+                ModelState.AddModelError("", $"Số lượng người ở vượt quá giới hạn cho phép. Phòng này chỉ cho phép tối đa {loaiPhong.SoNguoiOToiDa} người.");
+                return View(datPhong);
+            }
+      
+            if (phong.MaTinhTrang == 2)
+            {
+                if (datPhong.MaTinhTrangDat != 1)
                 {
-                    room.MaTinhTrang = 1;
-                    db.Entry(room).State = EntityState.Modified;
+                    phong.MaTinhTrang = 1;
+                    db.Entry(phong).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Room", "Room");
                 }
@@ -119,14 +155,19 @@ namespace HotelManagement.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Room", "Room");
             }
-
-
+    
             ModelState.AddModelError("", "Không thể dùng phòng này");
-            return View(book);
+            ViewBag.MaKh = new SelectList(db.KhachHangs, "MaKh", "HoTenKh");
+            ViewBag.MaNv = new SelectList(db.NhanViens, "MaNv", "HoTenNv");
+            ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
+            var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
+            ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
+            ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats, "MaTinhTrangDat", "TenTinhTrangDat");
 
+            return View(datPhong);
         }
 
-
+        //Thêm Dịch Vụ
         [HttpGet("addservice")]
         public IActionResult AddService(int? maPhieuThue)
         {
@@ -144,6 +185,7 @@ namespace HotelManagement.Areas.Admin.Controllers
 
             return View(new PhongDichVu { MaPhieuThue = maPhieuThue.Value } );
         }
+
         [HttpPost("addservice")]
         public IActionResult AddService(PhongDichVu model, string action)
         {
@@ -182,6 +224,8 @@ namespace HotelManagement.Areas.Admin.Controllers
             ViewBag.MaDichVu = new SelectList(db.DichVus, "MaDichVu", "TenDichVu");
             return View(model);
         }
+
+        //Chi Tiết Phiếu Thuê
         [HttpGet("details")]
         public IActionResult Details(int? maPhieuThue)
         {

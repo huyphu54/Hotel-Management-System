@@ -11,17 +11,41 @@ namespace HotelManagement.Areas.Admin.Controllers
     {
         QlksContext db = new QlksContext();
         [Route("")]
+        //Danh sách phòng
         [Route("room")]
-        public IActionResult Room(int? page)
+        public IActionResult Room(int? page, string searchTinhTrang, string searchLoaiPhong, string searchTang)
         {
             int pageSize = 10;
             int pageNumber = page ?? 1;
             var listPhong = db.Phongs.Include(p => p.MaLpNavigation).Include(p => p.MaTangNavigation).Include(p => p.MaTinhTrangNavigation).AsNoTracking().OrderBy(x => x.MaPhong);
+            if (!string.IsNullOrEmpty(searchTinhTrang))
+            {
+
+                listPhong = listPhong.Where(p => p.MaTinhTrangNavigation.TenTinhTrang.Contains(searchTinhTrang))
+                    .OrderBy(x => x.MaPhong);
+            }
+            if (!string.IsNullOrEmpty(searchLoaiPhong))
+            {
+
+                listPhong = listPhong.Where(p => p.MaLpNavigation.TenLoaiPhong.Contains(searchLoaiPhong))
+                    .OrderBy(x => x.MaPhong);
+            }
+            if (!string.IsNullOrEmpty(searchTang))
+            {
+
+                listPhong = listPhong.Where(p => p.MaTangNavigation.TenTang.Contains(searchTang))
+                    .OrderBy(x => x.MaPhong);
+            }
+
             PagedList<Phong> lstPhong = new PagedList<Phong>(listPhong, pageNumber, pageSize);
+            ViewBag.SearchTinhTrang = searchTinhTrang;
+            ViewBag.SearchLoaiPhong= searchLoaiPhong;
+            ViewBag.SearchTang = searchTang;
             return View(lstPhong);
+
         }
 
-
+        //Thay đổi chi tiết phòng
         [Route("editroom")]
         [HttpGet]
         public IActionResult EditRoom(int? maPhong)
@@ -78,7 +102,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             }
         }
 
-
+        //Danh sách loại phòng 
         [Route("roomtype")]
         public IActionResult RoomType()
         {
@@ -86,12 +110,14 @@ namespace HotelManagement.Areas.Admin.Controllers
             return View(listLoaiPhong);
         }
 
+        //Thêm loại phòng mới
         [Route("addroomtype")]
         [HttpGet]
         public IActionResult AddRoomType()
         {
             return View();
         }
+
         [Route("addroomtype")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -106,6 +132,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             return View(loaiphong);
         }
 
+        //Chỉnh sửa loại phòng
         [Route("editroomtype")]
         [HttpGet]
         public IActionResult EditRoomType(int? maLoaiPhong)
@@ -113,6 +140,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             var loaiPhong = db.LoaiPhongs.Find(maLoaiPhong);
             return View(loaiPhong);
         }
+
         [Route("editroomtype")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -126,9 +154,6 @@ namespace HotelManagement.Areas.Admin.Controllers
             }
             return View(loaiphong);
         }
-
-       
-     
     }
 
 }

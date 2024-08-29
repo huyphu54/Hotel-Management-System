@@ -8,7 +8,7 @@
 <h1>RoomType</h1>
 
 <p>
-    <a asp-action="AddRoomType">Create New</a>
+    <a asp-action="AddRoomType" class="btn btn-success">Tạo Loại Phòng Mới</a>
 </p>
 <table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
     <thead class="thead-light">
@@ -24,6 +24,9 @@
             </th>
             <th>
                 Giá
+            </th>
+            <th>
+                Khách Tối đa
             </th>
             <th></th>
         </tr>
@@ -41,6 +44,9 @@
             </th>
             <th>
                 Giá
+            </th>
+            <th>
+                Khách Tối đa
             </th>
             <th></th>
         </tr>
@@ -62,8 +68,11 @@
                     @Html.DisplayFor(modelItem => item.Gia)
                 </td>
                 <td>
-                    <a class="btn btn-primary" asp-action="EditRoomType" asp-route-maLoaiPhong="@item.MaLp">Edit</a> |
-                    <a class="btn btn-info" asp-action="Details" asp-route-maLoaiPhong="@item.MaLp">Details</a> |
+                    @Html.DisplayFor(modelItem => item.SoNguoiOToiDa) 
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="EditRoomType" asp-route-maLoaiPhong="@item.MaLp">Edit</a> 
+                    <a class="btn btn-info" asp-action="Details" asp-route-maLoaiPhong="@item.MaLp">Details</a> 
                     <a class="btn btn-danger" asp-action="Delete" asp-route-maLoaiPhong="@item.MaLp">Delete</a>
                 </td>
             </tr>

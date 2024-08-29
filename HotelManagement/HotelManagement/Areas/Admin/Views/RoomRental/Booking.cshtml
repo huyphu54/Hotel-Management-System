@@ -55,6 +55,12 @@
                 <label  class="control-label">Số Người Ở</label>
                 <input asp-for="SoNguoiO" class="form-control" />
                 <span asp-validation-for="SoNguoiO" class="text-danger"></span>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        @Html.ValidationSummary()
+                    </div>
+                }
             </div>
             <div class="form-group">
                 <label class="control-label">Loại Hình Đặt</label>

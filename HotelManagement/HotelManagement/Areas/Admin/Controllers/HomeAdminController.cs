@@ -15,28 +15,24 @@ namespace HotelManagement.Areas.Admin.Controllers
     public class HomeAdminController : Controller
     {
         QlksContext db = new QlksContext();
+
+        //Trang chủ
         [Route("")]
         [Route("index")]
-        
         public IActionResult Index()
         {
            
             return View();  
         }
 
-
-
-
+        //Danh Sách khách Hàng
         [Route("customer")]
         public IActionResult Customer(int? page, string searchString, string year)
         {
             int pageSize = 5;
             int pageNumber = page ?? 1;
 
-            // Lấy danh sách khách hàng từ cơ sở dữ liệu
             var listKhachHang = db.KhachHangs.AsNoTracking().OrderBy(x => x.MaKh).AsQueryable();
-
-            // Kiểm tra nếu có chuỗi tìm kiếm
             if (!string.IsNullOrEmpty(searchString))
             {
                 listKhachHang = listKhachHang.Where(kh => kh.HoTenKh.Contains(searchString));
@@ -45,19 +41,13 @@ namespace HotelManagement.Areas.Admin.Controllers
             {
                 listKhachHang = listKhachHang.Where(kh => kh.NamSinh.Contains(year));
             }
-
-
-            // Sử dụng PagedList cho việc phân trang
             PagedList<KhachHang> lst = new PagedList<KhachHang>(listKhachHang, pageNumber, pageSize);
-
-            // Truyền giá trị tìm kiếm vào ViewBag để hiển thị lại trên form tìm kiếm
             ViewBag.SearchString = searchString;
             ViewBag.Year = year;
             return View(lst);
         }
 
-
-
+        //Thêm Khách hàng mới
         [Route("addcustomer")]
         [HttpGet]
         public IActionResult AddCustomer()

@@ -11,6 +11,24 @@
 <p>
     <a asp-action="Booking" asp-controller="RoomRental" class="btn btn-success">Tạo Phiếu Đặt Phòng</a>
 </p>
+<form asp-action="RoomRental" method="get">
+    <div id="dataTableHover_filter" class="dataTables_filter">
+        <label>
+            Tìm Khách Hàng
+            <input type="search" name="searchKhachHang" value="@ViewBag.SearchKhachHang" class="form-control form-control-sm" placeholder="Nhập Tên Khách Hàng" aria-controls="dataTableHover">
+        </label>
+        <label>
+            Loại Hình Đặt
+            <input type="search" name="searchLoaiHinhDat" value="@ViewBag.SearchLoaiHinhDat" class="form-control form-control-sm" placeholder="Nhập Loại Hình Đặt" aria-controls="dataTableHover">
+        </label>
+        <label>
+            Tình Trạng
+            <input type="search" name="searchTinhTrang" value="@ViewBag.SearchTinhTrang" class="form-control form-control-sm" placeholder="Nhập Tình Trạng" aria-controls="dataTableHover">
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-primary">Search</button>
+    </div>
+</form>
 <table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
     <thead class="thead-light">
         <tr>
