@@ -41,14 +41,21 @@ namespace HotelManagement.Areas.Admin.Controllers
         public IActionResult EditRental(DatPhong datPhong)
         {
             var updateStatus = db.DatPhongs.Find(datPhong.MaPhieuThue);
+            if (updateStatus.MaTinhTrangDat == 3)
+            {
+                ModelState.AddModelError("", "Không thể thay đổi tình trạng do phòng đã trả");
+                return View(datPhong);
+            }
 
             updateStatus.MaTinhTrangDat = datPhong.MaTinhTrangDat;
-            
+            updateStatus.GioNhan = datPhong.GioNhan;
+            updateStatus.GioTra = datPhong.GioTra;
             var phongUpdate = db.Phongs.FirstOrDefault(p => p.MaPhong == datPhong.MaPhong);
             if (phongUpdate == null)
             {
                 return NotFound("Phòng không tồn tại hoặc không hợp lệ.");
             }
+            
             if (updateStatus.MaTinhTrangDat == 2)
             {
                 phongUpdate.MaTinhTrang = 1;
@@ -59,9 +66,9 @@ namespace HotelManagement.Areas.Admin.Controllers
                 phongUpdate.MaTinhTrang = 2;
             }
 
-            else if(updateStatus.MaTinhTrangDat==1 || updateStatus.MaTinhTrangDat == 4)
+            else if( updateStatus.MaTinhTrangDat == 4)
             {
-                ModelState.AddModelError("", "Không thể thay đổi tình trạng do phòng đã thanh toán");
+                ModelState.AddModelError("", "Không thể thay đổi tình trạng do phòng đã hủy");
                 return View(datPhong);
             }
 
@@ -180,7 +187,11 @@ namespace HotelManagement.Areas.Admin.Controllers
         {
             var datPhong = db.DatPhongs
                              .Include(dp => dp.PhongDichVus)
-                             .ThenInclude(pd => pd.MaDichVuNavigation).Include(dp => dp.MaKhNavigation).Include(dp => dp.MaPhongNavigation).Include(dp => dp.MaTinhTrangDatNavigation)
+                             .ThenInclude(pd => pd.MaDichVuNavigation).Include(dp => dp.MaKhNavigation)
+                             .Include(dp => dp.MaPhongNavigation)
+                             .ThenInclude(p =>p.MaLpNavigation)
+                             .Include(dp => dp.MaTinhTrangDatNavigation)
+                       
                              .FirstOrDefault(dp => dp.MaPhieuThue == maPhieuThue);
            
             if (datPhong == null)

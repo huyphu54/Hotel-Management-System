@@ -82,17 +82,19 @@
             <th>Thành Tiền</th>
         </tr>
     </thead>
-    <tfoot>
-        <tr>
-            <th>Tên Dịch Vụ</th>
-            <th>Giá</th>
-            <th>Số Lượng</th>
-            <th>Thành Tiền</th>
-        </tr>
-    </tfoot>
+    
     <tbody>
+
+        @{
+
+            double tongTienDichVu = 0;
+        }
+        
+       
         @foreach (var dv in Model.PhongDichVus)
         {
+            var thanhTien = dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia;
+            tongTienDichVu += (double)thanhTien;
             <tr>
                 <td>@dv.MaDichVuNavigation.TenDichVu</td>
                 <td>@dv.MaDichVuNavigation.Gia</td>
@@ -100,9 +102,51 @@
                 <td>@(dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia)</td>
             </tr>
         }
+        <tr>
+            <td colspan="3" class="text-right"><strong>Tổng Tiền Dịch Vụ:</strong></td>
+            <td><strong>@tongTienDichVu.ToString("N0") VND</strong></td>
+        </tr>
+        
     </tbody>
 </table>
-<div>
+@{
+    double soNgayGio = 0;
+    if (Model.NgayNhan.HasValue && Model.NgayTra.HasValue)
+    {
+        // Kết hợp NgayNhan và GioNhan, NgayTra và GioTra để tính chính xác số ngày giờ ở
+        var ngayGioNhan = Model.GioNhan.HasValue ? Model.NgayNhan.Value.ToDateTime(Model.GioNhan.Value) : Model.NgayNhan.Value.ToDateTime(TimeOnly.MinValue);
+        var ngayGioTra = Model.GioTra.HasValue ? Model.NgayTra.Value.ToDateTime(Model.GioTra.Value) : Model.NgayTra.Value.ToDateTime(TimeOnly.MaxValue);
+
+        soNgayGio = (ngayGioTra - ngayGioNhan).TotalDays;
+    }
+    // Tính tiền phòng
+
+    double tienPhong = Model.MaPhongNavigation.MaLpNavigation.Gia.GetValueOrDefault() * soNgayGio;
+    double tienCoc = Model.MaPhongNavigation.MaLpNavigation.SoTienCoc.GetValueOrDefault() * soNgayGio;
+    double tongTienPhieuThue = 0;
+
+    if(Model.MaTinhTrangDat==40)
+    {
+        tongTienPhieuThue = tienCoc;
+    }
+
+    if (Model.MaLoaiHinhDat==1)
+    {
+        tongTienPhieuThue = tongTienDichVu + tienPhong;
+    }
+    else if(Model.MaLoaiHinhDat==2)
+    {
+        tongTienPhieuThue = tongTienDichVu + tienPhong + 60000;
+    }
+    else 
+    {
+        tongTienPhieuThue = tongTienDichVu + tienPhong + 30000;
+    }
    
+}
+
+<h4>Tổng Tiền Phiếu Thuê: @tongTienPhieuThue.ToString("N0") VND</h4>
+
+<div>
     <a asp-action="RoomRental" asp-area="Admin" class="btn btn-primary">Back to List</a>
 </div>
