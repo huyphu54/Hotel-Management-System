@@ -1,0 +1,76 @@
+﻿@model HotelManagement.Models.HoaDon
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Staff";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h1>Tạo Phiếu Thanh Toán</h1>
+
+<p>@TempData["Message"]</p>
+<hr />
+<div class="row">   
+    <div class="col-md-4">
+        <form asp-action="CreateBill" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label>Mã Phiếu Thuê:</label>
+                <input type="text" class="form-control" asp-for="MaPhieuThue" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayLapPhieu" class="control-label"></label>
+                <input asp-for="NgayLapPhieu" class="form-control" />
+                <span asp-validation-for="NgayLapPhieu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Số Tiền Cọc:</label>
+                <input type="text" class="form-control" asp-for="SoTienCoc" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="TienDichVu" class="control-label"></label>
+                <input asp-for="TienDichVu" class="form-control" readonly />
+                <span asp-validation-for="TienDichVu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Tổng Tiền Tạm Tính:</label>
+                <input type="text" class="form-control" id="tongTienTamTinh" asp-for="TongTienTamTinh" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Phụ Thu:</label>
+                <input type="text" class="form-control" id="phuThu" asp-for="PhuThu" />
+            </div>
+
+            <div class="form-group">
+                <label>Tổng Tiền Thu:</label>
+                <input type="text" class="form-control" id="tongTienThu" asp-for="TongTienThu" readonly />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="RoomRenTal" asp-area="admin" asp-controller="RoomRental" class="btn btn-primary">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Lắng nghe sự kiện khi nhập vào trường Phụ Thu
+            $("#phuThu").on("input", function () {
+                // Lấy giá trị của Tổng Tiền Tạm Tính và Phụ Thu
+                var tongTienTamTinh = parseFloat($("#tongTienTamTinh").val()) || 0;
+                var phuThu = parseFloat($("#phuThu").val()) || 0;
+
+                // Cập nhật Tổng Tiền Thu
+                var tongTienThu = tongTienTamTinh + phuThu;
+                $("#tongTienThu").val(tongTienThu.toFixed(2)); // Làm tròn tới 2 chữ số thập phân
+            });
+        });
+    </script>
+}

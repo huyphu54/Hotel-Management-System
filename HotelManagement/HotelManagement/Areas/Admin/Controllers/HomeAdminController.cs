@@ -59,8 +59,15 @@ namespace HotelManagement.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddCustomer(KhachHang khachHang)
         {
+           bool checkCCCD = db.KhachHangs.Any(kh => kh.Cccd == khachHang.Cccd);
+            if (checkCCCD)
+            {              
+                ModelState.AddModelError("CCCD", "Khách hàng này đã tồn tại trong hệ thống.");
+                return View(khachHang); 
+            }
             if (ModelState.IsValid)
             {
+                
                 db.KhachHangs.Add(khachHang);
                 db.SaveChanges();
                 return RedirectToAction("Customer");

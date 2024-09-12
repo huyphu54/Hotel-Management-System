@@ -1,0 +1,102 @@
+﻿@model IEnumerable<HotelManagement.Models.HoaDon>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh Sách Hóa Đơn</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
+    <thead class="thead-light">
+        <tr>
+            <th>
+               Mã Phiếu Thuê
+            </th>
+            <th>
+              Ngày Lập Phiếu
+            </th>
+            <th>
+                Số Tiền Cọc
+            </th>
+            <th>
+                Tiền Dịch Vụ
+            </th>
+            <th>
+               Tổng Tiền Tạm Tính
+            </th>
+            <th>
+               Phụ Thu
+            </th>
+            
+            <th>
+              Tổng Tiền Thu
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tfoot >
+        <tr>
+            <th>
+                Mã Phiếu Thuê
+            </th>
+            <th>
+                Ngày Lập Phiếu
+            </th>
+            <th>
+                Số Tiền Cọc
+            </th>
+            <th>
+                Tiền Dịch Vụ
+            </th>
+            <th>
+                Tổng Tiền Tạm Tính
+            </th>
+            <th>
+                Phụ Thu
+            </th>
+           
+            <th>
+                Tổng Tiền
+            </th>
+
+            <th></th>
+        </tr>
+    </tfoot>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaPhieuThueNavigation.MaPhieuThue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayLapPhieu)
+                <td>
+                        @item.SoTienCoc?.ToString("N0")
+                </td>
+                <td>
+                        @item.TienDichVu?.ToString("N0")
+                </td>
+                <td>
+                        @item.TongTienTamTinh?.ToString("N0")
+                </td>
+                <td>
+                        @item.PhuThu?.ToString("N0")
+                </td>
+                <td>
+                        @item.TongTienThu?.ToString("N0")
+                </td>
+           
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaHoaDon">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaHoaDon">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaHoaDon">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,43 @@
+﻿@model HotelManagement.Models.Phong
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "AddRoom";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thêm Phòng Mới</h1>
+
+<p>@TempData["Message"]</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="AddRoom">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SoPhong" class="control-label">Số Phòng</label>
+                <input asp-for="SoPhong" class="form-control" />
+                <span asp-validation-for="SoPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaTang" class="control-label">Tầng</label>
+                <select asp-for="MaTang" class ="form-control" asp-items="ViewBag.MaTang"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaLp" class="control-label">Loại Phòng</label>
+                <select asp-for="MaLp" class ="form-control" asp-items="ViewBag.MaLp"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaTinhTrang" class="control-label">Tình Trạng</label>
+                <select asp-for="MaTinhTrang" class ="form-control" asp-items="ViewBag.MaTinhTrang"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-primary" asp-action="Room">Back to List</a>
+</div>
+

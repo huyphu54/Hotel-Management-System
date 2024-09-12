@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<h1>RoomType</h1>
+<h1>Loại Phòng</h1>
 
 <p>
     <a asp-action="AddRoomType" class="btn btn-success">Tạo Loại Phòng Mới</a>
@@ -68,7 +68,7 @@
                     @Html.DisplayFor(modelItem => item.Gia)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SoNguoiOToiDa) 
+                    @Html.DisplayFor(modelItem => item.SoNguoiOtoiDa)
                 </td>
                 <td>
                     <a class="btn btn-primary" asp-action="EditRoomType" asp-route-maLoaiPhong="@item.MaLp">Edit</a> 

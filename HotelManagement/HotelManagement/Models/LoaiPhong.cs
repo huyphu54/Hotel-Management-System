@@ -14,6 +14,8 @@ public partial class LoaiPhong
     public double? SoTienCoc { get; set; }
 
     public double? Gia { get; set; }
-    public int SoNguoiOToiDa { get; set; }
+
+    public int? SoNguoiOtoiDa { get; set; }
+
     public virtual ICollection<Phong> Phongs { get; set; } = new List<Phong>();
 }

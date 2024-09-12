@@ -7,11 +7,11 @@ public partial class DatPhong
 {
     public int MaPhieuThue { get; set; }
 
-    public int MaKh { get; set; }
+    public int? MaKh { get; set; }
 
-    public int MaNv { get; set; }
+    public int? MaNv { get; set; }
 
-    public int MaLoaiHinhDat { get; set; }
+    public int? MaLoaiHinhDat { get; set; }
 
     public DateOnly? NgayNhan { get; set; }
 
@@ -21,25 +21,25 @@ public partial class DatPhong
 
     public TimeOnly? GioTra { get; set; }
 
-    public int MaPhong { get; set; }
+    public int? MaPhong { get; set; }
 
     public int? SoNguoiO { get; set; }
 
     public int MaTinhTrangDat { get; set; }
 
-    public virtual ICollection<HoaDon> HoaDons { get; set; } = new List<HoaDon>();
+    public virtual HoaDon? HoaDon { get; set; }
 
-    public virtual KhachHang MaKhNavigation { get; set; } = null!;
+    public virtual KhachHang? MaKhNavigation { get; set; }
 
-    public virtual LoaiHinhDat MaLoaiHinhDatNavigation { get; set; } = null!;
+    public virtual LoaiHinhDat? MaLoaiHinhDatNavigation { get; set; }
 
-    public virtual NhanVien MaNvNavigation { get; set; } = null!;
+    public virtual NhanVien? MaNvNavigation { get; set; }
 
-    public virtual Phong MaPhongNavigation { get; set; } = null!;
+    public virtual Phong? MaPhongNavigation { get; set; }
 
     public virtual TinhTrangDat MaTinhTrangDatNavigation { get; set; } = null!;
 
     public virtual ICollection<PhongDichVu> PhongDichVus { get; set; } = new List<PhongDichVu>();
 
-    public virtual ICollection<PhongHuy> PhongHuys { get; set; } = new List<PhongHuy>();
+    public virtual PhongHuy? PhongHuy { get; set; }
 }

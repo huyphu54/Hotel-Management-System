@@ -21,6 +21,8 @@ public partial class NhanVien
 
     public string? ChucVu { get; set; }
 
+    public byte[]? Avatar { get; set; }
+
     public virtual ICollection<DatPhong> DatPhongs { get; set; } = new List<DatPhong>();
 
     public virtual PhongBan MaPbNavigation { get; set; } = null!;

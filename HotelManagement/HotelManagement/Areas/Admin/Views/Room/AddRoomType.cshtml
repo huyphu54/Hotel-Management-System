@@ -6,9 +6,8 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>AddRoomType</h1>
+<h1>Thêm Loại Phòng</h1>
 
-<h4>LoaiPhong</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,33 +15,33 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="TenLoaiPhong" class="control-label"></label>
+                <label asp-for="TenLoaiPhong" class="control-label">Tên Loại Phòng</label>
                 <input asp-for="TenLoaiPhong" class="form-control" />
                 <span asp-validation-for="TenLoaiPhong" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TienNghi" class="control-label"></label>
+                <label asp-for="TienNghi" class="control-label">Tiện Nghi</label>
                 <input asp-for="TienNghi" class="form-control" />
                 <span asp-validation-for="TienNghi" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SoTienCoc" class="control-label"></label>
+                <label asp-for="SoTienCoc" class="control-label">Số Tiền Cọc</label>
                 <input asp-for="SoTienCoc" class="form-control" />
                 <span asp-validation-for="SoTienCoc" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Gia" class="control-label"></label>
+                <label asp-for="Gia" class="control-label">Giá</label>
                 <input asp-for="Gia" class="form-control" />
                 <span asp-validation-for="Gia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="RoomType" class="btn btn-primary">Back to List</a>
 </div>
 

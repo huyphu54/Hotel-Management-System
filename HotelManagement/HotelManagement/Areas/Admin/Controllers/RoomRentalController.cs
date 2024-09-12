@@ -20,7 +20,8 @@ namespace HotelManagement.Areas.Admin.Controllers
         {
             int pageSize = 10;
             int pageNumber = page ?? 1;
-            var listPhieuDat = db.DatPhongs.Include(p => p.MaKhNavigation).Include(p => p.MaNvNavigation).Include(p => p.MaPhongNavigation).Include(p => p.MaLoaiHinhDatNavigation).Include(p => p.MaTinhTrangDatNavigation).AsNoTracking().OrderBy(x => x.MaPhieuThue).AsQueryable();
+            var listPhieuDat = db.DatPhongs.Include(p => p.MaKhNavigation).Include(p => p.MaNvNavigation).Include(p => p.MaPhongNavigation).ThenInclude(lp => lp.MaLpNavigation)
+                .Include(p => p.MaLoaiHinhDatNavigation).Include(p => p.MaTinhTrangDatNavigation).AsNoTracking().OrderBy(x => x.MaPhieuThue).AsQueryable();
 
             if (!string.IsNullOrEmpty(searchKhachHang))
             {
@@ -41,7 +42,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             ViewBag.SearchKhachHang = searchKhachHang;
             ViewBag.SearchLoaiHinhDat = searchLoaiHinhDat;
             ViewBag.SearchTinhTrang = searchTinhTrang;
-            PagedList <DatPhong> lstPhieuDat = new PagedList<DatPhong>(listPhieuDat, pageNumber, pageSize);
+            PagedList<DatPhong> lstPhieuDat = new PagedList<DatPhong>(listPhieuDat, pageNumber, pageSize);
             return View(lstPhieuDat);
         }
 
@@ -52,7 +53,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         {
             ViewBag.MaPhong = new SelectList(db.Phongs.ToList(), "MaPhong", "SoPhong");
             ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats.ToList(), "MaTinhTrangDat", "TenTinhTrangDat");
-            var phieuThue=  db.DatPhongs.Find(maPhieuThue);
+            var phieuThue = db.DatPhongs.Find(maPhieuThue);
             return View(phieuThue);
 
         }
@@ -67,7 +68,11 @@ namespace HotelManagement.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể thay đổi tình trạng do phòng đã trả");
                 return View(datPhong);
             }
-
+            if(updateStatus.MaTinhTrangDat == 4)
+            {
+                ModelState.AddModelError("", "Không thể thay đổi tình trạng do phòng đã hủy");
+                return View(datPhong);
+            }
             updateStatus.MaTinhTrangDat = datPhong.MaTinhTrangDat;
             updateStatus.GioNhan = datPhong.GioNhan;
             updateStatus.GioTra = datPhong.GioTra;
@@ -76,7 +81,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             {
                 return NotFound("Phòng không tồn tại hoặc không hợp lệ.");
             }
-     
+
 
             if (updateStatus.MaTinhTrangDat == 2)
             {
@@ -95,11 +100,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                 phongUpdate.MaTinhTrang = 2;
             }
 
-            else if( updateStatus.MaTinhTrangDat == 4)
-            {
-                ModelState.AddModelError("", "Không thể thay đổi tình trạng do phòng đã hủy");
-                return View(datPhong);
-            }
+            
 
             db.Entry(updateStatus).State = EntityState.Modified;
             db.Entry(phongUpdate).State = EntityState.Modified;
@@ -114,20 +115,22 @@ namespace HotelManagement.Areas.Admin.Controllers
         {
             DatPhong booking = new DatPhong();
             if (roomId.HasValue)
-              {
+            {
                 booking.MaPhong = roomId.Value;
-              }
-              
-             ViewBag.MaKh = new SelectList(db.KhachHangs, "MaKh", "HoTenKh");
-             ViewBag.MaNv = new SelectList(db.NhanViens, "MaNv", "HoTenNv");
-             ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
-             var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
-             ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
-             ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats, "MaTinhTrangDat", "TenTinhTrangDat");
-           
+            }
+            var customers = db.KhachHangs
+              .Select(c => new { c.MaKh, c.HoTenKh })
+              .ToList();
+            ViewBag.KhachHang = new SelectList(customers, "MaKh", "HoTenKh");
+            ViewBag.MaNv = new SelectList(db.NhanViens, "MaNv", "HoTenNv");
+            ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
+            var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
+            ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
+            ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats, "MaTinhTrangDat", "TenTinhTrangDat");
+
             return View(booking);
-         }
-        
+        }
+
         [Route("booking")]
         [HttpPost]
         public IActionResult Booking(DatPhong datPhong)
@@ -135,13 +138,13 @@ namespace HotelManagement.Areas.Admin.Controllers
             db.DatPhongs.Add(datPhong);
             var phong = db.Phongs.Include(dp => dp.MaLpNavigation).FirstOrDefault(p => p.MaPhong == datPhong.MaPhong);
             var loaiPhong = phong.MaLpNavigation;
-           
-            if (datPhong.SoNguoiO > loaiPhong.SoNguoiOToiDa)
+
+            if (datPhong.SoNguoiO > loaiPhong.SoNguoiOtoiDa)
             {
-                ModelState.AddModelError("", $"Số lượng người ở vượt quá giới hạn cho phép. Phòng này chỉ cho phép tối đa {loaiPhong.SoNguoiOToiDa} người.");
+                ModelState.AddModelError("", $"Số lượng người ở vượt quá giới hạn cho phép. Phòng này chỉ cho phép tối đa {loaiPhong.SoNguoiOtoiDa} người.");
                 return View(datPhong);
             }
-      
+
             if (phong.MaTinhTrang == 2)
             {
                 if (datPhong.MaTinhTrangDat != 1)
@@ -155,7 +158,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Room", "Room");
             }
-    
+
             ModelState.AddModelError("", "Không thể dùng phòng này");
             ViewBag.MaKh = new SelectList(db.KhachHangs, "MaKh", "HoTenKh");
             ViewBag.MaNv = new SelectList(db.NhanViens, "MaNv", "HoTenNv");
@@ -175,7 +178,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                              .Include(dp => dp.PhongDichVus)
                              .FirstOrDefault(dp => dp.MaPhieuThue == maPhieuThue);
 
-            
+
             if (datPhong == null)
             {
                 return NotFound();
@@ -183,7 +186,7 @@ namespace HotelManagement.Areas.Admin.Controllers
 
             ViewBag.MaDichVu = new SelectList(db.DichVus, "MaDichVu", "TenDichVu");
 
-            return View(new PhongDichVu { MaPhieuThue = maPhieuThue.Value } );
+            return View(new PhongDichVu { MaPhieuThue = maPhieuThue.Value });
         }
 
         [HttpPost("addservice")]
@@ -195,14 +198,13 @@ namespace HotelManagement.Areas.Admin.Controllers
 
             if (existingRecord != null)
             {
-                // Nếu đã tồn tại, cập nhật số lượng
                 existingRecord.SoLuong += model.SoLuong.GetValueOrDefault();
                 db.Entry(existingRecord).State = EntityState.Modified;
             }
 
 
             var roombooking = db.DatPhongs.FirstOrDefault(p => p.MaPhieuThue == model.MaPhieuThue);
-            if (roombooking.MaTinhTrangDat ==1 || roombooking.MaTinhTrangDat==2)
+            if (roombooking.MaTinhTrangDat == 1 || roombooking.MaTinhTrangDat == 2)
             {
                 if (action == "save")
                 {
@@ -212,7 +214,6 @@ namespace HotelManagement.Areas.Admin.Controllers
                 }
                 else if (action == "exit")
                 {
-                    // Chuyển hướng sang trang khác (VD: chi tiết phiếu thuê phòng)
                     return RedirectToAction("Details", new { maPhieuThue = model.MaPhieuThue });
 
                 }
@@ -233,11 +234,11 @@ namespace HotelManagement.Areas.Admin.Controllers
                              .Include(dp => dp.PhongDichVus)
                              .ThenInclude(pd => pd.MaDichVuNavigation).Include(dp => dp.MaKhNavigation)
                              .Include(dp => dp.MaPhongNavigation)
-                             .ThenInclude(p =>p.MaLpNavigation)
+                             .ThenInclude(p => p.MaLpNavigation)
                              .Include(dp => dp.MaTinhTrangDatNavigation)
-                       
+
                              .FirstOrDefault(dp => dp.MaPhieuThue == maPhieuThue);
-           
+
             if (datPhong == null)
             {
                 return NotFound();
@@ -245,5 +246,7 @@ namespace HotelManagement.Areas.Admin.Controllers
 
             return View(datPhong);
         }
+
     }
 }
+    

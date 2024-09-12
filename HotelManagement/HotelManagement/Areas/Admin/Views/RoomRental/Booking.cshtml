@@ -4,7 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<h1>Booking</h1>
+<h1>Phiếu Đặt Phòng</h1>
 
 <h4>DatPhong</h4>
 <hr />
@@ -18,8 +18,8 @@
                  <select asp-for="MaPhong" class="form-control" asp-items="ViewBag.MaPhong"></select>
              </div>
             <div class="form-group">
-                <label  class="control-label">Tên Khách Hàng</label>
-                <select asp-for="MaKh" class ="form-control" asp-items="ViewBag.MaKh"></select>
+                <label class="control-label">Tên Khách Hàng</label>
+                <select id="searchCustomer" asp-for="MaKh" class="form-control" asp-items="@ViewBag.KhachHang"></select>
             </div>
             <div class="form-group">
                 <label class="control-label">Nhân Viên</label>
@@ -77,3 +77,15 @@
     <a asp-action="RoomRental" asp-area="Admin">Back to List</a>
 </div>
 
+ @section Scripts{
+     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+      <script type="text/javascript">
+                     $(function () {
+                         $("#searchCustomer").select2();
+                     });
+                 </script>
+     }
+ }

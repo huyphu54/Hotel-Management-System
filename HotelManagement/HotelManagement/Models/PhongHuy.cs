@@ -13,7 +13,5 @@ public partial class PhongHuy
 
     public DateOnly? NgayHuy { get; set; }
 
-    public TimeOnly? GioHuy { get; set; }
-
     public virtual DatPhong MaPhieuThueNavigation { get; set; } = null!;
 }

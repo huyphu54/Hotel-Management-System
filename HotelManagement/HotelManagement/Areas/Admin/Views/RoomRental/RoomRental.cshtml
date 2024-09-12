@@ -6,7 +6,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>RoomRental</h1>
+<h1>Danh Sách Phiếu Đặt Phòng</h1>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <p>
     <a asp-action="Booking" asp-controller="RoomRental" class="btn btn-success">Tạo Phiếu Đặt Phòng</a>
@@ -14,7 +14,7 @@
 <form asp-action="RoomRental" method="get">
     <div id="dataTableHover_filter" class="dataTables_filter">
         <label>
-            Tìm Khách Hàng
+           Khách Hàng
             <input type="search" name="searchKhachHang" value="@ViewBag.SearchKhachHang" class="form-control form-control-sm" placeholder="Nhập Tên Khách Hàng" aria-controls="dataTableHover">
         </label>
         <label>
@@ -41,6 +41,9 @@
            
             <th>
                 Số Phòng
+            </th>
+            <th>
+                Loại Phòng
             </th>
             <th>
                 Ngày Nhận
@@ -101,6 +104,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MaPhongNavigation.SoPhong)
             </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.MaPhongNavigation.MaLpNavigation.TenLoaiPhong)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NgayNhan)
             </td>
@@ -125,7 +131,7 @@
             <td>
                     <a asp-action="AddService" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-primary">Thêm Dịch Vụ</a>
                     <a asp-action="Details" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-info">Chi Tiết Phiếu</a>
-
+                    <a asp-action="CreateBill" asp-route-maPhieuThue="@item.MaPhieuThue" asp-controller="Payment" asp-area="Admin" class="btn btn-info">Thanh Toán</a>
             </td>
         </tr>
 }

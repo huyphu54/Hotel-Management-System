@@ -7,19 +7,14 @@ public partial class HoaDon
 {
     public int MaHoaDon { get; set; }
 
-    public int MaPhieuThue { get; set; }
+    public int? MaPhieuThue { get; set; }
 
-    public int? SoNgayO { get; set; }
-
-    public double? SoTienCoc { get; set; }
-
-    public double? PhuThu { get; set; }
-
+    public DateOnly? NgayLapPhieu { get; set; }
+    public double? TienDichVu { get; set; }
     public double? TongTienTamTinh { get; set; }
-
+    public double? PhuThu { get; set; }
+    public double? SoTienCoc { get; set; }
     public double? TongTienThu { get; set; }
 
-    public string? TinhTrang { get; set; }
-
-    public virtual DatPhong MaPhieuThueNavigation { get; set; } = null!;
+    public virtual DatPhong? MaPhieuThueNavigation { get; set; }
 }

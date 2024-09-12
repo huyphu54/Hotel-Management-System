@@ -22,8 +22,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.MaKhNavigation.HoTenKh)
         </dd>
-        
-   
+
         <dt class = "col-sm-2">
             Phòng
         </dt>
@@ -126,12 +125,12 @@
     double tienCoc = Model.MaPhongNavigation.MaLpNavigation.SoTienCoc.GetValueOrDefault() * soNgayGio;
     double tongTienPhieuThue = 0;
 
-    if(Model.MaTinhTrangDat==40)
+    if (Model.MaTinhTrangDat == 4)
     {
         tongTienPhieuThue = tienCoc;
     }
 
-    if (Model.MaLoaiHinhDat==1)
+    else if (Model.MaLoaiHinhDat==1)
     {
         tongTienPhieuThue = tongTienDichVu + tienPhong;
     }

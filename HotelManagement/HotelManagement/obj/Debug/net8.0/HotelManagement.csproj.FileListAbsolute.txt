@@ -6,7 +6,6 @@ E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\Hote
 E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\HotelManagement.MvcApplicationPartsAssemblyInfo.cache
 E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\HotelManagement.RazorAssemblyInfo.cache
 E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\HotelManagement.RazorAssemblyInfo.cs
-E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\HotelManagement.sourcelink.json
 E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\appsettings.Development.json
 E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\appsettings.json
 E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\HotelManagement.staticwebassets.runtime.json

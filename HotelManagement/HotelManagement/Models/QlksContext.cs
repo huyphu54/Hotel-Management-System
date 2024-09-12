@@ -62,22 +62,18 @@ public partial class QlksContext : DbContext
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.DatPhongs)
                 .HasForeignKey(d => d.MaKh)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RoomRentalDetail_Customer");
 
             entity.HasOne(d => d.MaLoaiHinhDatNavigation).WithMany(p => p.DatPhongs)
                 .HasForeignKey(d => d.MaLoaiHinhDat)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RoomRentalDetail_BookType");
 
             entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.DatPhongs)
                 .HasForeignKey(d => d.MaNv)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RoomRentalDetail_Employees");
 
             entity.HasOne(d => d.MaPhongNavigation).WithMany(p => p.DatPhongs)
                 .HasForeignKey(d => d.MaPhong)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RoomRentalDetail_Room");
 
             entity.HasOne(d => d.MaTinhTrangDatNavigation).WithMany(p => p.DatPhongs)
@@ -101,12 +97,11 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("HoaDon");
 
-            entity.Property(e => e.TinhTrang).HasMaxLength(50);
+            entity.HasIndex(e => e.MaPhieuThue, "Unique_DatPhong").IsUnique();
 
-            entity.HasOne(d => d.MaPhieuThueNavigation).WithMany(p => p.HoaDons)
-                .HasForeignKey(d => d.MaPhieuThue)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Payment_RoomRentalDetail");
+            entity.HasOne(d => d.MaPhieuThueNavigation).WithOne(p => p.HoaDon)
+                .HasForeignKey<HoaDon>(d => d.MaPhieuThue)
+                .HasConstraintName("FK_HoaDon_DatPhong");
         });
 
         modelBuilder.Entity<KhachHang>(entity =>
@@ -148,6 +143,7 @@ public partial class QlksContext : DbContext
             entity.ToTable("LoaiPhong");
 
             entity.Property(e => e.MaLp).HasColumnName("MaLP");
+            entity.Property(e => e.SoNguoiOtoiDa).HasColumnName("SoNguoiOToiDa");
             entity.Property(e => e.TenLoaiPhong)
                 .HasMaxLength(100)
                 .IsFixedLength();
@@ -239,16 +235,18 @@ public partial class QlksContext : DbContext
 
         modelBuilder.Entity<PhongHuy>(entity =>
         {
-            entity.HasKey(e => e.MaPhongHuy).HasName("PK_RoomCancelled");
+            entity.HasKey(e => e.MaPhongHuy);
 
             entity.ToTable("PhongHuy");
 
+            entity.HasIndex(e => e.MaPhieuThue, "Unique_DatPhong").IsUnique();
+
             entity.Property(e => e.LyDo).HasMaxLength(200);
 
-            entity.HasOne(d => d.MaPhieuThueNavigation).WithMany(p => p.PhongHuys)
-                .HasForeignKey(d => d.MaPhieuThue)
+            entity.HasOne(d => d.MaPhieuThueNavigation).WithOne(p => p.PhongHuy)
+                .HasForeignKey<PhongHuy>(d => d.MaPhieuThue)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RoomCancelled_RoomCancelled");
+                .HasConstraintName("FK_PhongHuy_DatPhong");
         });
 
         modelBuilder.Entity<Tang>(entity =>

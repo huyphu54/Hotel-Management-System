@@ -9,8 +9,9 @@
 <h1>Danh Sách Phòng</h1>
 
 <p>
-    <a asp-action="EditRoom" class="btn btn-success">Create New</a>
+    <a asp-action="AddRoom" class="btn btn-success">Thêm Phòng Mới</a>
 </p>
+<p>@TempData["Message"]</p>
 <form asp-action="Room" method="get">
     <div id="dataTableHover_filter" class="dataTables_filter">
         <label>
@@ -23,7 +24,7 @@
         </label>
         <label>
             Tìm Tầng
-            <input type="search" name="searchTang" value="@ViewBag.SearchTang" class="form-control form-control-sm" placeholder="Nhập Số T" aria-controls="dataTableHover">
+            <input type="search" name="searchTang" value="@ViewBag.SearchTang" class="form-control form-control-sm" placeholder="Nhập Số Tầng" aria-controls="dataTableHover">
         </label>
 
         <button type="submit" class="btn btn-primary btn-primary">Search</button>
@@ -72,9 +73,9 @@
                 <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaTangNavigation.TenTang)</td>
                 <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaTinhTrangNavigation.TenTinhTrang)</td>
                 <td class="text-end">
-                    <a class="btn btn-primary" asp-action="EditRoom" asp-route-maPhong="@item.MaPhong">Edit</a>
-                    <a class="btn btn-info" asp-action="BookingDetail" asp-route-id="@item.MaPhong">Details</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-MaPhong="@item.MaPhong" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                    <a class="btn btn-primary" asp-action="EditRoom" asp-route-maPhong="@item.MaPhong">Cập Nhật Phòng</a>
+                    <a class="btn btn-info" asp-action="BookingDetail" asp-route-id="@item.MaPhong">Chi Tiết</a>
+                    <a class="btn btn-danger" asp-action="DeleteRoom" asp-route-maPhong="@item.MaPhong" onclick="return confirm('Bạn có chắc muốn xóa phòng này?');">Xóa Phòng</a>
                 </td>
             </tr>
         }

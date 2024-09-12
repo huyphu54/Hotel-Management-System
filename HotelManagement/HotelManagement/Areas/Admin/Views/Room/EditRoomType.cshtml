@@ -6,9 +6,9 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>EditRoomType</h1>
+<h1>Cập Nhật Loại Phòng</h1>
 
-<h4>LoaiPhong</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,24 +16,29 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MaLp" />
             <div class="form-group">
-                <label asp-for="TenLoaiPhong" class="control-label"></label>
+                <label asp-for="TenLoaiPhong" class="control-label">Loại Phòng</label>
                 <input asp-for="TenLoaiPhong" class="form-control" />
                 <span asp-validation-for="TenLoaiPhong" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TienNghi" class="control-label"></label>
+                <label asp-for="TienNghi" class="control-label">Tiện Nghi</label>
                 <input asp-for="TienNghi" class="form-control" />
                 <span asp-validation-for="TienNghi" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SoTienCoc" class="control-label"></label>
+                <label asp-for="SoTienCoc" class="control-label">Số Tiền Cọc</label>
                 <input asp-for="SoTienCoc" class="form-control" />
                 <span asp-validation-for="SoTienCoc" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Gia" class="control-label"></label>
+                <label asp-for="Gia" class="control-label">Giá</label>
                 <input asp-for="Gia" class="form-control" />
                 <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoNguoiOtoiDa" class="control-label">Số Người Ở Tối Đa</label>
+                <input asp-for="SoNguoiOtoiDa" class="form-control" />
+                <span asp-validation-for="SoNguoiOtoiDa" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

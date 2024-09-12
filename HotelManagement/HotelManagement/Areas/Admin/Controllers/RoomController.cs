@@ -44,7 +44,61 @@ namespace HotelManagement.Areas.Admin.Controllers
             return View(lstPhong);
 
         }
+        //Thêm Phòng Mới
+        [Route("addroom")]
+        [HttpGet]
+        public IActionResult AddRoom()
+        {
+            ViewBag.MaTang = new SelectList(db.Tangs.ToList(), "MaTang", "TenTang");
+            ViewBag.MaLp = new SelectList(db.LoaiPhongs.ToList(), "MaLp", "TenLoaiPhong"); 
+            ViewBag.MaTinhTrang = new SelectList(db.TinhTrangPhongs.ToList(), "MaTinhTrang", "TenTinhTrang");
+            return View();
+        }
+        [Route("addroom")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddRoom(Phong phong)
+        {
+            
+            bool checkPhong = db.Phongs.Any(p => p.SoPhong == phong.SoPhong);
+            if (checkPhong)
+            {
+                TempData["Message"] = "Phòng này đã tồn tại trong hệ thống!";
+                ViewBag.MaTang = new SelectList(db.Tangs.ToList(), "MaTang", "TenTang");
+                ViewBag.MaLp = new SelectList(db.LoaiPhongs.ToList(), "MaLp", "TenLoaiPhong");
+                ViewBag.MaTinhTrang = new SelectList(db.TinhTrangPhongs.ToList(), "MaTinhTrang", "TenTinhTrang");
+                return View(phong);
+            }
+            db.Phongs.Add(phong);
+            db.SaveChanges();
+            return RedirectToAction("room");
 
+        }
+        //Xóa Phòng
+        [Route("DeleteRoom")]
+        [HttpGet]
+        public IActionResult DeleteRoom(int? maPhong)
+        {
+            var phong = db.Phongs.Find(maPhong);
+            if (phong == null)
+            {
+                return NotFound();
+            }
+
+            // Xử lý các đơn đặt phòng liên quan
+            var datPhongs = db.DatPhongs.Where(dp => dp.MaPhong == maPhong).ToList();
+            foreach (var datPhong in datPhongs)
+            {
+                TempData["Message"] = "Không thể xóa phòng này.";
+                return RedirectToAction("Room");
+            }
+
+            db.Phongs.Remove(phong);
+            db.SaveChanges();
+
+            TempData["Message"] = "Đã xóa phòng.";
+            return RedirectToAction("Room");
+        }
         //Thay đổi chi tiết phòng
         [Route("editroom")]
         [HttpGet]
@@ -70,8 +124,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            phongToUpdate.SoPhong = phong.SoPhong;
-            phongToUpdate.MaTang = phong.MaTang;
+          
             phongToUpdate.MaLp = phong.MaLp;
             phongToUpdate.MaTinhTrang = phong.MaTinhTrang;
 
