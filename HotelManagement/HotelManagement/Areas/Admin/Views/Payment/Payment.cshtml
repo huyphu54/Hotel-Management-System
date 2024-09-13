@@ -6,10 +6,10 @@
 }
 
 <h1>Danh Sách Hóa Đơn</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@* 
+ <p>
+     <a asp-action="Create">Create New</a>
+ </p> *@
 <table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
     <thead class="thead-light">
         <tr>
@@ -92,9 +92,9 @@
                 </td>
            
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MaHoaDon">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaHoaDon">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaHoaDon">Delete</a>
+                <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.MaHoaDon">Xuất Hóa Đơn</a> 
+                <a class="btn btn-info" asp-action="PaymentDetail" asp-route-maHoaDon="@item.MaHoaDon">Chi Tiết Hóa Đơn</a> 
+               
             </td>
         </tr>
 }

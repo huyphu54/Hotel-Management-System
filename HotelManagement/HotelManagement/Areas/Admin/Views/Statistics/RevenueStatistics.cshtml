@@ -1,0 +1,50 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Thống Kê Doanh Thu Theo Ngày";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h2>@ViewData["Title"]</h2>
+<form asp-action="RevenueStatistics" method="get">
+    <div>
+        <label for="fromDate">Từ ngày:</label>
+        <input type="date" name="fromDate" />
+    </div>
+    <div>
+        <label for="toDate">Đến ngày:</label>
+        <input type="date" name="toDate" />
+    </div>
+
+    <input type="submit" value="Xem thống kê" />
+</form>
+<canvas id="revenueChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Dữ liệu ngày tháng và doanh thu từ Model
+    var labels = @Html.Raw(Json.Serialize(Model.Select(m => m.Date.ToString("dd/MM/yyyy"))));
+    var data = @Html.Raw(Json.Serialize(Model.Select(m => m.TotalRevenue)));
+
+    var ctx = document.getElementById('revenueChart').getContext('2d');
+    var revenueChart = new Chart(ctx, {
+        type: 'bar', // Biểu đồ cột
+        data: {
+            labels: labels, // Các nhãn ngày tháng
+            datasets: [{
+                label: 'Doanh Thu (VND)',
+                data: data, // Dữ liệu doanh thu
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true // Trục y bắt đầu từ 0
+                }
+            }
+        }
+    });
+</script>

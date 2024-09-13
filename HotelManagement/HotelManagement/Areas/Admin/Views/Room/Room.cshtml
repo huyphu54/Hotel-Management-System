@@ -72,6 +72,7 @@
                 <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaLpNavigation.TenLoaiPhong)</td>
                 <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaTangNavigation.TenTang)</td>
                 <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaTinhTrangNavigation.TenTinhTrang)</td>
+               
                 <td class="text-end">
                     <a class="btn btn-primary" asp-action="EditRoom" asp-route-maPhong="@item.MaPhong">Cập Nhật Phòng</a>
                     <a class="btn btn-info" asp-action="BookingDetail" asp-route-id="@item.MaPhong">Chi Tiết</a>

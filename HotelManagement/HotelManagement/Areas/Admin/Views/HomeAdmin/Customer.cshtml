@@ -41,31 +41,31 @@
                         <table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
                             <thead class="thead-light">
                                 <tr role="row">
-                                    <th class="sorting" tabindex="0" aria-controls="dataTableHover" rowspan="1" colspan="1" aria-label="ID: activate to sort column ascending" style="width: 181.812px;">ID</th>
-                                    <th class="sorting_desc" tabindex="0" aria-controls="dataTableHover" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending" style="width: 285.6px;">Name</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTableHover" rowspan="1" colspan="1" aria-label="Birth: activate to sort column ascending" style="width: 53.525px;">Birth</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTableHover" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 116.287px;">Email</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTableHover" rowspan="1" colspan="1" aria-label="Phone Number: activate to sort column ascending" style="width: 116.287px;">Phone number</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTableHover" rowspan="1" colspan="1" aria-label="Nation: activate to sort column ascending" style="width: 116.287px;">Nation</th>
-                                    <th class="sorting" tabindex="0" aria-controls="dataTableHover" rowspan="1" colspan="1" aria-label="Identity: activate to sort column ascending" style="width: 116.287px;">Identity</th>
+                                   
+                                    <th>Họ Tên</th>
+                                    <th>Năm Sinh</th>
+                                    <th>Email</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Quốc Tịch</th>
+                                    <th>CCCD</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th rowspan="1" colspan="1">ID</th>
-                                    <th rowspan="1" colspan="1">Name</th>
-                                    <th rowspan="1" colspan="1">Birth</th>
-                                    <th rowspan="1" colspan="1">Email</th>
-                                    <th rowspan="1" colspan="1">Phone Number</th>
-                                    <th rowspan="1" colspan="1">Nation</th>
-                                    <th rowspan="1" colspan="1">Identity</th>
+                                    
+                                    <th>Họ Tên</th>
+                                    <th>Năm Sinh</th>
+                                    <th>Email</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Quốc Tịch</th>
+                                    <th>CCCD</th>
                                 </tr>
                             </tfoot>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
                                     <tr role="row" class="even">
-                                        <td>@item.MaKh</td>
+                                       
                                         <td>@item.HoTenKh</td>
                                         <td>@item.NamSinh</td>
                                         <td>@item.Email</td>

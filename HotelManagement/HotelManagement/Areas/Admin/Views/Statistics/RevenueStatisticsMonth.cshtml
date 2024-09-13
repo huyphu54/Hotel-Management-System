@@ -1,0 +1,49 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Thống Kê Doanh Thu Theo Tháng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h2>@ViewData["Title"]</h2>
+<form asp-action="RevenueStatisticsMonth" method="get">
+    <div>
+        <label for="fromMonth">Từ tháng:</label>
+        <input type="month" name="fromMonth" />
+    </div>
+    <div>
+        <label for="toMonth">Đến tháng:</label>
+        <input type="month" name="toMonth" />
+    </div>
+   
+    <input type="submit" value="Xem thống kê" />
+</form>
+<canvas id="monthlyChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var labels = @Html.Raw(Json.Serialize(Model.Select(m => m.Date))); // Tháng
+    var data = @Html.Raw(Json.Serialize(Model.Select(m => m.TotalRevenue)));
+
+    var ctx = document.getElementById('monthlyChart').getContext('2d');
+    var monthlyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Doanh Thu (VND)',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

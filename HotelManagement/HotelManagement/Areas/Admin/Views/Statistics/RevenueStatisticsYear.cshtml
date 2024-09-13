@@ -1,0 +1,50 @@
+﻿@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Thống Kê Doanh Thu Theo Năm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h2>@ViewData["Title"]</h2>
+<form asp-action="RevenueStatisticsYear" method="get">
+    <div>
+        <label for="fromYear">Từ năm:</label>
+        <input type="month" name="fromYear" />
+    </div>
+    <div>
+        <label for="toYear">Đến năm:</label>
+        <input type="month" name="toYear" />
+    </div>
+
+    <input type="submit" value="Xem thống kê" />
+</form>
+
+<canvas id="yearlyChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var labels = @Html.Raw(Json.Serialize(Model.Select(m => m.Date))); 
+    var data = @Html.Raw(Json.Serialize(Model.Select(m => m.TotalRevenue)));
+  
+
+    var ctx = document.getElementById('yearlyChart').getContext('2d');
+    var yearlyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Doanh Thu (VND)',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

@@ -17,9 +17,9 @@ namespace HotelManagement.Areas.Admin.Controllers
             int pageSize = 10;
             int pageNumber = page ?? 1;
             var listNhanVien = db.NhanViens.Include(nv => nv.MaPbNavigation).AsNoTracking().OrderBy(x => x.MaNv);
+            
             if (!string.IsNullOrEmpty(searchNhanVien))
             {
-
                 listNhanVien = listNhanVien.Where(nv => nv.HoTenNv.Contains(searchNhanVien))
                     .OrderBy(x => x.MaNv);
             }
@@ -29,7 +29,10 @@ namespace HotelManagement.Areas.Admin.Controllers
                 listNhanVien = listNhanVien.Where(nv => nv.MaPbNavigation.TenPb.Contains(searchPhongBan))
                     .OrderBy(x => x.MaNv);
             }
-
+            if (!listNhanVien.Any())
+            {
+                TempData["Message"] = "Không tìm thấy nhân viên";
+            }
             PagedList<NhanVien> lstNhanVien = new PagedList<NhanVien>(listNhanVien, pageNumber, pageSize);
             ViewBag.SearchNhanVien = searchNhanVien;
             ViewBag.SearchPhongBan = searchPhongBan;
@@ -89,13 +92,13 @@ namespace HotelManagement.Areas.Admin.Controllers
             nhanVienUpdate.Sdt = nhanVien.Sdt;
             nhanVienUpdate.Email = nhanVien.Email;
             nhanVienUpdate.ChucVu = nhanVien.ChucVu;
- 
+
             if (AvatarFile != null && AvatarFile.Length > 0)
             {
                 using (var ms = new MemoryStream())
                 {
                     AvatarFile.CopyTo(ms);
-                    nhanVienUpdate.Avatar = ms.ToArray(); 
+                    nhanVienUpdate.Avatar = ms.ToArray();
                 }
             }
 
@@ -117,7 +120,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         public IActionResult DetailStaff(int? maNhanVien)
         {
 
-            var nhanVien = db.NhanViens.Include(nv => nv.MaPbNavigation).FirstOrDefault(nv=>nv.MaNv == maNhanVien);
+            var nhanVien = db.NhanViens.Include(nv => nv.MaPbNavigation).FirstOrDefault(nv => nv.MaNv == maNhanVien);
             return View(nhanVien);
         }
         [Route("DeleteStaff")]
@@ -132,13 +135,18 @@ namespace HotelManagement.Areas.Admin.Controllers
             int NhanVienQuanLy = 2;
             // Xử lý các đơn đặt phòng liên quan
             var datPhongs = db.DatPhongs.Where(dp => dp.MaNv == maNhanVien).ToList();
+            if (nhanVien.MaNv == 1)
+            {
+                TempData["Message"] = "Bạn không thể sa thải giám đốc";
+                return RedirectToAction("Staff");
+            }
             foreach (var datPhong in datPhongs)
             {
 
                 datPhong.MaNv = NhanVienQuanLy;
             }
 
-            db.SaveChanges(); // Lưu các thay đổi
+                db.SaveChanges(); // Lưu các thay đổi
 
             // Xóa nhân viên
             db.NhanViens.Remove(nhanVien);
@@ -147,6 +155,19 @@ namespace HotelManagement.Areas.Admin.Controllers
             TempData["Message"] = "Đã sa thải nhân viên.";
             return RedirectToAction("Staff");
         }
+        [Route("Department")]
+        [HttpGet]
+        public IActionResult Department()
+        {
+            var listPhongBan = db.PhongBans
+                .Select(phongBan => new PhongBan
+                {
+                    TenPb = phongBan.TenPb,
+                    MaPb = phongBan.MaPb,
+                    SoLuongNhanVien = db.NhanViens.Count(nv => nv.MaPb == phongBan.MaPb)
+                }).ToList();
 
-    }
+            return View(listPhongBan);
+        }
+    } 
 }

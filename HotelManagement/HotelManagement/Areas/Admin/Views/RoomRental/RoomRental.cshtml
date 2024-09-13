@@ -117,21 +117,25 @@
                 @Html.DisplayFor(modelItem => item.SoNguoiO)
             </td>
             <td>
-                <div>
+                
                    @Html.DisplayFor(modelItem => item.MaTinhTrangDatNavigation.TenTinhTrangDat)
-                </div>
+                
 
-                <div>
-                   <a asp-action="EditRental" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Cập Nhật</a>
-                </div>
+               
                
                 
             </td>
             
-            <td>
-                    <a asp-action="AddService" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-primary">Thêm Dịch Vụ</a>
-                    <a asp-action="Details" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-info">Chi Tiết Phiếu</a>
-                    <a asp-action="CreateBill" asp-route-maPhieuThue="@item.MaPhieuThue" asp-controller="Payment" asp-area="Admin" class="btn btn-info">Thanh Toán</a>
+            <td>       
+                <div>
+                        <a asp-action="AddService" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Thêm Dịch Vụ</a>
+                        <a asp-action="Details" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-info">Chi Tiết Phiếu</a>
+                </div>
+                    <div>
+                        <a asp-action="EditRental" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Cập Nhật Phiếu</a>
+                        <a asp-action="CreateBill" asp-route-maPhieuThue="@item.MaPhieuThue" asp-controller="Payment" asp-area="Admin" class="btn btn-info">Thanh Toán</a>
+                    </div>
+
             </td>
         </tr>
 }

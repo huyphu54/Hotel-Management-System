@@ -231,12 +231,11 @@ namespace HotelManagement.Areas.Admin.Controllers
         public IActionResult Details(int? maPhieuThue)
         {
             var datPhong = db.DatPhongs
-                             .Include(dp => dp.PhongDichVus)
-                             .ThenInclude(pd => pd.MaDichVuNavigation).Include(dp => dp.MaKhNavigation)
-                             .Include(dp => dp.MaPhongNavigation)
-                             .ThenInclude(p => p.MaLpNavigation)
+                             .Include(dp => dp.PhongDichVus).ThenInclude(pd => pd.MaDichVuNavigation)
+                             .Include(dp => dp.MaKhNavigation)
+                             .Include(dp => dp.MaNvNavigation)
+                             .Include(dp => dp.MaPhongNavigation).ThenInclude(p => p.MaLpNavigation)
                              .Include(dp => dp.MaTinhTrangDatNavigation)
-
                              .FirstOrDefault(dp => dp.MaPhieuThue == maPhieuThue);
 
             if (datPhong == null)

@@ -1,0 +1,92 @@
+﻿@model HotelManagement.Models.HoaDon
+
+@{
+    ViewData["Title"] = "PaymentDetail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Chi Tiết Hóa Đơn</h1>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-sm-2">Thông Tin</th>
+                <th class="col-sm-10">Chi Tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mã Phiếu Thuê</td>
+                <td>@Html.DisplayFor(model => model.MaPhieuThueNavigation.MaPhieuThue)</td>
+            </tr>
+             <tr>
+                <td>Phòng Thuê</td>
+                <td>@Html.DisplayFor(model => model.MaPhieuThueNavigation.MaPhongNavigation.SoPhong)</td>
+            </tr>
+            <tr>
+                <td>Họ Tên Khách Hàng</td>
+                <td>@Html.DisplayFor(model => model.MaPhieuThueNavigation.MaKhNavigation.HoTenKh)</td>
+            </tr>
+            <tr>
+                <td>Nhân Viên Thanh Toán</td>
+                <td>@Html.DisplayFor(model => model.MaPhieuThueNavigation.MaNvNavigation.HoTenNv)</td>
+            </tr>
+            <tr>
+                <td>Ngày Lập Phiếu</td>
+                <td> @(Model.NgayLapPhieu.HasValue ? Model.NgayLapPhieu.Value.ToString("dd/MM/yyyy") : String.Empty) </td>
+            </tr>
+            <tr>
+                <td>Số Tiền Cọc</td>
+                <td>@String.Format("{0:N0}", Model.SoTienCoc) VND</td>
+            </tr>
+            <tr>
+                <td>Tổng Tiền Tạm Tính</td>
+                <td>@String.Format("{0:N0}", Model.TongTienTamTinh) VND</td>
+            </tr>
+            <tr>
+                <td>Phụ Thu</td>
+                <td>@String.Format("{0:N0}", Model.PhuThu) VND</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+<h3>Dịch Vụ Đã Sử Dụng</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên Dịch Vụ</th>
+            <th>Giá</th>
+            <th>Số Lượng</th>
+            <th>Thành Tiền</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @{
+
+            double tongTienDichVu = 0;
+        }
+
+
+        @foreach (var dv in Model.MaPhieuThueNavigation.PhongDichVus)
+        {
+            var thanhTien = dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia;
+            tongTienDichVu += (double)thanhTien;
+            <tr>
+                <td>@dv.MaDichVuNavigation.TenDichVu</td>
+                <td>@dv.MaDichVuNavigation.Gia VND</td>
+                <td>@dv.SoLuong</td>
+                <td>@(dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia) VND</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3" class="text-right"><strong>Tổng Tiền Dịch Vụ:</strong></td>
+            <td><strong>@tongTienDichVu.ToString("N0") VND</strong></td>
+        </tr>
+
+    </tbody>
+</table>
+<h2>Tổng Tiền Thanh Toán: @String.Format("{0:N0}", Model.TongTienThu) VND</h2>

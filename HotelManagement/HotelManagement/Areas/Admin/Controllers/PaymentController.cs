@@ -46,7 +46,23 @@ namespace HotelManagement.Areas.Admin.Controllers
             var ngayLapPhieu = datPhong.NgayTra;
             double tienPhong =datPhong.MaPhongNavigation.MaLpNavigation.Gia.Value * soNgayGio;
             double tienCoc = datPhong.MaPhongNavigation.MaLpNavigation.SoTienCoc.Value * soNgayGio;
-            double tongTienTamTinh = tienPhong + tongTienDichVu;
+            double tongTienTamTinh = 0;
+            if (datPhong.MaTinhTrangDat==4)
+            {
+                tongTienTamTinh = tienCoc + tongTienDichVu;
+            }
+            else 
+            {
+                tongTienTamTinh = tienPhong + tongTienDichVu;
+            }
+            if(datPhong.MaTinhTrangDat == 1 )
+            {
+                ModelState.AddModelError("", "Khách Hàng Chưa Nhận Phòng!");
+            }
+            else if ( datPhong.MaTinhTrangDat == 2)
+            {
+                ModelState.AddModelError("", "Khách Hàng Chưa Trả Phòng!");
+            }
             double phuThu = 0;
 
             HoaDon hoaDon = new HoaDon()
@@ -80,8 +96,19 @@ namespace HotelManagement.Areas.Admin.Controllers
 
             return View(hoaDon);
         }
+        [Route("PaymentDetail")]
+        public IActionResult PaymentDetail(int? maHoaDon)
+        {
+            var hoaDon = db.HoaDons.Include(hd=>hd.MaPhieuThueNavigation).ThenInclude(dp=>dp.MaKhNavigation)
+                .Include(hd => hd.MaPhieuThueNavigation).ThenInclude(dp => dp.MaNvNavigation)
+                .Include(hd1 => hd1.MaPhieuThueNavigation).ThenInclude(dp => dp.PhongDichVus).ThenInclude(dv=>dv.MaDichVuNavigation)
+                .Include(hd2 => hd2.MaPhieuThueNavigation).ThenInclude(dp => dp.MaPhongNavigation)
+                .FirstOrDefault(hd=>hd.MaHoaDon == maHoaDon);
+            return View(hoaDon);
+        }
+
 
     }
 
-   
+
 }
