@@ -1,4 +1,5 @@
-﻿using HotelManagement.Models;
+﻿using HotelManagement.Filters;
+using HotelManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,14 +9,13 @@ using X.PagedList;
 namespace HotelManagement.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("admin")]
 
     public class RoomRentalController : Controller
     {
         QlksContext db = new QlksContext();
-        [Route("")]
         //Danh sách phiếu thuê
-        [Route("Roomrental")]
+        [Authentication]
+        [Route("admin/Roomrental")]
         public IActionResult RoomRental(int? page, string searchKhachHang, string searchLoaiHinhDat, string searchTinhTrang)
         {
             int pageSize = 10;
@@ -47,7 +47,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         }
 
         //Thay đổi chi tiết phiếu thuê
-        [Route("Editrental")]
+        [Route("admin/Editrental")]
         [HttpGet]
         public IActionResult EditRental(int? maPhieuThue)
         {
@@ -58,7 +58,7 @@ namespace HotelManagement.Areas.Admin.Controllers
 
         }
 
-        [Route("Editrental")]
+        [Route("admin/Editrental")]
         [HttpPost]
         public IActionResult EditRental(DatPhong datPhong)
         {
@@ -109,7 +109,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         }
 
         //Thêm Phiếu Thuê mới
-        [Route("booking")]
+        [Route("admin/booking")]
         [HttpGet]
         public IActionResult Booking(int? roomId)
         {
@@ -121,30 +121,42 @@ namespace HotelManagement.Areas.Admin.Controllers
             var customers = db.KhachHangs
               .Select(c => new { c.MaKh, c.HoTenKh })
               .ToList();
-            ViewBag.KhachHang = new SelectList(customers, "MaKh", "HoTenKh");
-            ViewBag.MaNv = new SelectList(db.NhanViens, "MaNv", "HoTenNv");
-            ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
             var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
+            var receptionStaff = db.NhanViens.Where(nv => nv.MaPb ==2).Select(nv => new { nv.MaNv, nv.HoTenNv }).ToList();
+            ViewBag.KhachHang = new SelectList(customers, "MaKh", "HoTenKh");
+            ViewBag.MaNv = new SelectList(receptionStaff, "MaNv", "HoTenNv");
+            ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
+            
             ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
             ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats, "MaTinhTrangDat", "TenTinhTrangDat");
 
             return View(booking);
         }
 
-        [Route("booking")]
+        [Route("admin/booking")]
         [HttpPost]
         public IActionResult Booking(DatPhong datPhong)
         {
             db.DatPhongs.Add(datPhong);
             var phong = db.Phongs.Include(dp => dp.MaLpNavigation).FirstOrDefault(p => p.MaPhong == datPhong.MaPhong);
             var loaiPhong = phong.MaLpNavigation;
+            var ngayHomNay = DateOnly.FromDateTime(DateTime.Now);
 
             if (datPhong.SoNguoiO > loaiPhong.SoNguoiOtoiDa)
             {
                 ModelState.AddModelError("", $"Số lượng người ở vượt quá giới hạn cho phép. Phòng này chỉ cho phép tối đa {loaiPhong.SoNguoiOtoiDa} người.");
                 return View(datPhong);
             }
-
+            if (datPhong.NgayNhan >= datPhong.NgayTra)
+            {
+                ModelState.AddModelError("", "Ngày nhận phải trước ngày trả.");
+                return View(datPhong);
+            }
+            else if (datPhong.NgayNhan <= ngayHomNay )
+            {
+                ModelState.AddModelError("", "Ngày đặt không thể ở quá khứ");
+                return View(datPhong);
+            }
             if (phong.MaTinhTrang == 2)
             {
                 if (datPhong.MaTinhTrangDat != 1)
@@ -171,7 +183,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         }
 
         //Thêm Dịch Vụ
-        [HttpGet("addservice")]
+        [HttpGet("admin/addservice")]
         public IActionResult AddService(int? maPhieuThue)
         {
             var datPhong = db.DatPhongs
@@ -189,7 +201,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             return View(new PhongDichVu { MaPhieuThue = maPhieuThue.Value });
         }
 
-        [HttpPost("addservice")]
+        [HttpPost("admin/addservice")]
         public IActionResult AddService(PhongDichVu model, string action)
         {
             var existingRecord = db.PhongDichVus
@@ -215,19 +227,18 @@ namespace HotelManagement.Areas.Admin.Controllers
                 else if (action == "exit")
                 {
                     return RedirectToAction("Details", new { maPhieuThue = model.MaPhieuThue });
-
                 }
             }
 
 
 
-            ModelState.AddModelError("", "Không thể dùng phòng này");
+            ModelState.AddModelError("", "Không thể thêm dịch vụ phòng này");
             ViewBag.MaDichVu = new SelectList(db.DichVus, "MaDichVu", "TenDichVu");
             return View(model);
         }
 
         //Chi Tiết Phiếu Thuê
-        [HttpGet("details")]
+        [HttpGet("admin/details")]
         public IActionResult Details(int? maPhieuThue)
         {
             var datPhong = db.DatPhongs

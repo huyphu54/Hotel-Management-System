@@ -1,11 +1,11 @@
 ﻿@model HotelManagement.Models.HoaDon
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "PaymentDetail";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Chi Tiết Hóa Đơn</h1>
+<h2 class="m-0 font-weight-bold text-primary">Chi Tiết Hóa Đơn</h2>
 
 
     <table class="table">
@@ -52,7 +52,7 @@
     </table>
 
 
-<h3>Dịch Vụ Đã Sử Dụng</h3>
+<h3 class="m-0 font-weight-bold text-primary">Dịch Vụ Đã Sử Dụng</h3>
 <table class="table">
     <thead>
         <tr>
@@ -89,4 +89,7 @@
 
     </tbody>
 </table>
-<h2>Tổng Tiền Thanh Toán: @String.Format("{0:N0}", Model.TongTienThu) VND</h2>
+<h2 class="m-0 font-weight-bold text-success">Tổng Tiền Thanh Toán: @String.Format("{0:N0}", Model.TongTienThu) VND</h2>
+<div>
+    <a asp-action="Payment" class="btn btn-primary">Back to List</a>
+</div>

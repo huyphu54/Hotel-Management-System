@@ -1,4 +1,4 @@
-﻿
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,6 +59,7 @@
                         <a class="collapse-item" href="/admin/staff">Danh Sách Nhân Viên</a>
                         <a class="collapse-item" href="/admin/addstaff">Thêm Nhân Viên</a>
                         <a class="collapse-item" href="/admin/department">Phòng Ban</a>
+                        <a class="collapse-item" href="/admin/account">Quản Lý Tài Khoản</a>
 
                     </div>
                 </div>
@@ -301,11 +302,30 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                                <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px">
-                                <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                 @{
+                                    var tenNhanVien = Context.Session.GetString("HoTenNv");
+                                    var avatarUrl = Context.Session.GetString("Avatar") ?? "../LayoutAdmin/img/boy.png";
+                                    var khach = "Khách";
+                                }
+                                <img class="img-profile rounded-circle" src="@avatarUrl" style="max-width: 60px">
+                              
+                               <span class="ml-2 d-none d-lg-inline text-white small">
+                                    @if (!string.IsNullOrEmpty(tenNhanVien))
+                                    {
+                                        @tenNhanVien
+                                    }
+                                    else
+                                    {
+                                        @khach
+                                    }
+                                </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                @{
+                                    var maNv = Context.Session.GetInt32("MaNv");
+                                }
+
+                                <a class="dropdown-item" asp-action="DetailStaff" asp-controller="Staff" asp-area="Admin" asp-route-maNhanVien="@maNv">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -371,7 +391,9 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                                    <a href="/admin/login" class="btn btn-primary">Logout</a>
+                                    <form asp-controller="Access" asp-action="Logout" method="post">
+                                        <button  type="submit" class="btn btn-outline-primary" >Đăng xuất</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

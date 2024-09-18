@@ -5,170 +5,174 @@
     ViewData["Title"] = "RoomRental";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-<h1>Danh Sách Phiếu Đặt Phòng</h1>
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<p>
-    <a asp-action="Booking" asp-controller="RoomRental" class="btn btn-success">Tạo Phiếu Đặt Phòng</a>
-</p>
-<form asp-action="RoomRental" method="get">
-    <div id="dataTableHover_filter" class="dataTables_filter">
-        <label>
-           Khách Hàng
-            <input type="search" name="searchKhachHang" value="@ViewBag.SearchKhachHang" class="form-control form-control-sm" placeholder="Nhập Tên Khách Hàng" aria-controls="dataTableHover">
-        </label>
-        <label>
-            Loại Hình Đặt
-            <input type="search" name="searchLoaiHinhDat" value="@ViewBag.SearchLoaiHinhDat" class="form-control form-control-sm" placeholder="Nhập Loại Hình Đặt" aria-controls="dataTableHover">
-        </label>
-        <label>
-            Tình Trạng
-            <input type="search" name="searchTinhTrang" value="@ViewBag.SearchTinhTrang" class="form-control form-control-sm" placeholder="Nhập Tình Trạng" aria-controls="dataTableHover">
-        </label>
-
-        <button type="submit" class="btn btn-primary btn-primary">Search</button>
-    </div>
-</form>
-<table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
-    <thead class="thead-light">
-        <tr>
-            <th>
+<div class="col-lg-12 col-md-6">
+    <h3 class ="m-0 font-weight-bold text-primary">Danh Sách Phiếu Đặt Phòng</h3>
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    <p>
+        <a asp-action="Booking" asp-controller="RoomRental" class="btn btn-success">Tạo Phiếu Đặt Phòng</a>
+    </p>
+    <form asp-action="RoomRental" method="get">
+        <div id="dataTableHover_filter" class="dataTables_filter">
+            <label>
                Khách Hàng
-            </th>
-            <th>
+                <input type="search" name="searchKhachHang" value="@ViewBag.SearchKhachHang" class="form-control form-control-sm" placeholder="Nhập Tên Khách Hàng" aria-controls="dataTableHover">
+            </label>
+            <label>
                 Loại Hình Đặt
-            </th>
-           
-            <th>
-                Số Phòng
-            </th>
-            <th>
-                Loại Phòng
-            </th>
-            <th>
-                Ngày Nhận
-            </th>
-            <th>
-                Ngày Trả
-            </th>
-          
-            <th>
-                Số Người ở
-            </th>
-            <th>
+                <input type="search" name="searchLoaiHinhDat" value="@ViewBag.SearchLoaiHinhDat" class="form-control form-control-sm" placeholder="Nhập Loại Hình Đặt" aria-controls="dataTableHover">
+            </label>
+            <label>
                 Tình Trạng
-            </th>
-           
-            <th></th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>
-                Khách Hàng
-            </th>
-            <th>
-                Loại Hình Đặt
-            </th>
-            <th>
-                Số Phòng
-            </th>
-            <th>
-                Ngày Nhận
-            </th>
-            <th>
-                Ngày Trả
-            </th>
-          
-            <th>
-                Số Người ở
-            </th>
-            <th>
-                Tình Trạng
-            </th>
+                <input type="search" name="searchTinhTrang" value="@ViewBag.SearchTinhTrang" class="form-control form-control-sm" placeholder="Nhập Tình Trạng" aria-controls="dataTableHover">
+            </label>
 
-            <th></th>
-        </tr>
-
-    </tfoot>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaKhNavigation.HoTenKh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaLoaiHinhDatNavigation.TenLoaiHinhDat)
-            </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.MaPhongNavigation.SoPhong)
-            </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.MaPhongNavigation.MaLpNavigation.TenLoaiPhong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayNhan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayTra)
-            </td>    
-            <td>
-                @Html.DisplayFor(modelItem => item.SoNguoiO)
-            </td>
-            <td>
-                
-                   @Html.DisplayFor(modelItem => item.MaTinhTrangDatNavigation.TenTinhTrangDat)
-                
-
-               
-               
-                
-            </td>
-            
-            <td>       
-                <div>
-                        <a asp-action="AddService" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Thêm Dịch Vụ</a>
-                        <a asp-action="Details" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-info">Chi Tiết Phiếu</a>
-                </div>
-                    <div>
-                        <a asp-action="EditRental" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Cập Nhật Phiếu</a>
-                        <a asp-action="CreateBill" asp-route-maPhieuThue="@item.MaPhieuThue" asp-controller="Payment" asp-area="Admin" class="btn btn-info">Thanh Toán</a>
-                    </div>
-
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-<div class="row">
-    <div class="col-sm-12 col-md-5">
-        <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite">
-            Showing @Model.PageNumber to @Model.PageCount of @Model.TotalItemCount entries
+            <button type="submit" class="btn btn-primary btn-primary">Search</button>
         </div>
-    </div>
-    <div class="col-sm-12 col-md-7">
-        <div class="dataTables_paginate paging_simple_numbers" id="dataTableHover_paginate">
-            <ul class="pagination">
-                @if (Model.PageNumber > 1)
-                {
-                    <li class="paginate_button page-item previous">
-                        <a class="page-link" href="@Url.Action("RoomRental","RoomRental", new { page = Model.PageNumber - 1 })">Previous</a>
-                    </li>
-                }
-                @for (int i = 1; i <= Model.PageCount; i++)
-                {
-                    <li class="paginate_button page-item @(i == Model.PageNumber ? "active" : "")">
-                        <a class="page-link" href="@Url.Action("RoomRental","RoomRental", new { page = i })">@i</a>
-                    </li>
-                }
-                @if (Model.PageNumber < Model.PageCount)
-                {
-                    <li class="paginate_button page-item next">
-                        <a class="page-link" href="@Url.Action("RoomRental","RoomRental", new { page = Model.PageNumber + 1 })">Next</a>
-                    </li>
-                }
-            </ul>
+    </form>
+    <table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                   Khách Hàng
+                </th>
+                <th>
+                    Loại Hình Đặt
+                </th>
+           
+                <th>
+                    Số Phòng
+                </th>
+                <th>
+                    Loại Phòng
+                </th>
+                <th>
+                    Ngày Nhận
+                </th>
+                <th>
+                    Ngày Trả
+                </th>
+          
+                <th>
+                    Số Người ở
+                </th>
+                <th>
+                    Tình Trạng
+                </th>
+           
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot class="thead-light">
+            <tr>
+                <th>
+                    Khách Hàng
+                </th>
+                <th>
+                    Loại Hình Đặt
+                </th>
+                <th>
+                    Số Phòng
+                </th>
+                <th>
+                    Loại Phòng
+                </th>
+                <th>
+                    Ngày Nhận
+                </th>
+                <th>
+                    Ngày Trả
+                </th>
+          
+                <th>
+                    Số Người ở
+                </th>
+                <th>
+                    Tình Trạng
+                </th>
+
+                <th></th>
+            </tr>
+
+        </tfoot>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaKhNavigation.HoTenKh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaLoaiHinhDatNavigation.TenLoaiHinhDat)
+                </td>
+           
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaPhongNavigation.SoPhong)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.MaPhongNavigation.MaLpNavigation.TenLoaiPhong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayNhan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayTra)
+                </td>    
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoNguoiO)
+                </td>
+                <td>
+                
+                       @Html.DisplayFor(modelItem => item.MaTinhTrangDatNavigation.TenTinhTrangDat)
+                
+
+               
+               
+                
+                </td>
+            
+                <td>       
+                    <div>
+                            <a asp-action="AddService" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Thêm Dịch Vụ</a>
+                            <a asp-action="Details" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-info">Chi Tiết Phiếu</a>
+                    </div>
+                        <div>
+                            <a asp-action="EditRental" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Cập Nhật Phiếu</a>
+                            <a asp-action="CreateBill" asp-route-maPhieuThue="@item.MaPhieuThue" asp-controller="Payment" asp-area="Admin" class="btn btn-info">Thanh Toán</a>
+                        </div>
+
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite">
+                Showing @Model.PageNumber to @Model.PageCount of @Model.TotalItemCount entries
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers" id="dataTableHover_paginate">
+                <ul class="pagination">
+                    @if (Model.PageNumber > 1)
+                    {
+                        <li class="paginate_button page-item previous">
+                            <a class="page-link" href="@Url.Action("RoomRental","RoomRental", new { page = Model.PageNumber - 1 })">Previous</a>
+                        </li>
+                    }
+                    @for (int i = 1; i <= Model.PageCount; i++)
+                    {
+                        <li class="paginate_button page-item @(i == Model.PageNumber ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("RoomRental","RoomRental", new { page = i })">@i</a>
+                        </li>
+                    }
+                    @if (Model.PageNumber < Model.PageCount)
+                    {
+                        <li class="paginate_button page-item next">
+                            <a class="page-link" href="@Url.Action("RoomRental","RoomRental", new { page = Model.PageNumber + 1 })">Next</a>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 </div>

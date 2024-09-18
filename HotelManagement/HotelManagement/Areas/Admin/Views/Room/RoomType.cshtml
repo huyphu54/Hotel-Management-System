@@ -5,77 +5,79 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<h1>Loại Phòng</h1>
+<div class="col-lg-12 col-md-6">
+    <h3 class="m-0 font-weight-bold text-primary">Loại Phòng</h3>
 
-<p>
-    <a asp-action="AddRoomType" class="btn btn-success">Tạo Loại Phòng Mới</a>
-</p>
-<table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
-    <thead class="thead-light">
-        <tr>
-            <th>
-                Tên Loại Phòng
-            </th>
-            <th>
-                Tiện Nghi
-            </th>
-            <th>
-                Số Tiền Cọc
-            </th>
-            <th>
-                Giá
-            </th>
-            <th>
-                Khách Tối đa
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>
-                Tên Loại Phòng
-            </th>
-            <th>
-                Tiện Nghi
-            </th>
-            <th>
-                Số Tiền Cọc
-            </th>
-            <th>
-                Giá
-            </th>
-            <th>
-                Khách Tối đa
-            </th>
-            <th></th>
-        </tr>
-    </tfoot>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <p>
+        <a asp-action="AddRoomType" class="btn btn-success">Tạo Loại Phòng Mới</a>
+    </p>
+    <table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
+        <thead class="thead-light">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TenLoaiPhong)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TienNghi)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SoTienCoc)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gia)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SoNguoiOtoiDa)
-                </td>
-                <td>
-                    <a class="btn btn-primary" asp-action="EditRoomType" asp-route-maLoaiPhong="@item.MaLp">Edit</a> 
-                    <a class="btn btn-info" asp-action="Details" asp-route-maLoaiPhong="@item.MaLp">Details</a> 
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-maLoaiPhong="@item.MaLp">Delete</a>
-                </td>
+                <th>
+                    Tên Loại Phòng
+                </th>
+                <th>
+                    Tiện Nghi
+                </th>
+                <th>
+                    Số Tiền Cọc
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Khách Tối đa
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>
+                    Tên Loại Phòng
+                </th>
+                <th>
+                    Tiện Nghi
+                </th>
+                <th>
+                    Số Tiền Cọc
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Khách Tối đa
+                </th>
+                <th></th>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenLoaiPhong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TienNghi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTienCoc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoNguoiOtoiDa)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="EditRoomType" asp-route-maLoaiPhong="@item.MaLp">Cập Nhật</a> 
+                        <a class="btn btn-info" asp-action="Details" asp-route-maLoaiPhong="@item.MaLp">Chi Tiết</a> 
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-maLoaiPhong="@item.MaLp">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

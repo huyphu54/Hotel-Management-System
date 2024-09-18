@@ -1,4 +1,6 @@
-﻿using HotelManagement.Models;
+﻿using DinkToPdf.Contracts;
+using DinkToPdf;
+using HotelManagement.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<QlksContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("QLKS")));
-
+// Đăng ký dịch vụ IConverter
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+builder.Services.AddSession();
 // Cấu hình xác thực và phân quyền
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -18,11 +22,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LogoutPath = "/Admin/Logout";
     });
 
-builder.Services.AddAuthorization(options =>
-{
-    // Thiết lập phân quyền cho khu vực Admin
-    options.AddPolicy("AdminOnly", policy => policy.RequireAuthenticatedUser());
-});
+//builder.Services.AddAuthorization(options =>
+//{
+//    // Thiết lập phân quyền cho khu vực Admin
+//    options.AddPolicy("AdminOnly", policy => policy.RequireAuthenticatedUser());
+//});
 
 var app = builder.Build();
 
@@ -33,6 +37,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// Sử dụng Session
+app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -50,7 +57,7 @@ app.MapControllerRoute(
 app.MapAreaControllerRoute(
     name: "admin",
     areaName: "Admin",
-    pattern: "Admin/{controller=Home}/{action=Index}/{id?}")
+    pattern: "Admin/{controller=Access}/{action=Login}/{id?}")
     .RequireAuthorization("AdminOnly");  // Áp dụng chính sách phân quyền cho khu vực Admin
 
 app.Run();

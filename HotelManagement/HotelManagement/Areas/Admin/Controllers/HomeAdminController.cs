@@ -1,4 +1,5 @@
-﻿using HotelManagement.Models;
+﻿using HotelManagement.Filters;
+using HotelManagement.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
@@ -17,7 +18,9 @@ namespace HotelManagement.Areas.Admin.Controllers
         QlksContext db = new QlksContext();
 
         //Trang chủ
+        
         [Route("")]
+        [Authentication]
         [Route("index")]
         public IActionResult Index()
         {
@@ -29,7 +32,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         [Route("customer")]
         public IActionResult Customer(int? page, string searchString, string year)
         {
-            int pageSize = 5;
+            int pageSize = 10;
             int pageNumber = page ?? 1;
 
             var listKhachHang = db.KhachHangs.AsNoTracking().OrderBy(x => x.MaKh).AsQueryable();

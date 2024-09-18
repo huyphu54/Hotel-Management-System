@@ -260,3 +260,4 @@ E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\Hote
 E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\PageList.dll
 E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\PagedList.Core.dll
 E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\PagedList.Core.Mvc.dll
+E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\DinkToPdf.dll

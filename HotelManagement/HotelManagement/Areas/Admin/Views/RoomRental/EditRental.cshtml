@@ -5,44 +5,42 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Thay đổi phiếu đặt phòng</h1>
-
-<h4>Đặt phòng</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" asp-action="EditRental">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MaPhieuThue" />
+<h2 class="m-0 font-weight-bold text-primary">Thay đổi phiếu đặt phòng</h2>
+  <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-action="EditRental">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="MaPhieuThue" />
    
-            <div class="form-group">
-                <label  class="control-label">Số Phòng</label>
-                <select asp-for="MaPhong" class="form-control" asp-items="ViewBag.MaPhong"></select>
-                <span asp-validation-for="MaPhong" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Giờ Nhận</label>
-                <input asp-for="GioNhan" class="form-control" type="time"  />
-                <span asp-validation-for="GioNhan" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Giờ Trả</label>
-                <input asp-for="GioTra" class="form-control" type="time" />
-                <span asp-validation-for="GioTra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label  class="control-label">Tình Trạng</label>
-                <select asp-for="MaTinhTrangDat" class="form-control" asp-items="ViewBag.MaTinhTrangDat"></select>
-                <span asp-validation-for="MaTinhTrangDat" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <label  class="control-label">Số Phòng</label>
+                    <select asp-for="MaPhong" class="form-control" asp-items="ViewBag.MaPhong"></select>
+                    <span asp-validation-for="MaPhong" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Giờ Nhận</label>
+                    <input asp-for="GioNhan" class="form-control" type="time"  />
+                    <span asp-validation-for="GioNhan" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Giờ Trả</label>
+                    <input asp-for="GioTra" class="form-control" type="time" />
+                    <span asp-validation-for="GioTra" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label  class="control-label">Tình Trạng</label>
+                    <select asp-for="MaTinhTrangDat" class="form-control" asp-items="ViewBag.MaTinhTrangDat"></select>
+                    <span asp-validation-for="MaTinhTrangDat" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Cập Nhật" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
 <div>
-    <a asp-action="RoomRental" asp-area="Admin" class="btn btn-primary">Back to List</a>
+    <a asp-action="RoomRental" asp-area="Admin" class="btn btn-primary">Back To List</a>
 </div>
 

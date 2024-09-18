@@ -6,13 +6,12 @@ using X.PagedList;
 namespace HotelManagement.Areas.Admin.Controllers
 {
     [Area("admin")]
-    [Route("admin")]
+
     public class RoomController : Controller
     {
         QlksContext db = new QlksContext();
-        [Route("")]
         //Danh sách phòng
-        [Route("room")]
+        [Route("admin/room")]
         public IActionResult Room(int? page, string searchTinhTrang, string searchLoaiPhong, string searchTang)
         {
             int pageSize = 10;
@@ -45,7 +44,7 @@ namespace HotelManagement.Areas.Admin.Controllers
 
         }
         //Thêm Phòng Mới
-        [Route("addroom")]
+        [Route("admin/addroom")]
         [HttpGet]
         public IActionResult AddRoom()
         {
@@ -75,7 +74,7 @@ namespace HotelManagement.Areas.Admin.Controllers
 
         }
         //Xóa Phòng
-        [Route("DeleteRoom")]
+        [Route("admin/DeleteRoom")]
         [HttpGet]
         public IActionResult DeleteRoom(int? maPhong)
         {
@@ -100,7 +99,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             return RedirectToAction("Room");
         }
         //Thay đổi chi tiết phòng
-        [Route("editroom")]
+        [Route("admin/editroom")]
         [HttpGet]
         public IActionResult EditRoom(int? maPhong)
         {
@@ -112,7 +111,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             return View(phong);
         }
 
-        [Route("editroom")]
+        [Route("admin/editroom")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditRoom(Phong phong, DatPhong datPhong)
@@ -156,7 +155,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         }
 
         //Danh sách loại phòng 
-        [Route("roomtype")]
+        [Route("admin/roomtype")]
         public IActionResult RoomType()
         {
             var listLoaiPhong = db.LoaiPhongs.ToList();
@@ -164,14 +163,14 @@ namespace HotelManagement.Areas.Admin.Controllers
         }
 
         //Thêm loại phòng mới
-        [Route("addroomtype")]
+        [Route("admin/addroomtype")]
         [HttpGet]
         public IActionResult AddRoomType()
         {
             return View();
         }
 
-        [Route("addroomtype")]
+        [Route("admin/addroomtype")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddRoomType(LoaiPhong loaiphong)
@@ -186,7 +185,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         }
 
         //Chỉnh sửa loại phòng
-        [Route("editroomtype")]
+        [Route("admin/editroomtype")]
         [HttpGet]
         public IActionResult EditRoomType(int? maLoaiPhong)
         {
@@ -194,7 +193,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             return View(loaiPhong);
         }
 
-        [Route("editroomtype")]
+        [Route("admin/editroomtype")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditRoomType(LoaiPhong loaiphong)

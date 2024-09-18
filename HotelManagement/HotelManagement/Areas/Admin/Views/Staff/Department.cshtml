@@ -5,58 +5,56 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<h1>Phòng Ban</h1>
 
-@* <p>
-    <a asp-action="Create">Create New</a>
-</p> *@
-<table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
-    <thead class="thead-light">
-        <tr>
-            <th>
-               Mã Phòng Ban
-            </th>
-            <th>
-               Tên Phòng Ban
-            </th>
-            <th>
-               Số Lượng Nhân Viên
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>
-                Mã Phòng Ban
-            </th>
-            <th>
-                Tên Phòng Ban
-            </th>
-            <th>
-                Số Lượng Nhân Viên
-            </th>
-            <th></th>
-        </tr>
-    </tfoot>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-             <td>
-               PB @Html.DisplayFor(modelItem => item.MaPb)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenPb)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoLuongNhanVien)
-            </td>
-         @*    <td>
-                <a asp-action="Edit" asp-route-id="@item.MaPb">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaPb">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaPb">Delete</a>
-            </td> *@
-        </tr>
-}
-    </tbody>
-</table>
+<h3 class="m-0 font-weight-bold text-primary">Phòng Ban</h3>
+
+    <table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                   Mã Phòng Ban
+                </th>
+                <th>
+                   Tên Phòng Ban
+                </th>
+                <th>
+                   Số Lượng Nhân Viên
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>
+                    Mã Phòng Ban
+                </th>
+                <th>
+                    Tên Phòng Ban
+                </th>
+                <th>
+                    Số Lượng Nhân Viên
+                </th>
+                <th></th>
+            </tr>
+        </tfoot>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                 <td>
+                   PB @Html.DisplayFor(modelItem => item.MaPb)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenPb)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuongNhanVien) Người
+                </td>
+             @*    <td>
+                    <a asp-action="Edit" asp-route-id="@item.MaPb">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.MaPb">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MaPb">Delete</a>
+                </td> *@
+            </tr>
+    }
+        </tbody>
+    </table>

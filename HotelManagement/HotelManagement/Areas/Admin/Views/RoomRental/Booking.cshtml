@@ -4,9 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<h1>Phiếu Đặt Phòng</h1>
-
-<h4>DatPhong</h4>
+<h2 class="m-0 font-weight-bold text-primary">Phiếu Đặt Phòng</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -67,14 +65,14 @@
                 <select asp-for="MaTinhTrangDat" class="form-control" asp-items="ViewBag.MaTinhTrangDat"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Tạo Phiếu Đặt" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="RoomRental" asp-area="Admin">Back to List</a>
+    <a asp-action="RoomRental" asp-area="Admin" class="btn btn-primary">Back to List</a>
 </div>
 
  @section Scripts{
@@ -88,4 +86,4 @@
                      });
                  </script>
      }
- }
+ 
