@@ -17,7 +17,13 @@ public partial class QlksContext : DbContext
 
     public virtual DbSet<DatPhong> DatPhongs { get; set; }
 
+    public virtual DbSet<DatPhongDoan> DatPhongDoans { get; set; }
+
+    public virtual DbSet<DatPhongDoanPhong> DatPhongDoanPhongs { get; set; }
+
     public virtual DbSet<DichVu> DichVus { get; set; }
+
+    public virtual DbSet<DoanDichVu> DoanDichVus { get; set; }
 
     public virtual DbSet<HoaDon> HoaDons { get; set; }
 
@@ -78,8 +84,45 @@ public partial class QlksContext : DbContext
 
             entity.HasOne(d => d.MaTinhTrangDatNavigation).WithMany(p => p.DatPhongs)
                 .HasForeignKey(d => d.MaTinhTrangDat)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DatPhong_TinhTrangDat");
+        });
+
+        modelBuilder.Entity<DatPhongDoan>(entity =>
+        {
+            entity.HasKey(e => e.MaDoan);
+
+            entity.ToTable("DatPhongDoan");
+
+            entity.Property(e => e.MaKh).HasColumnName("MaKH");
+            entity.Property(e => e.MaNv).HasColumnName("MaNV");
+            entity.Property(e => e.TenDoan).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.DatPhongDoans)
+                .HasForeignKey(d => d.MaKh)
+                .HasConstraintName("FK_DatPhongDoan_KhachHang");
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.DatPhongDoans)
+                .HasForeignKey(d => d.MaNv)
+                .HasConstraintName("FK_DatPhongDoan_NhanVien");
+
+            entity.HasOne(d => d.MaTinhTrangDatNavigation).WithMany(p => p.DatPhongDoans)
+                .HasForeignKey(d => d.MaTinhTrangDat)
+                .HasConstraintName("FK_DatPhongDoan_TinhTrangDat");
+        });
+
+        modelBuilder.Entity<DatPhongDoanPhong>(entity =>
+        {
+            entity.HasKey(e => e.MaChiTiet).HasName("PK_DatPhongDoan_Phong_1");
+
+            entity.ToTable("DatPhongDoan_Phong");
+
+            entity.HasOne(d => d.MaDoanNavigation).WithMany(p => p.DatPhongDoanPhongs)
+                .HasForeignKey(d => d.MaDoan)
+                .HasConstraintName("FK_DatPhongDoan_Phong_DatPhongDoan_Phong");
+
+            entity.HasOne(d => d.MaPhongNavigation).WithMany(p => p.DatPhongDoanPhongs)
+                .HasForeignKey(d => d.MaPhong)
+                .HasConstraintName("FK_DatPhongDoan_Phong_Phong");
         });
 
         modelBuilder.Entity<DichVu>(entity =>
@@ -91,16 +134,39 @@ public partial class QlksContext : DbContext
             entity.Property(e => e.TenDichVu).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<DoanDichVu>(entity =>
+        {
+            entity.HasKey(e => e.MaChiTietDv);
+
+            entity.ToTable("Doan_DichVu");
+
+            entity.Property(e => e.MaChiTietDv).HasColumnName("MaChiTietDV");
+
+            entity.HasOne(d => d.MaDichVuNavigation).WithMany(p => p.DoanDichVus)
+                .HasForeignKey(d => d.MaDichVu)
+                .HasConstraintName("FK_Doan_DichVu_DichVu");
+
+            entity.HasOne(d => d.MaDoanNavigation).WithMany(p => p.DoanDichVus)
+                .HasForeignKey(d => d.MaDoan)
+                .HasConstraintName("FK_Doan_DichVu_DatPhongDoan");
+        });
+
         modelBuilder.Entity<HoaDon>(entity =>
         {
             entity.HasKey(e => e.MaHoaDon).HasName("PK_Payment");
 
             entity.ToTable("HoaDon");
 
-            entity.HasIndex(e => e.MaPhieuThue, "Unique_DatPhong").IsUnique();
+            entity.HasIndex(e => e.MaPhieuThue, "IX_HoaDon");
 
-            entity.HasOne(d => d.MaPhieuThueNavigation).WithOne(p => p.HoaDon)
-                .HasForeignKey<HoaDon>(d => d.MaPhieuThue)
+            entity.HasIndex(e => new { e.MaPhieuThue, e.MaDoan }, "Unique_HoaDon").IsUnique();
+
+            entity.HasOne(d => d.MaDoanNavigation).WithMany(p => p.HoaDons)
+                .HasForeignKey(d => d.MaDoan)
+                .HasConstraintName("FK_HoaDon_DatPhongDoan");
+
+            entity.HasOne(d => d.MaPhieuThueNavigation).WithMany(p => p.HoaDons)
+                .HasForeignKey(d => d.MaPhieuThue)
                 .HasConstraintName("FK_HoaDon_DatPhong");
         });
 
@@ -239,9 +305,10 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("PhongHuy");
 
-            entity.HasIndex(e => e.MaPhieuThue, "Unique_DatPhong").IsUnique();
+            entity.HasIndex(e => e.MaPhieuThue, "Unique_PhongHuy").IsUnique();
 
             entity.Property(e => e.LyDo).HasMaxLength(200);
+            entity.Property(e => e.TinhTrang).HasMaxLength(50);
 
             entity.HasOne(d => d.MaPhieuThueNavigation).WithOne(p => p.PhongHuy)
                 .HasForeignKey<PhongHuy>(d => d.MaPhieuThue)
@@ -283,6 +350,7 @@ public partial class QlksContext : DbContext
             entity.Property(e => e.Uid).HasColumnName("UID");
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
             entity.Property(e => e.MatKhau).HasMaxLength(50);
+            entity.Property(e => e.Role).HasMaxLength(50);
             entity.Property(e => e.TaiKhoan).HasMaxLength(50);
 
             entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.Users)

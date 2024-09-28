@@ -8,6 +8,7 @@ public partial class PhongBan
     public int MaPb { get; set; }
 
     public string? TenPb { get; set; }
+
     public int? SoLuongNhanVien { get; set; }
 
     public virtual ICollection<NhanVien> NhanViens { get; set; } = new List<NhanVien>();

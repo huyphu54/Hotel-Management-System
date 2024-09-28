@@ -4,6 +4,7 @@ using HotelManagement.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using HotelManagement.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,11 @@ builder.Services.AddDbContext<QlksContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("QLKS")));
 // Đăng ký dịch vụ IConverter
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+//Thêm Session
 builder.Services.AddSession();
+// Đăng ký dịch vụ EmailService
+builder.Services.AddTransient<EmailService>();
+
 // Cấu hình xác thực và phân quyền
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -60,4 +65,4 @@ app.MapAreaControllerRoute(
     pattern: "Admin/{controller=Access}/{action=Login}/{id?}")
     .RequireAuthorization("AdminOnly");  // Áp dụng chính sách phân quyền cho khu vực Admin
 
-app.Run();
+app.Run();  

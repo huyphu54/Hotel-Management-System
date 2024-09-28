@@ -13,7 +13,7 @@
         <thead class="thead-light">
             <tr>
                 <th>
-                   Mã Phiếu Thuê
+                   Mã Hóa Đơn
                 </th>
                 <th>
                   Ngày Lập Phiếu
@@ -41,7 +41,7 @@
         <tfoot >
             <tr>
                 <th>
-                    Mã Phiếu Thuê
+                    Mã Hóa Đơn
                 </th>
                 <th>
                     Ngày Lập Phiếu
@@ -70,8 +70,9 @@
     @foreach (var item in Model) {
             <tr>
                 <td>
-                   PT @Html.DisplayFor(modelItem => item.MaPhieuThueNavigation.MaPhieuThue)
+                   PT @Html.DisplayFor(modelItem => item.MaHoaDon)
                 </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.NgayLapPhieu)
                     <td>

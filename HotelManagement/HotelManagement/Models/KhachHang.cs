@@ -19,5 +19,7 @@ public partial class KhachHang
 
     public string? Cccd { get; set; }
 
+    public virtual ICollection<DatPhongDoan> DatPhongDoans { get; set; } = new List<DatPhongDoan>();
+
     public virtual ICollection<DatPhong> DatPhongs { get; set; } = new List<DatPhong>();
 }

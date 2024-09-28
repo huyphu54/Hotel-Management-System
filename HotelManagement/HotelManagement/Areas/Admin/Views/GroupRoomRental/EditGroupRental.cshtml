@@ -1,0 +1,74 @@
+﻿@model HotelManagement.Models.DatPhongDoan
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EditGroupRental";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h3 class="m-0 font-weight-bold text-primary">Cập Nhật Phiếu</h3>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditGroupRental">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaDoan" />
+            <div class="form-group">
+                <label asp-for="TenDoan" class="control-label">Tên Đoàn</label>
+                <input asp-for="TenDoan" class="form-control" readonly/>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayDat" class="control-label">Ngày Đặt</label>
+                <input asp-for="NgayDat" class="form-control" type="date" />
+                <span asp-validation-for="NgayDat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayTra" class="control-label">Ngày Trả</label>
+                <input asp-for="NgayTra" class="form-control" type="date"/>
+                <span asp-validation-for="NgayTra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoNguoiO" class="control-label">Số Người Ở</label>
+                <input asp-for="SoNguoiO" class="form-control" readonly />
+                <span asp-validation-for="SoNguoiO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="toggleRooms" style="cursor: pointer;">Chọn Phòng </label>
+                <div id="toggleRooms" class="border p-2 mb-2" style="max-height: 150px; overflow-y: auto;">
+                    @foreach (var room in ViewBag.MaPhong)
+                    {
+                        <div>
+                            <input type="checkbox" name="selectedRoomIds" value="@room.Value"
+                            @(Model.DatPhongDoanPhongs.Any(dp => dp.MaPhong.ToString() == room.Value) ? "checked" : "") />
+                            @room.Text
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MaTinhTrangDat" class="control-label"></label>
+                <select asp-for="MaTinhTrangDat" class="form-control" asp-items="ViewBag.MaTinhTrangDat"></select>
+                <span asp-validation-for="MaTinhTrangDat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="GroupRoomRental" class="btn btn-primary">Back to List</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('label[for="toggleRooms"]').click(function () {
+            $('#toggleRooms').slideToggle();
+        });
+    });
+</script>

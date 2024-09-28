@@ -40,9 +40,12 @@
                 <div id="collapseRoomRental" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản Lý Đơn Đặt Phòng Phòng</h6>
+                       @*  <a class="collapse-item" href="/admin/booking">Lập Phiếu Đặt Phòng</a> *@
                         <a class="collapse-item" href="/admin/roomrental">Danh Sánh Phiếu Đặt</a>
-                        <a class="collapse-item" href="/admin/booking">Lập Phiếu Đặt Phòng</a>
-                        <a class="collapse-item" href="/admin/payment">Danh Sách Phiếu Thanh Toán</a>
+                        @* <a class="collapse-item" href="/admin/addgrouprental">Lập Phiếu Đặt Phòng Đoàn</a> *@
+                        <a class="collapse-item" href="/admin/grouproomrental">Danh Sánh Phiếu Đặt Đoàn</a>
+                        <a class="collapse-item" href="/admin/roomcancelled">Danh Sánh Phòng Hủy</a>
+                        <a class="collapse-item" href="/admin/payment">Danh Sách Hóa Đơn</a>
                         
                     </div>
                 </div>
@@ -100,7 +103,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRevenue"
                    aria-expanded="true" aria-controls="collapseBootstrap">
-                      <i class="fas fa-fw fa-chart-area"></i
+                      <i class="fas fa-fw fa-chart-area"></i>
                     <span>Thống Kê Doanh Thu</span>
                 </a>
                 <div id="collapseRevenue" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
@@ -124,10 +127,29 @@
             </li>
             
             <li class="nav-item">
-                <a class="nav-link" href="/admin/revenuestatistics">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoomUsage"
+                   aria-expanded="true" aria-controls="collapseBootstrap">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Thống Kê Mật Độ</span>
+                    <span>Thống Kê Mật Độ Sử Dụng Phòng</span>
                 </a>
+                <div id="collapseRoomUsage" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Thống Kê Doanh Thu</h6>
+                        <a class="collapse-item" href="/admin/RoomUsageStatistics">
+
+                            <span>Mật Độ Sử Dụng Ngày</span>
+                        </a>
+                        <a class="collapse-item" href="/admin/RoomUsageStatisticsMonth">
+
+                            <span>Mật Độ Sử Dụng Tháng</span>
+                        </a>
+                        <a class="collapse-item" href="/admin/RoomUsageStatisticsYear">
+
+                            <span>Mật Độ Sử Dụng Năm</span>
+                        </a>
+
+                    </div>
+                </div>
             </li>
             <hr class="sidebar-divider">
             <div class="version" id="version-ruangadmin"></div>

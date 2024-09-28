@@ -12,6 +12,7 @@ public partial class User
     public string? MatKhau { get; set; }
 
     public int MaNv { get; set; }
+
     public string? Role { get; set; }
 
     public virtual NhanVien MaNvNavigation { get; set; } = null!;

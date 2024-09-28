@@ -50,7 +50,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         [Route("admin/Editrental")]
         [HttpGet]
         public IActionResult EditRental(int? maPhieuThue)
-        {
+        {          
             ViewBag.MaPhong = new SelectList(db.Phongs.ToList(), "MaPhong", "SoPhong");
             ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats.ToList(), "MaTinhTrangDat", "TenTinhTrangDat");
             var phieuThue = db.DatPhongs.Find(maPhieuThue);
@@ -73,6 +73,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể thay đổi tình trạng do phòng đã hủy");
                 return View(datPhong);
             }
+            updateStatus.MaPhong = datPhong.MaPhong;
             updateStatus.MaTinhTrangDat = datPhong.MaTinhTrangDat;
             updateStatus.GioNhan = datPhong.GioNhan;
             updateStatus.GioTra = datPhong.GioTra;
@@ -99,6 +100,20 @@ namespace HotelManagement.Areas.Admin.Controllers
             {
                 phongUpdate.MaTinhTrang = 2;
             }
+            else if (updateStatus.MaTinhTrangDat == 4)
+            {
+                var phongHuy = new PhongHuy
+                {
+                    MaPhieuThue = updateStatus.MaPhieuThue,
+                    LyDo = "Chưa Cập Nhật",
+                    NgayHuy = updateStatus.NgayNhan,
+                    TinhTrang= "Chưa Cập Nhật"
+                };
+                
+                db.PhongHuys.Add(phongHuy);
+                db.SaveChanges();
+                return RedirectToAction("RoomRental", "RoomRental");
+            }
 
             
 
@@ -119,14 +134,13 @@ namespace HotelManagement.Areas.Admin.Controllers
                 booking.MaPhong = roomId.Value;
             }
             var customers = db.KhachHangs
-              .Select(c => new { c.MaKh, c.HoTenKh })
+              .Select(c => new { c.MaKh, c.HoTenKh, c.Cccd })
               .ToList();
             var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
             var receptionStaff = db.NhanViens.Where(nv => nv.MaPb ==2).Select(nv => new { nv.MaNv, nv.HoTenNv }).ToList();
-            ViewBag.KhachHang = new SelectList(customers, "MaKh", "HoTenKh");
+            ViewBag.KhachHang = customers;
             ViewBag.MaNv = new SelectList(receptionStaff, "MaNv", "HoTenNv");
-            ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
-            
+            ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");   
             ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
             ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats, "MaTinhTrangDat", "TenTinhTrangDat");
 
@@ -147,16 +161,21 @@ namespace HotelManagement.Areas.Admin.Controllers
                 ModelState.AddModelError("", $"Số lượng người ở vượt quá giới hạn cho phép. Phòng này chỉ cho phép tối đa {loaiPhong.SoNguoiOtoiDa} người.");
                 return View(datPhong);
             }
-            if (datPhong.NgayNhan >= datPhong.NgayTra)
+            if (datPhong.MaLoaiHinhDat == 1|| datPhong.MaLoaiHinhDat == 2)
             {
-                ModelState.AddModelError("", "Ngày nhận phải trước ngày trả.");
-                return View(datPhong);
+                if (datPhong.NgayNhan >= datPhong.NgayTra)
+                {
+                    ModelState.AddModelError("", "Ngày nhận phải trước ngày trả.");
+                    return View(datPhong);
+                }
             }
-            else if (datPhong.NgayNhan <= ngayHomNay )
+            
+            if (datPhong.NgayNhan < ngayHomNay )
             {
                 ModelState.AddModelError("", "Ngày đặt không thể ở quá khứ");
                 return View(datPhong);
             }
+            
             if (phong.MaTinhTrang == 2)
             {
                 if (datPhong.MaTinhTrangDat != 1)
@@ -171,11 +190,15 @@ namespace HotelManagement.Areas.Admin.Controllers
                 return RedirectToAction("Room", "Room");
             }
 
-            ModelState.AddModelError("", "Không thể dùng phòng này");
-            ViewBag.MaKh = new SelectList(db.KhachHangs, "MaKh", "HoTenKh");
-            ViewBag.MaNv = new SelectList(db.NhanViens, "MaNv", "HoTenNv");
-            ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
+            var customers = db.KhachHangs
+              .Select(c => new { c.MaKh, c.HoTenKh, c.Cccd })
+              .ToList();
             var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
+            var receptionStaff = db.NhanViens.Where(nv => nv.MaPb == 2).Select(nv => new { nv.MaNv, nv.HoTenNv }).ToList();
+            ViewBag.KhachHang = customers;
+            ViewBag.MaNv = new SelectList(receptionStaff, "MaNv", "HoTenNv");
+            ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
+
             ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
             ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats, "MaTinhTrangDat", "TenTinhTrangDat");
 

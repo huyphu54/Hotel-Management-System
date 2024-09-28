@@ -1,0 +1,113 @@
+﻿@using HotelManagement.Models
+@model X.PagedList.IPagedList<HotelManagement.Models.PhongHuy>
+@using X.PagedList
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "RoomCancelled";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h3 class="m-0 font-weight-bold text-primary">Danh Sách Phòng Hủy</h3>
+<table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
+    <thead class="thead-light">
+        <tr>
+            <th>
+               Mã Phiếu Thuê
+            </th>
+            <th>
+                Khách Hàng
+            </th>
+            <th>
+                Lý Do Hủy Phòng
+            </th>
+            <th>
+                Ngày Hủy
+            </th>
+            <th>
+                Tình Trạng
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tfoot>
+        <tr>
+            <th>
+                Mã Phiếu Thuê
+            </th>
+            <th>
+                Khách Hàng
+            </th>
+            <th>
+                Lý Do Hủy Phòng
+            </th>
+            <th>
+                Ngày Hủy
+            </th>
+            <th>
+                Tình Trạng
+            </th>
+            <th></th>
+        </tr>
+        </
+    <tfoot>
+        
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+               PT @Html.DisplayFor(modelItem => item.MaPhieuThueNavigation.MaPhieuThue)
+            </td>
+             <td>
+               @Html.DisplayFor(modelItem => item.MaPhieuThueNavigation.MaKhNavigation.HoTenKh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LyDo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayHuy)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.TinhTrang)
+            </td>
+            
+            <td>
+                <a asp-action="EditStatus" asp-route-maPhongHuy="@item.MaPhongHuy" class="btn btn-primary">Cập Nhật Tình Trạng</a> |
+             
+               <a asp-action="CreateBill" asp-route-maPhieuThue="@item.MaPhieuThue" asp-controller="Payment" asp-area="Admin" class="btn btn-success">Thanh Toán</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-sm-12 col-md-5">
+        <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite">
+            Showing @Model.PageNumber to @Model.PageCount of @Model.TotalItemCount entries
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="dataTableHover_paginate">
+            <ul class="pagination">
+                @if (Model.PageNumber > 1)
+                {
+                    <li class="paginate_button page-item previous">
+                        <a class="page-link" href="@Url.Action("RoomCancelled","RoomCancelled", new { page = Model.PageNumber - 1 })">Previous</a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    <li class="paginate_button page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("RoomCancelled","RoomCancelled", new { page = i })">@i</a>
+                    </li>
+                }
+                @if (Model.PageNumber < Model.PageCount)
+                {
+                    <li class="paginate_button page-item next">
+                        <a class="page-link" href="@Url.Action("RoomCancelled","RoomCancelled", new { page = Model.PageNumber + 1 })">Next</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

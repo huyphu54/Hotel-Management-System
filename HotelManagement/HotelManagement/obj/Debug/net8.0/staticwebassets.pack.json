@@ -9277,6 +9277,98 @@
       "PackagePath": "staticwebassets\\Layout\\js\\wow.min.js"
     },
     {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_blog.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_blog.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_blog_page.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_blog_page.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_booking.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_booking.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_bradcam.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_bradcam.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_color.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_color.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_common.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_common.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_contact.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_contact.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_customer.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_customer.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_dining.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_dining.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_elements.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_elements.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_extend.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_extend.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_footer.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_footer.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_gallery.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_gallery.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_h1-hero.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_h1-hero.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_headerMenu.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_headerMenu.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_mixins.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_mixins.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_overlay.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_overlay.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_reset.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_reset.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_room.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_room.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_testimonial.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_testimonial.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\_variables.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\_variables.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\main.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\main.scss"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\Layout\\scss\\services.scss",
+      "PackagePath": "staticwebassets\\Layout\\scss\\services.scss"
+    },
+    {
       "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

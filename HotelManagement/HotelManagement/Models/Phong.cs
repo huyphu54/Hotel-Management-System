@@ -15,6 +15,8 @@ public partial class Phong
 
     public int MaTinhTrang { get; set; }
 
+    public virtual ICollection<DatPhongDoanPhong> DatPhongDoanPhongs { get; set; } = new List<DatPhongDoanPhong>();
+
     public virtual ICollection<DatPhong> DatPhongs { get; set; } = new List<DatPhong>();
 
     public virtual LoaiPhong MaLpNavigation { get; set; } = null!;

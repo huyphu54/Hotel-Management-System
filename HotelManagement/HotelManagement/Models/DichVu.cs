@@ -11,5 +11,7 @@ public partial class DichVu
 
     public double? Gia { get; set; }
 
+    public virtual ICollection<DoanDichVu> DoanDichVus { get; set; } = new List<DoanDichVu>();
+
     public virtual ICollection<PhongDichVu> PhongDichVus { get; set; } = new List<PhongDichVu>();
 }

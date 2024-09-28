@@ -23,6 +23,8 @@ public partial class NhanVien
 
     public byte[]? Avatar { get; set; }
 
+    public virtual ICollection<DatPhongDoan> DatPhongDoans { get; set; } = new List<DatPhongDoan>();
+
     public virtual ICollection<DatPhong> DatPhongs { get; set; } = new List<DatPhong>();
 
     public virtual PhongBan MaPbNavigation { get; set; } = null!;

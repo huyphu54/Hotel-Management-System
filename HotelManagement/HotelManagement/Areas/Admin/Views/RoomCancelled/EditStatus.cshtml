@@ -1,0 +1,57 @@
+﻿@model HotelManagement.Models.PhongHuy
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EditStatus";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="m-0 font-weight-bold text-primary">Cập Nhật Tình Trạng</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditStatus">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaPhongHuy" />
+            <div class="form-group">
+                <label asp-for="MaPhieuThue" class="control-label"></label>
+                <input asp-for="MaPhieuThue" class="form-control" readonly />
+                <span asp-validation-for="MaPhieuThue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LyDo" class="control-label">Lý Do Hủy Phòng</label>
+                <select asp-for="LyDo" class="form-control">
+                    <option value="Chưa cập nhật">Chưa cập nhật</option>
+                    <option value="Không có nhu cầu ở">Không có nhu cầu ở</option>
+                    <option value="Giá phòng quá đắt">Giá phòng quá đắt</option>
+                    <option value="Đã tìm được khách sạn tốt hơn">Đã tìm được khách sạn tốt hơn</option>
+                    <option value="Địa chỉ quá xa">Địa chỉ quá xa</option>
+                    <option value="Lý do khác">Lý do khác</option>
+                </select>
+                <span asp-validation-for="LyDo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TinhTrang" class="control-label">Tình Trạng</label>
+                <select asp-for="TinhTrang" class="form-control">
+                    <option value="Chưa Cập Nhật">Chưa Cập Nhật</option>
+                    <option value="Đã Cập Nhật">Đã Cập Nhật</option>
+                 
+                </select>
+                <span asp-validation-for="TinhTrang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayHuy" class="control-label"></label>
+                <input asp-for="NgayHuy" class="form-control" />
+                <span asp-validation-for="NgayHuy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cập Nhật" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="RoomCancelled" class="btn btn-primary">Back to List</a>
+</div>
+

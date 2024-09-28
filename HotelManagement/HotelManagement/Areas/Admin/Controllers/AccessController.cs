@@ -38,6 +38,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                     HttpContext.Session.SetString("TaiKhoan", u.TaiKhoan.ToString());
                     HttpContext.Session.SetString("HoTenNv", u.MaNvNavigation.HoTenNv.ToString());
                     HttpContext.Session.SetInt32("MaNv", u.MaNv);
+                    HttpContext.Session.SetString("Role", u.Role);
                     if (u.MaNvNavigation.Avatar != null)
                     {
                         var avatarBase64 = Convert.ToBase64String(u.MaNvNavigation.Avatar);
@@ -45,7 +46,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                     }
                     else
                     {
-                        HttpContext.Session.SetString("Avatar", "img/boy.png"); // Hình mặc định nếu không có avatar
+                        HttpContext.Session.SetString("Avatar", "../layoutAdmin/img/boy.png"); // Hình mặc định nếu không có avatar
                     }
                     return RedirectToAction("Index", "HomeAdmin");
                 }

@@ -1,0 +1,120 @@
+﻿@model HotelManagement.Models.DatPhongDoan
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "AddGroupRental";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h3 class="m-0 font-weight-bold text-primary">Phiếu Đặt Phòng Đoàn</h3>
+
+<hr />
+<p style="color:red; font-weight:bold;">@TempData["Message"]</p>
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="AddGroupRental" method="post">
+            <div class="form-group">
+                <label asp-for="TenDoan">Tên Đoàn</label>
+                <input asp-for="TenDoan" class="form-control" />
+                <span asp-validation-for="TenDoan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Khách Hàng Đại Diện</label>
+                <select id="searchCustomer" asp-for="MaKh" class="form-control">
+                    @if (ViewBag.KhachHang != null)
+                    {
+                        foreach (var khachHang in ViewBag.KhachHang)
+                        {
+                            <option value="@khachHang.MaKh" data-cccd="@khachHang.Cccd">@khachHang.HoTenKh</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="">Không có khách hàng nào</option> <!-- Thông báo nếu không có khách hàng -->
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Số CCCD</label>
+                <input type="text" id="cccdTextbox" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label>Nhân Viên</label>
+                <select asp-for="MaNv" class="form-control" asp-items="ViewBag.NhanVien"></select>
+                <span asp-validation-for="MaNv" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NgayDat">Ngày Đặt</label>
+                <input asp-for="NgayDat" class="form-control" type="date" />
+                <span asp-validation-for="NgayDat" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NgayTra">Ngày Trả</label>
+                <input asp-for="NgayTra" class="form-control" type="date" />
+                <span asp-validation-for="NgayTra" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SoNguoiO">Số Người Ở</label>
+                <input asp-for="SoNguoiO" class="form-control" type="number" />
+                <span asp-validation-for="SoNguoiO" class="text-danger"></span>
+            </div>
+
+        
+            
+            <div class="form-group">
+                <label>Tình Trạng Đặt</label>
+                <select asp-for="MaTinhTrangDat" class="form-control" asp-items="ViewBag.TinhTrang"></select>
+                <span asp-validation-for="MaTinhTrangDat" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="toggleRooms" style="cursor: pointer;">Chọn Phòng:</label>
+                <div id="toggleRooms" class="border p-2 mb-2" style="max-height: 150px; overflow-y: auto;">
+                    @foreach (var phong in ViewBag.Phong)
+                    {
+                        <div>
+                            <input type="checkbox" name="SelectedPhongIds" value="@phong.Value" id="phong_@phong.Value" />
+                            <label for="phong_@phong.Value">@phong.Text</label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Tạo Đặt Phòng Đoàn</button>
+            <a asp-action="GroupRoomRental" class="btn btn-secondary">Hủy</a>
+        </form>
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="GroupRoomRental" class="btn btn-primary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#searchCustomer").select2();
+            $('#searchCustomer').change(function () {
+                var selectedEmail = $('#searchCustomer option:selected').data('cccd');
+                $('#cccdTextbox').val(selectedEmail); // Update the readonly textbox with selected email
+            });
+            $(document).ready(function () {
+                $('label[for="toggleRooms"]').click(function () {
+                    $('#toggleRooms').slideToggle();
+                });
+            });
+
+        });
+    </script>
+}

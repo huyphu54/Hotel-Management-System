@@ -1,0 +1,38 @@
+﻿@model HotelManagement.Models.DoanDichVu
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "AddGroupService";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>AddGroupService</h1>
+
+<h4>DoanDichVu</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddGroupService">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>         
+                <input type="hidden" asp-for="MaDoan" />
+
+                <div class="form-group">
+                    <label asp-for="MaDichVu" class="control-label">Tên Dịch Vụ</label>
+                    <select asp-for="MaDichVu" class="form-control" asp-items="ViewBag.MaDichVu"></select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="SoLuong" class="control-label">Số Lượng</label>
+                    <input asp-for="SoLuong" class="form-control" />
+                </div>
+
+            <button asp-area="Admin" type="submit" name="action" value="save" class="btn btn-primary">Lưu</button>
+            <button asp-area="Admin" type="submit" name="action" value="exit" class="btn btn-secondary">Chi Tiết Hóa Đơn</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="GroupRoomRental" asp-area="Admin" class="btn btn-primary">Back to List</a>
+</div>
+
+

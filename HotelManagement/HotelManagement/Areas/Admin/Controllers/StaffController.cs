@@ -1,4 +1,6 @@
-﻿using HotelManagement.Models;
+﻿using HotelManagement.Filters;
+using HotelManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ namespace HotelManagement.Areas.Admin.Controllers
     public class StaffController : Controller
     {
         QlksContext db = new QlksContext();
+        [Authorization]
         [Route("Staff")]
         [HttpGet]
         public IActionResult Staff(int? page, string searchNhanVien, string searchPhongBan)
@@ -38,6 +41,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             ViewBag.SearchPhongBan = searchPhongBan;
             return View(lstNhanVien);
         }
+        [Authorization]
         [Route("AddStaff")]
         [HttpGet]
         public IActionResult AddStaff()
@@ -71,6 +75,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             TempData["Message"] = "Thêm Nhân Viên Thành Công!";
             return RedirectToAction("Staff");
         }
+        [Authorization]
         [Route("EditStaff")]
         [HttpGet]
         public IActionResult EditStaff(int? maNhanVien)
@@ -115,6 +120,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                 return View(nhanVien);
             }
         }
+        
         [Route("DetailStaff")]
         [HttpGet]
         public IActionResult DetailStaff(int? maNhanVien)
@@ -123,6 +129,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             var nhanVien = db.NhanViens.Include(nv => nv.MaPbNavigation).FirstOrDefault(nv => nv.MaNv == maNhanVien);
             return View(nhanVien);
         }
+        [Authorization]
         [Route("DeleteStaff")]
         [HttpGet]
         public IActionResult DeleteStaff(int? maNhanVien)
@@ -155,6 +162,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             TempData["Message"] = "Đã sa thải nhân viên.";
             return RedirectToAction("Staff");
         }
+        [Authorization]
         [Route("Department")]
         [HttpGet]
         public IActionResult Department()

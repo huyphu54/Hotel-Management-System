@@ -1,4 +1,5 @@
-﻿using HotelManagement.Models;
+﻿using HotelManagement.Filters;
+using HotelManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,7 @@ namespace HotelManagement.Areas.Admin.Controllers
 
         }
         //Thêm Phòng Mới
+        [Authorization]
         [Route("admin/addroom")]
         [HttpGet]
         public IActionResult AddRoom()
@@ -53,7 +55,8 @@ namespace HotelManagement.Areas.Admin.Controllers
             ViewBag.MaTinhTrang = new SelectList(db.TinhTrangPhongs.ToList(), "MaTinhTrang", "TenTinhTrang");
             return View();
         }
-        [Route("addroom")]
+
+        [Route("admin/addroom")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddRoom(Phong phong)
@@ -74,6 +77,7 @@ namespace HotelManagement.Areas.Admin.Controllers
 
         }
         //Xóa Phòng
+        [Authorization]
         [Route("admin/DeleteRoom")]
         [HttpGet]
         public IActionResult DeleteRoom(int? maPhong)
@@ -99,6 +103,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             return RedirectToAction("Room");
         }
         //Thay đổi chi tiết phòng
+
         [Route("admin/editroom")]
         [HttpGet]
         public IActionResult EditRoom(int? maPhong)
@@ -153,7 +158,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                 return View(phong);
             }
         }
-
+        [Authorization]
         //Danh sách loại phòng 
         [Route("admin/roomtype")]
         public IActionResult RoomType()
@@ -161,7 +166,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             var listLoaiPhong = db.LoaiPhongs.ToList();
             return View(listLoaiPhong);
         }
-
+        [Authorization]
         //Thêm loại phòng mới
         [Route("admin/addroomtype")]
         [HttpGet]
@@ -183,7 +188,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             }
             return View(loaiphong);
         }
-
+        [Authorization]
         //Chỉnh sửa loại phòng
         [Route("admin/editroomtype")]
         [HttpGet]

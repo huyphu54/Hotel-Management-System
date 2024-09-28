@@ -16,11 +16,13 @@
             </tr>
         </thead>
         <tbody>
+        @if (Model.MaPhieuThue.HasValue)
+        {
             <tr>
                 <td>Mã Phiếu Thuê</td>
                 <td>@Html.DisplayFor(model => model.MaPhieuThueNavigation.MaPhieuThue)</td>
             </tr>
-             <tr>
+            <tr>
                 <td>Phòng Thuê</td>
                 <td>@Html.DisplayFor(model => model.MaPhieuThueNavigation.MaPhongNavigation.SoPhong)</td>
             </tr>
@@ -48,6 +50,53 @@
                 <td>Phụ Thu</td>
                 <td>@String.Format("{0:N0}", Model.PhuThu) VND</td>
             </tr>
+        }
+        @if (Model.MaDoan.HasValue)
+        {
+            <tr>
+                <td>Mã Phiếu Thuê Đoàn</td>
+                <td>@Html.DisplayFor(model => model.MaDoanNavigation.MaDoan)</td>
+            </tr>
+            <tr>
+                <td>Tên Đoàn</td>
+                <td>@Html.DisplayFor(model => model.MaDoanNavigation.TenDoan)</td>
+            </tr>
+            <tr>
+                <td>Khách Hàng Đại Diện</td>
+                <td>@Html.DisplayFor(model => model.MaDoanNavigation.MaKhNavigation.HoTenKh)</td>
+            </tr>
+            <tr>
+                <td>Phòng Thuê</td>
+                <td>
+                    @if (Model.MaDoanNavigation.DatPhongDoanPhongs != null && Model.MaDoanNavigation.DatPhongDoanPhongs.Any())
+                    {
+                        <ul>
+                            @foreach (var phong in Model.MaDoanNavigation.DatPhongDoanPhongs)
+                            {
+                                if (phong.MaPhongNavigation != null)
+                                {
+                                    <li>@phong.MaPhongNavigation.SoPhong</li>
+                                }
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <li>Không có phòng nào được chọn.</li>
+                    }
+                </td>
+            </tr>
+           
+            <tr>
+                <td>Nhân Viên Thanh Toán</td>
+                <td>@Html.DisplayFor(model => model.MaDoanNavigation.MaNvNavigation.HoTenNv)</td>
+            </tr>
+            <tr>
+                <td>Ngày Lập Phiếu</td>
+                <td> @(Model.NgayLapPhieu.HasValue ? Model.NgayLapPhieu.Value.ToString("dd/MM/yyyy") : String.Empty) </td>
+            </tr>
+        }
+
         </tbody>
     </table>
 
@@ -70,18 +119,35 @@
             double tongTienDichVu = 0;
         }
 
-
-        @foreach (var dv in Model.MaPhieuThueNavigation.PhongDichVus)
+        @if (Model.MaPhieuThue.HasValue)
         {
-            var thanhTien = dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia;
-            tongTienDichVu += (double)thanhTien;
-            <tr>
-                <td>@dv.MaDichVuNavigation.TenDichVu</td>
-                <td>@dv.MaDichVuNavigation.Gia VND</td>
-                <td>@dv.SoLuong</td>
-                <td>@(dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia) VND</td>
-            </tr>
+            @foreach (var dv in Model.MaPhieuThueNavigation.PhongDichVus)
+            {
+                var thanhTien = dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia;
+                tongTienDichVu += (double)thanhTien;
+                <tr>
+                    <td>@dv.MaDichVuNavigation.TenDichVu</td>
+                    <td>@dv.MaDichVuNavigation.Gia VND</td>
+                    <td>@dv.SoLuong</td>
+                    <td>@(dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia) VND</td>
+                </tr>
+            }
         }
+        @if (Model.MaDoan.HasValue)
+        {
+            @foreach (var dv in Model.MaDoanNavigation.DoanDichVus)
+            {
+                var thanhTien = dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia;
+                tongTienDichVu += (double)thanhTien;
+                <tr>
+                    <td>@dv.MaDichVuNavigation.TenDichVu</td>
+                    <td>@dv.MaDichVuNavigation.Gia VND</td>
+                    <td>@dv.SoLuong</td>
+                    <td>@(dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia) VND</td>
+                </tr>
+            }
+        }
+
         <tr>
             <td colspan="3" class="text-right"><strong>Tổng Tiền Dịch Vụ:</strong></td>
             <td><strong>@tongTienDichVu.ToString("N0") VND</strong></td>

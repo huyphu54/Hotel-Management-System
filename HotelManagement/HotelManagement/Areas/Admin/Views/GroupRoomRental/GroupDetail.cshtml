@@ -1,0 +1,124 @@
+﻿@model HotelManagement.Models.DatPhongDoan
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "GroupDetail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="m-0 font-weight-bold text-primary">Chi Tiết Phiếu Thuê Phòng Theo Đoàn</h2>
+<hr />
+<div>
+  
+    <dl class="row">
+        <dt class="col-sm-2">Tên Đoàn</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.TenDoan)</dd>
+
+        <dt class="col-sm-2">Khách Hàng Đại Diện</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.MaKhNavigation.HoTenKh)</dd>
+
+        <dt class="col-sm-2">Nhân Viên Phụ Trách</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.MaNvNavigation.HoTenNv)</dd>
+        <dt class="col-sm-2">Tình Trạng</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.MaTinhTrangDatNavigation.TenTinhTrangDat)</dd>       
+        <dt class="col-sm-2">Ngày Đặt</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NgayDat)</dd>
+
+        <dt class="col-sm-2">Ngày Trả</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NgayTra)</dd>
+
+        <dt class="col-sm-2">Số Người Ở</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.SoNguoiO)</dd>
+        <dt class="col-sm-2">
+            Các phòng đã thuê
+        </dt>
+        <dd>
+            @if (Model.DatPhongDoanPhongs != null && Model.DatPhongDoanPhongs.Any())
+            {
+                <ul>
+                    @foreach (var phong in Model.DatPhongDoanPhongs)
+                    {
+                        if (phong.MaPhongNavigation != null)
+                        {
+                            <li>@phong.MaPhongNavigation.SoPhong</li>
+                        }
+                    }
+                </ul>
+            }
+            else
+            {
+                <li>Không có phòng nào được chọn.</li>
+            }
+        </dd>
+      
+
+        
+    </dl>
+</div>
+<h3 class="m-0 font-weight-bold text-primary">Dịch Vụ Đã Sử Dụng</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên Dịch Vụ</th>
+            <th>Giá</th>
+            <th>Số Lượng</th>
+            <th>Thành Tiền</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @{
+
+            double tongTienDichVu = 0;
+        }
+
+
+        @foreach (var dv in Model.DoanDichVus)
+        {
+            var thanhTien = dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia;
+            tongTienDichVu += (double)thanhTien;
+            <tr>
+                <td>@dv.MaDichVuNavigation.TenDichVu</td>
+                <td>@dv.MaDichVuNavigation.Gia</td>
+                <td>@dv.SoLuong</td>
+                <td>@(dv.SoLuong.GetValueOrDefault() * dv.MaDichVuNavigation.Gia)</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3" class="text-right"><strong>Tổng Tiền Dịch Vụ:</strong></td>
+            <td><strong>@tongTienDichVu.ToString("N0") VND</strong></td>
+        </tr>
+
+    </tbody>
+</table>
+@{
+    double soNgayGio = 0;
+    if (Model.NgayDat.HasValue && Model.NgayTra.HasValue)
+    {
+        // Kết hợp NgayNhan và GioNhan, NgayTra và GioTra để tính chính xác số ngày giờ ở
+        var ngayDat = Model.NgayDat.Value.ToDateTime(TimeOnly.MinValue);
+        var ngayTra =Model.NgayTra.Value.ToDateTime(TimeOnly.MaxValue);
+
+        soNgayGio = (ngayTra - ngayDat).TotalDays;
+    }
+    // Tính tiền phòng
+
+    double tienPhong = Model.DatPhongDoanPhongs.Sum(p => p.MaPhongNavigation?.MaLpNavigation?.Gia.GetValueOrDefault() * soNgayGio) ?? 0;
+    //Tính tiền phòng hủy
+  
+    double tongTienPhieuThue = tongTienDichVu + tienPhong;
+
+    if (Model.MaTinhTrangDat == 4)
+    {
+        tongTienPhieuThue = Model.DatPhongDoanPhongs.Sum(p => p.MaPhongNavigation?.MaLpNavigation?.SoTienCoc.GetValueOrDefault() * soNgayGio) ?? 0;
+    }
+
+   
+
+}
+
+<h4>Tổng Tiền Phiếu Thuê: @tongTienPhieuThue.ToString("N0") VND</h4>
+
+<div>
+    <a asp-action="GroupRoomRental" asp-area="Admin" class="btn btn-primary">Back to List</a>
+</div>

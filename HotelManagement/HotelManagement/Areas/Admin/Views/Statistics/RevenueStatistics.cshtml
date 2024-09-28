@@ -5,46 +5,56 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<h2 class="m-0 font-weight-bold text-primary">@ViewData["Title"]</h3>
-<form asp-action="RevenueStatistics" method="get">
-    <div>
+<h2 class="m-0 font-weight-bold text-primary">@ViewData["Title"]</h2>
+<form asp-action="RevenueStatistics" method="get" class="mb-4">
+    <div class="form-group">
         <label for="fromDate">Từ ngày:</label>
-        <input type="date" name="fromDate" />
+        <input type="date" name="fromDate" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="toDate">Đến ngày:</label>
-        <input type="date" name="toDate" />
+        <input type="date" name="toDate" class="form-control" />
     </div>
 
-    <input type="submit" value="Xem thống kê" />
+    <button type="submit" class="btn btn-primary">Thống Kê</button>
 </form>
-<canvas id="revenueChart" width="400" height="200"></canvas>
+@if (Model != null && Model.Any())
+{
+    <canvas id="revenueChart" width="400" height="200"></canvas>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    // Dữ liệu ngày tháng và doanh thu từ Model
-    var labels = @Html.Raw(Json.Serialize(Model.Select(m => m.Date.ToString("dd/MM/yyyy"))));
-    var data = @Html.Raw(Json.Serialize(Model.Select(m => m.TotalRevenue)));
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Dữ liệu ngày tháng và doanh thu từ Model
+        var labels = @Html.Raw(Json.Serialize(Model.Select(m => m.Date.ToString("dd/MM/yyyy"))));
+        var data = @Html.Raw(Json.Serialize(Model.Select(m => m.TotalRevenue)));
 
-    var ctx = document.getElementById('revenueChart').getContext('2d');
-    var revenueChart = new Chart(ctx, {
-        type: 'bar', // Biểu đồ cột
-        data: {
-            labels: labels, // Các nhãn ngày tháng
-            datasets: [{
-                label: 'Doanh Thu (VND)',
-                data: data, // Dữ liệu doanh thu
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true // Trục y bắt đầu từ 0
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var revenueChart = new Chart(ctx, {
+            type: 'bar', // Biểu đồ cột
+            data: {
+                labels: labels, // Các nhãn ngày tháng
+                datasets: [{
+                    label: 'Doanh Thu (VND)',
+                    data: data, // Dữ liệu doanh thu
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true // Trục y bắt đầu từ 0
+                    }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
+
+
+}
+
+else
+{
+<p>Không có dữ liệu để hiển thị.</p>
+}

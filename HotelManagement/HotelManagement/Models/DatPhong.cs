@@ -25,9 +25,9 @@ public partial class DatPhong
 
     public int? SoNguoiO { get; set; }
 
-    public int MaTinhTrangDat { get; set; }
+    public int? MaTinhTrangDat { get; set; }
 
-    public virtual HoaDon? HoaDon { get; set; }
+    public virtual ICollection<HoaDon> HoaDons { get; set; } = new List<HoaDon>();
 
     public virtual KhachHang? MaKhNavigation { get; set; }
 
@@ -37,7 +37,7 @@ public partial class DatPhong
 
     public virtual Phong? MaPhongNavigation { get; set; }
 
-    public virtual TinhTrangDat MaTinhTrangDatNavigation { get; set; } = null!;
+    public virtual TinhTrangDat? MaTinhTrangDatNavigation { get; set; }
 
     public virtual ICollection<PhongDichVu> PhongDichVus { get; set; } = new List<PhongDichVu>();
 

@@ -15,8 +15,16 @@
         <form asp-action="CreateBill" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label>Mã Phiếu Thuê:</label>
-                <input type="text" class="form-control" asp-for="MaPhieuThue" readonly />
+                @if (Model.MaPhieuThue != null)
+                {
+                    <label>Mã Phiếu Thuê:</label>
+                    <input type="text" class="form-control" asp-for="MaPhieuThue" readonly />
+                }
+                else if (Model.MaDoan != null)
+                {
+                    <label>Mã Phiếu Đoàn:</label>
+                    <input type="text" class="form-control" asp-for="MaDoan" readonly />
+                }
             </div>
             <div class="form-group">
                 <label asp-for="NgayLapPhieu" class="control-label"></label>
@@ -52,10 +60,19 @@
         </form>
     </div>
 </div>
+                @if (Model.MaPhieuThue != null)
+                {
+                    <div>
+                        <a asp-action="RoomRenTal" asp-area="admin" asp-controller="RoomRental" class="btn btn-primary">Back to List</a>
+                    </div>
+                }
+                else if (Model.MaDoan != null)
+                {
+                    <div>
+                            <a asp-action="GroupRoomRental" asp-area="admin" asp-controller="GroupRoomRental" class="btn btn-primary">Back to List</a>
+                    </div>
+                }
 
-<div>
-    <a asp-action="RoomRenTal" asp-area="admin" asp-controller="RoomRental" class="btn btn-primary">Back to List</a>
-</div>
 
 @section Scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

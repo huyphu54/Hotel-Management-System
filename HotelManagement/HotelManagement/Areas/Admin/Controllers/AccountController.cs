@@ -1,20 +1,25 @@
-﻿using HotelManagement.Models;
+﻿using HotelManagement.Filters;
+using HotelManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 namespace HotelManagement.Areas.Admin.Controllers
 {
+    [Authentication]
     [Area("admin")]
     public class AccountController : Controller
     {
+
         QlksContext db = new QlksContext();
+        [Authorization]
         [Route("admin/account")]
         public IActionResult Account()
         {
             var listAccount = db.Users.Include(u => u.MaNvNavigation).ToList();
             return View(listAccount);
         }
+        [Authorization]
         [Route("admin/createaccount")]
         [HttpGet]
         public IActionResult CreateAccount()

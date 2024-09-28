@@ -46,6 +46,7 @@
         </thead>
         <tfoot>
             <tr>
+                <th>ID</th>
                 <th>Số Phòng</th>
                 <th>Loại Phòng</th>
                 <th>Tầng</th>
@@ -70,7 +71,7 @@
                     statusClass = "bg-gradient-danger text-white font-weight-bold";   // Nền đỏ, chữ trắng
                 }
                 <tr >
-                    <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaPhong)</td>
+                    <td class="@statusClass">P @Html.DisplayFor(modelItem => item.MaPhong)</td>
                     <td class="@statusClass">@Html.DisplayFor(modelItem => item.SoPhong)</td>
                     <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaLpNavigation.TenLoaiPhong)</td>
                     <td class="@statusClass">@Html.DisplayFor(modelItem => item.MaTangNavigation.TenTang)</td>

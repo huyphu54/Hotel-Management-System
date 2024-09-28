@@ -1,0 +1,54 @@
+﻿@model IEnumerable<dynamic>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Thống Kê Mật Độ Sử Dụng Phòng Theo Tháng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="m-0 font-weight-bold text-primary">@ViewData["Title"]</h2>
+
+<form asp-action="RoomUsageStatisticsMonth" method="get" class="mb-4">
+    <div class="form-group">
+        <label for="fromMonth">Từ Ngày:</label>
+        <input type="date" id="fromMonth" name="fromMonth" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="toMonth">Đến Ngày:</label>
+        <input type="date" id="toMonth" name="toMonth" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Thống Kê</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <canvas id="roomUsageChart" width="400" height="200"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('roomUsageChart').getContext('2d');
+        var roomUsageChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(m => m.Date))),
+                datasets: [{
+                    label: 'Tổng Số Phòng Được Sử Dụng',
+                    data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(m => m.TotalRoomsUsed))),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}
+else
+{
+    <p>Không có dữ liệu để hiển thị.</p>
+}

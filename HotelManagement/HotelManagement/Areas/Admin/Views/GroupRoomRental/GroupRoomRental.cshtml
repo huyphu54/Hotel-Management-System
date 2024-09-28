@@ -1,0 +1,91 @@
+﻿@model IEnumerable<HotelManagement.Models.DatPhongDoan>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "GroupRoomRental";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="m-0 font-weight-bold text-primary">Phiếu Đặt Phòng Đoàn</h2>
+    <a asp-action="AddGroupRental" class="btn btn-success">Tạo Phiếu Đặt Phòng Theo Đoàn</a>
+</p>
+<p style="color:red; font-weight:bold;">@TempData["Message"]</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Tên Đoàn
+            </th>
+          
+            <th>
+                Khách Hàng Đại Diện
+            </th>
+            <th>
+                Ngày Đặt
+            </th>
+            <th>
+                Ngày Trả
+            </th>
+            <th>
+                Số Người Ở
+            </th>        
+            @* <th>
+                Phòng Đặt
+             </th> *@
+            <th>
+                Tình trạng
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDoan)
+            </td>
+           
+             <td>
+                @Html.DisplayFor(modelItem => item.MaKhNavigation.HoTenKh)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayTra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoNguoiO)
+            </td>
+                @* <td>
+                    
+                        @if (item.DatPhongDoanPhongs != null && item.DatPhongDoanPhongs.Any())
+                        {
+                            foreach (var phong in item.DatPhongDoanPhongs)
+                            {
+                                if (phong.MaPhongNavigation != null) // Kiểm tra MaPhongNavigation có khác null
+                                {
+                                    <li>@phong.MaPhongNavigation.SoPhong</li>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <li>Không có phòng nào được chọn.</li>
+                        }
+                    
+                </td> *@
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.MaTinhTrangDatNavigation.TenTinhTrangDat)
+            </td>
+            <td>
+                <a asp-action="EditGroupRental" asp-route-maDoan="@item.MaDoan" class="btn btn-success">Cập Nhật </a>                
+                <a asp-action="GroupDetail" asp-route-maDoan="@item.MaDoan" class="btn btn-info">Chi Tiết </a>
+                <a asp-action="AddGroupService" asp-route-maDoan="@item.MaDoan" class="btn btn-success">Thêm Dịch Vụ</a> 
+                <a asp-action="CreateBill" asp-route-maDoan="@item.MaDoan" asp-controller="Payment" asp-area="Admin" class="btn btn-info">Thanh Toán</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

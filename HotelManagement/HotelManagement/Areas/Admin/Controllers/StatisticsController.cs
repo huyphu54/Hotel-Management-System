@@ -1,4 +1,5 @@
-﻿using HotelManagement.Models;
+﻿using HotelManagement.Filters;
+using HotelManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ namespace HotelManagement.Areas.Admin.Controllers
     public class StatisticsController : Controller
     {
         QlksContext db = new QlksContext();
+        [Authentication]
         [Route("RevenueStatistics")]
         public IActionResult RevenueStatistics(DateOnly? fromDate, DateOnly?toDate, string statisticType)
         {
@@ -61,18 +63,18 @@ namespace HotelManagement.Areas.Admin.Controllers
             return View(monthlyStatistics);
         }
         [Route("RevenueStatisticsYear")]
-        public IActionResult RevenueStatisticsYear(DateOnly? fromYear, DateOnly? toYear)
+        public IActionResult RevenueStatisticsYear(int? fromYear, int? toYear)
         {
             var query = db.HoaDons.AsQueryable();
 
             if (fromYear.HasValue)
             {
-                query = query.Where(hd => hd.NgayLapPhieu >= fromYear.Value);
+                query = query.Where(hd => hd.NgayLapPhieu.Value.Year >= fromYear.Value);
             }
 
             if (toYear.HasValue)
             {
-                query = query.Where(hd => hd.NgayLapPhieu <= toYear.Value);
+                query = query.Where(hd => hd.NgayLapPhieu.Value.Year <= toYear.Value);
             }
 
             var yearlyStatistics = query
@@ -87,5 +89,156 @@ namespace HotelManagement.Areas.Admin.Controllers
 
             return View(yearlyStatistics);
         }
+
+        [Route("RoomUsageStatistics")]
+        public IActionResult RoomUsageStatistics(DateOnly? fromDate, DateOnly? toDate)
+        {
+            // Khởi tạo truy vấn cho DatPhongDoan
+            var groupBookingQuery = db.DatPhongDoans.AsQueryable();
+            if (fromDate.HasValue)
+            {
+                groupBookingQuery = groupBookingQuery.Where(dp => dp.NgayDat >= fromDate.Value);
+            }
+            if (toDate.HasValue)
+            {
+                groupBookingQuery = groupBookingQuery.Where(dp => dp.NgayDat <= toDate.Value);
+            }
+
+            // Khởi tạo truy vấn cho DatPhong
+            var individualBookingQuery = db.DatPhongs.AsQueryable();
+            if (fromDate.HasValue)
+            {
+                individualBookingQuery = individualBookingQuery.Where(dp => dp.NgayNhan >= fromDate.Value);
+            }
+            if (toDate.HasValue)
+            {
+                individualBookingQuery = individualBookingQuery.Where(dp => dp.NgayNhan <= toDate.Value);
+            }
+
+            var groupBookingData = groupBookingQuery
+       .SelectMany(dp => dp.DatPhongDoanPhongs.Select(dpd => new { NgayDat = dp.NgayDat, RoomId = dpd.MaPhong }));
+
+            var individualBookingData = individualBookingQuery
+                .Select(dp => new { NgayDat = dp.NgayNhan, RoomId = dp.MaPhong });
+
+            // Kết hợp dữ liệu
+            var result = groupBookingData
+                .Concat(individualBookingData)
+                .GroupBy(x => x.NgayDat)
+                .Select(g => new
+                {
+                    Date = g.Key,
+                    TotalRoomsUsed = g.Select(x => x.RoomId).Distinct().Count()
+                })
+                .ToList();
+
+            return View(result);
+        }
+        [Route("RoomUsageStatisticsMonth")]
+        public IActionResult RoomUsageStatisticsMonth(DateOnly? fromMonth, DateOnly? toMonth)
+        {
+            var queryDatPhongDoan = db.DatPhongDoans.AsQueryable();
+
+            if (fromMonth.HasValue)
+            {
+                queryDatPhongDoan = queryDatPhongDoan.Where(dp => dp.NgayDat >= fromMonth.Value);
+            }
+
+            if (toMonth.HasValue)
+            {
+                queryDatPhongDoan = queryDatPhongDoan.Where(dp => dp.NgayDat <= toMonth.Value);
+            }
+
+            var queryDatPhong = db.DatPhongs.AsQueryable();
+
+            if (fromMonth.HasValue)
+            {
+                queryDatPhong = queryDatPhong.Where(dp => dp.NgayNhan >= fromMonth.Value);
+            }
+
+            if (toMonth.HasValue)
+            {
+                queryDatPhong = queryDatPhong.Where(dp => dp.NgayNhan <= toMonth.Value);
+            }
+
+            // Kết hợp dữ liệu từ cả hai bảng
+            var monthlyStatistics = queryDatPhongDoan
+                .SelectMany(dp => dp.DatPhongDoanPhongs.Select(dpd => new
+                {
+                    Year = dp.NgayDat.Value.Year,
+                    Month = dp.NgayDat.Value.Month,
+                    RoomId = dpd.MaPhong
+                }))
+                .Concat(
+                    queryDatPhong.Select(dp => new
+                    {
+                        Year = dp.NgayNhan.Value.Year,
+                        Month = dp.NgayNhan.Value.Month,
+                        RoomId = dp.MaPhong
+                    })
+                )
+                .GroupBy(x => new { x.Year, x.Month })
+                .Select(g => new
+                {
+                    Date = $"{g.Key.Month:00}/{g.Key.Year}", // Định dạng tháng/năm
+                    TotalRoomsUsed = g.Select(x => x.RoomId).Distinct().Count() // Đếm số lượng phòng đã sử dụng
+                })
+                .ToList();
+
+            return View(monthlyStatistics);
+        }
+        [Route("RoomUsageStatisticsYear")]
+        public IActionResult RoomUsageStatisticsYear(int? fromYear, int? toYear)
+        {
+            var queryDatPhongDoan = db.DatPhongDoans.AsQueryable();
+
+            if (fromYear.HasValue)
+            {
+                queryDatPhongDoan = queryDatPhongDoan.Where(dp => dp.NgayDat.Value.Year >= fromYear.Value);
+            }
+
+            if (toYear.HasValue)
+            {
+                queryDatPhongDoan = queryDatPhongDoan.Where(dp => dp.NgayDat.Value.Year <= toYear.Value);
+            }
+
+            var queryDatPhong = db.DatPhongs.AsQueryable();
+
+            if (fromYear.HasValue)
+            {
+                queryDatPhong = queryDatPhong.Where(dp => dp.NgayNhan.Value.Year >= fromYear.Value);
+            }
+
+            if (toYear.HasValue)
+            {
+                queryDatPhong = queryDatPhong.Where(dp => dp.NgayNhan.Value.Year <= toYear.Value);
+            }
+
+            // Kết hợp dữ liệu từ cả hai bảng
+            var yearlyStatistics = queryDatPhongDoan
+                .SelectMany(dp => dp.DatPhongDoanPhongs.Select(dpd => new
+                {
+                    Year = dp.NgayDat.Value.Year,
+                    RoomId = dpd.MaPhong
+                }))
+                .Concat(
+                    queryDatPhong.Select(dp => new
+                    {
+                        Year = dp.NgayNhan.Value.Year,
+                        RoomId = dp.MaPhong
+                    })
+                )
+                .GroupBy(x => x.Year)
+                .Select(g => new
+                {
+                    Year = g.Key,
+                    TotalRoomsUsed = g.Select(x => x.RoomId).Distinct().Count() // Đếm số lượng phòng đã sử dụng
+                })
+                .ToList();
+
+            return View(yearlyStatistics);
+        }
+
+
     }
 }
