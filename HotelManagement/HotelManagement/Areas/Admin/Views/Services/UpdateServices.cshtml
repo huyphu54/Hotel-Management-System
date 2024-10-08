@@ -1,0 +1,48 @@
+﻿@model HotelManagement.Models.DichVu
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "UpdateServices";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="m-0 font-weight-bold text-primary text-center">Cập Nhật Dịch Vụ</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="UpdateServices">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaDichVu" />
+            <div class="form-group">
+                <label asp-for="TenDichVu" class="control-label">Tên Dịch Vụ</label>
+                <input asp-for="TenDichVu" class="form-control" readonly/>
+                <span asp-validation-for="TenDichVu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gia" class="control-label">Giá Dịch Vụ</label>
+                <input asp-for="Gia" class="form-control" />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaLoaiDv" class="control-label">Loại Dịch Vụ</label>
+                <select asp-for="MaLoaiDv" class="form-control" asp-items="ViewBag.MaLoaiDv" disabled></select>
+                <span asp-validation-for="MaLoaiDv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TinhTrang" class="control-label">Tình Trạng</label>
+                <select asp-for="TinhTrang" class="form-control">
+                    <option value="Còn Hàng">Còn Hàng</option>
+                    <option value="Hết Hàng">Hết Hàng</option>
+                </select>
+                <span asp-validation-for="TinhTrang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

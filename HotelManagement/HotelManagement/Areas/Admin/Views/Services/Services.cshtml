@@ -1,0 +1,88 @@
+﻿@using HotelManagement.Models
+@model X.PagedList.IPagedList<HotelManagement.Models.DichVu>
+@using X.PagedList
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Service";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2 class="m-0 font-weight-bold text-primary text-center">Danh Sách Dịch Vụ</h2>
+<p>
+    <a asp-action="AddServices" class="btn btn-success">Thêm Dịch Vụ Mới</a>
+</p>
+<p>@TempData["Message"]</p>
+<table class="table align-items-center table-flush table-hover dataTable" id="dataTableHover" role="grid" aria-describedby="dataTableHover_info">
+    <thead class="thead-light">
+        <tr>
+            <th>Tên Dịch Vụ</th>
+            <th>Giá</th>
+            <th>Loại Dịch Vụ</th>
+            <th>Tình Trạng</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tfoot >
+        <tr>
+            <th>Tên Dịch Vụ</th>
+            <th>Giá</th>
+            <th>Loại Dịch Vụ</th>
+            <th>Tình Trạng</th>
+            <th></th>
+        </tr>
+    </tfoot>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDichVu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaLoaiDvNavigation.TenLoaiDv)
+            </td>
+              <td>
+                @Html.DisplayFor(modelItem => item.TinhTrang)
+            </td>
+            <td>
+                <a asp-action="UpdateServices" asp-route-maDV="@item.MaDichVu" class="btn btn-primary">Cập Nhật Dịch Vụ</a> |
+               @*  <a asp-action="Details" asp-route-maDV="@item.MaDichVu">Details</a> |
+                <a asp-action="Delete" asp-route-maDV="@item.MaDichVu">Delete</a> *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-sm-12 col-md-5">
+        <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite">
+            Showing @Model.PageNumber to @Model.PageCount of @Model.TotalItemCount entries
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="dataTableHover_paginate">
+            <ul class="pagination">
+                @if (Model.PageNumber > 1)
+                {
+                    <li class="paginate_button page-item previous">
+                        <a class="page-link" href="@Url.Action("Service","Services", new { page = Model.PageNumber - 1 })">Previous</a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    <li class="paginate_button page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Service","Services", new { page = i })">@i</a>
+                    </li>
+                }
+                @if (Model.PageNumber < Model.PageCount)
+                {
+                    <li class="paginate_button page-item next">
+                        <a class="page-link" href="@Url.Action("Service","Services", new { page = Model.PageNumber + 1 })">Next</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

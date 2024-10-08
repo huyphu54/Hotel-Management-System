@@ -202,13 +202,13 @@ namespace HotelManagement.Areas.Admin.Controllers
                              .Include(dp => dp.DoanDichVus)
                              .FirstOrDefault(dp => dp.MaDoan == maDoan);
 
-
+            var dichVuDoan = db.DichVus.Where(dv => dv.TinhTrang == "Còn Hàng").Select(dv => new { dv.MaDichVu, dv.TenDichVu }).ToList(); 
             if (doanDatPhong == null)
             {
                 return NotFound();
             }
 
-            ViewBag.MaDichVu = new SelectList(db.DichVus, "MaDichVu", "TenDichVu");
+            ViewBag.MaDichVu = new SelectList(dichVuDoan, "MaDichVu", "TenDichVu");
 
             return View(new DoanDichVu { MaDoan = maDoan.Value });
         }
@@ -219,7 +219,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             var existingRecord = db.DoanDichVus
                                   .AsNoTracking()
                                   .FirstOrDefault(ddv => ddv.MaDoan == model.MaDoan && ddv.MaDichVu == model.MaDichVu);
-
+            var dichVuDoan = db.DichVus.Where(dv => dv.TinhTrang == "Còn Hàng").Select(dv => new { dv.MaDichVu, dv.TenDichVu }).ToList(); 
             if (existingRecord != null)
             {
                 existingRecord.SoLuong += model.SoLuong.GetValueOrDefault();
@@ -242,7 +242,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                 }
             }
             ModelState.AddModelError("", "Không thể thêm dịch vụ!");
-            ViewBag.MaDichVu = new SelectList(db.DichVus, "MaDichVu", "TenDichVu");
+            ViewBag.MaDichVu = new SelectList(dichVuDoan, "MaDichVu", "TenDichVu");
             return View(model);
         }
         [HttpGet("admin/GroupDetail")]

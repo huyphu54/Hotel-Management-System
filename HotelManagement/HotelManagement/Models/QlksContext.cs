@@ -29,6 +29,8 @@ public partial class QlksContext : DbContext
 
     public virtual DbSet<KhachHang> KhachHangs { get; set; }
 
+    public virtual DbSet<LoaiDichVu> LoaiDichVus { get; set; }
+
     public virtual DbSet<LoaiHinhDat> LoaiHinhDats { get; set; }
 
     public virtual DbSet<LoaiPhong> LoaiPhongs { get; set; }
@@ -131,7 +133,12 @@ public partial class QlksContext : DbContext
 
             entity.ToTable("DichVu");
 
+            entity.Property(e => e.MaLoaiDv).HasColumnName("MaLoaiDV");
             entity.Property(e => e.TenDichVu).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaLoaiDvNavigation).WithMany(p => p.DichVus)
+                .HasForeignKey(d => d.MaLoaiDv)
+                .HasConstraintName("FK_DichVu_LoaiDichVu");
         });
 
         modelBuilder.Entity<DoanDichVu>(entity =>
@@ -189,6 +196,18 @@ public partial class QlksContext : DbContext
             entity.Property(e => e.Sdt)
                 .HasMaxLength(15)
                 .HasColumnName("SDT");
+        });
+
+        modelBuilder.Entity<LoaiDichVu>(entity =>
+        {
+            entity.HasKey(e => e.MaLoaiDv);
+
+            entity.ToTable("LoaiDichVu");
+
+            entity.Property(e => e.MaLoaiDv).HasColumnName("MaLoaiDV");
+            entity.Property(e => e.TenLoaiDv)
+                .HasMaxLength(50)
+                .HasColumnName("TenLoaiDV");
         });
 
         modelBuilder.Entity<LoaiHinhDat>(entity =>

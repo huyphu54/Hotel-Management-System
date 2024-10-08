@@ -158,6 +158,24 @@ namespace HotelManagement.Areas.Admin.Controllers
                 return View(phong);
             }
         }
+
+
+        [Route("admin/roomdetails")]
+        [HttpGet]
+        public IActionResult RoomDetails(int? maPhong)
+        {  
+            var phong = db.Phongs.Include(lp=>lp.MaLpNavigation)
+                .Include(t=>t.MaTangNavigation)
+                .Include(tt=>tt.MaTinhTrangNavigation)
+                .Include(dp=>dp.DatPhongs).ThenInclude(kh=>kh.MaKhNavigation)
+                .Include(dpd => dpd.DatPhongDoanPhongs).ThenInclude(d => d.MaDoanNavigation)
+                .FirstOrDefault(p => p.MaPhong == maPhong);
+            return View(phong);
+        }
+
+
+        //--------------------------Loại Phòng----------------------------
+
         [Authorization]
         //Danh sách loại phòng 
         [Route("admin/roomtype")]

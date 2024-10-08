@@ -21,7 +21,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             int pageSize = 10;
             int pageNumber = page ?? 1;
             var listPhieuDat = db.DatPhongs.Include(p => p.MaKhNavigation).Include(p => p.MaNvNavigation).Include(p => p.MaPhongNavigation).ThenInclude(lp => lp.MaLpNavigation)
-                .Include(p => p.MaLoaiHinhDatNavigation).Include(p => p.MaTinhTrangDatNavigation).AsNoTracking().OrderBy(x => x.MaPhieuThue).AsQueryable();
+                .Include(p => p.MaLoaiHinhDatNavigation).Include(p => p.MaTinhTrangDatNavigation).AsNoTracking().OrderBy(x => x.NgayNhan).AsQueryable();
 
             if (!string.IsNullOrEmpty(searchKhachHang))
             {
@@ -214,12 +214,13 @@ namespace HotelManagement.Areas.Admin.Controllers
                              .FirstOrDefault(dp => dp.MaPhieuThue == maPhieuThue);
 
 
+            var dichVuPhong = db.DichVus.Where(dv => dv.TinhTrang == "Còn Hàng").Select(dv => new { dv.MaDichVu, dv.TenDichVu }).ToList();
             if (datPhong == null)
             {
                 return NotFound();
             }
 
-            ViewBag.MaDichVu = new SelectList(db.DichVus, "MaDichVu", "TenDichVu");
+            ViewBag.MaDichVu = new SelectList(dichVuPhong, "MaDichVu", "TenDichVu");
 
             return View(new PhongDichVu { MaPhieuThue = maPhieuThue.Value });
         }
@@ -230,7 +231,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             var existingRecord = db.PhongDichVus
                                   .AsNoTracking()
                                   .FirstOrDefault(pdv => pdv.MaPhieuThue == model.MaPhieuThue && pdv.MaDichVu == model.MaDichVu);
-
+            var dichVuPhong = db.DichVus.Where(dv => dv.TinhTrang == "Còn Hàng").Select(dv => new { dv.MaDichVu, dv.TenDichVu }).ToList();
             if (existingRecord != null)
             {
                 existingRecord.SoLuong += model.SoLuong.GetValueOrDefault();
@@ -256,7 +257,7 @@ namespace HotelManagement.Areas.Admin.Controllers
 
 
             ModelState.AddModelError("", "Không thể thêm dịch vụ phòng này");
-            ViewBag.MaDichVu = new SelectList(db.DichVus, "MaDichVu", "TenDichVu");
+            ViewBag.MaDichVu = new SelectList(dichVuPhong, "MaDichVu", "TenDichVu");
             return View(model);
         }
 

@@ -1,0 +1,70 @@
+﻿@model HotelManagement.Models.Phong
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "RoomDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="m-0 font-weight-bold text-primary text-center">Chi Tiết Phòng</h2>
+
+<hr />
+<div>
+
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Số Phòng
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SoPhong)
+        </dd>
+        <dt class = "col-sm-2">
+            Loại Phòng
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaLpNavigation.TenLoaiPhong)
+        </dd>
+        <dt class = "col-sm-2">
+           Tầng
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaTangNavigation.TenTang)
+        </dd>
+        <dt class = "col-sm-2">
+            Tình Trạng Phòng
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaTinhTrangNavigation.TenTinhTrang)
+        </dd>      
+        <dt class="col-sm-2">
+            Khách Hàng
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.MaTinhTrang == 1)
+            {
+                var khachDangSuDung = Model.DatPhongs?.Where(kh => kh?.MaTinhTrangDat == 2).ToList();
+                if (khachDangSuDung != null && khachDangSuDung.Any())
+                {
+                    foreach (var kh in khachDangSuDung)
+                    {
+                        var hoTenKh = kh?.MaKhNavigation?.HoTenKh ?? "Không";
+                        @hoTenKh <br />
+                    }
+                }
+                else
+                {
+                    <span>Admin đang thay đổi trạng thái</span>
+                }
+            }
+            else
+            {
+                <span>Không có khách hàng sử dụng</span>
+            }
+        </dd>
+
+
+    </dl>
+</div>
+<div>
+    <a asp-action="EditRoom" asp-route-maPhong="@Model.MaPhong" class="btn btn-warning">Chỉnh Sửa</a> |
+    <a asp-action="Room" class="btn btn-primary">Back to List</a>
+</div>

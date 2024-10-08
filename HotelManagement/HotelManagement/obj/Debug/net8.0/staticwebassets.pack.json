@@ -149,6 +149,14 @@
       "PackagePath": "staticwebassets\\LayoutAdmin\\img\\logo\\logo2.png"
     },
     {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\LayoutAdmin\\img\\logo\\nplogo.jpg",
+      "PackagePath": "staticwebassets\\LayoutAdmin\\img\\logo\\nplogo.jpg"
+    },
+    {
+      "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\LayoutAdmin\\img\\logo\\nplogo2.jpg",
+      "PackagePath": "staticwebassets\\LayoutAdmin\\img\\logo\\nplogo2.jpg"
+    },
+    {
       "Id": "E:\\Hotel-Management-System\\HotelManagement\\HotelManagement\\wwwroot\\LayoutAdmin\\img\\man.png",
       "PackagePath": "staticwebassets\\LayoutAdmin\\img\\man.png"
     },

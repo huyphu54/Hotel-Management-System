@@ -39,9 +39,9 @@ namespace HotelManagement.Areas.Admin.Controllers
                 return View(user);
             } 
          
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Account");
+            db.Users.Add(user);
+            db.SaveChanges();
+            return RedirectToAction("Account");
            
         }
     }

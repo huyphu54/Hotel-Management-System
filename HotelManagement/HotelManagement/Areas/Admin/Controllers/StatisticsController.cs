@@ -116,7 +116,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             }
 
             var groupBookingData = groupBookingQuery
-       .SelectMany(dp => dp.DatPhongDoanPhongs.Select(dpd => new { NgayDat = dp.NgayDat, RoomId = dpd.MaPhong }));
+             .SelectMany(dp => dp.DatPhongDoanPhongs.Select(dpd => new { NgayDat = dp.NgayDat, RoomId = dpd.MaPhong }));
 
             var individualBookingData = individualBookingQuery
                 .Select(dp => new { NgayDat = dp.NgayNhan, RoomId = dp.MaPhong });
@@ -128,7 +128,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                 .Select(g => new
                 {
                     Date = g.Key,
-                    TotalRoomsUsed = g.Select(x => x.RoomId).Distinct().Count()
+                    TotalRoomsUsed = g.Select(x => x.RoomId).Count()
                 })
                 .ToList();
 
@@ -137,56 +137,58 @@ namespace HotelManagement.Areas.Admin.Controllers
         [Route("RoomUsageStatisticsMonth")]
         public IActionResult RoomUsageStatisticsMonth(DateOnly? fromMonth, DateOnly? toMonth)
         {
-            var queryDatPhongDoan = db.DatPhongDoans.AsQueryable();
-
+            // Khởi tạo truy vấn cho DatPhongDoan
+            var groupBookingQuery = db.DatPhongDoans.AsQueryable();
             if (fromMonth.HasValue)
             {
-                queryDatPhongDoan = queryDatPhongDoan.Where(dp => dp.NgayDat >= fromMonth.Value);
+                groupBookingQuery = groupBookingQuery.Where(dp => dp.NgayDat >= fromMonth.Value);
             }
-
             if (toMonth.HasValue)
             {
-                queryDatPhongDoan = queryDatPhongDoan.Where(dp => dp.NgayDat <= toMonth.Value);
+                groupBookingQuery = groupBookingQuery.Where(dp => dp.NgayDat <= toMonth.Value);
             }
 
-            var queryDatPhong = db.DatPhongs.AsQueryable();
-
+            // Khởi tạo truy vấn cho DatPhong
+            var individualBookingQuery = db.DatPhongs.AsQueryable();
             if (fromMonth.HasValue)
             {
-                queryDatPhong = queryDatPhong.Where(dp => dp.NgayNhan >= fromMonth.Value);
+                individualBookingQuery = individualBookingQuery.Where(dp => dp.NgayNhan >= fromMonth.Value);
             }
-
             if (toMonth.HasValue)
             {
-                queryDatPhong = queryDatPhong.Where(dp => dp.NgayNhan <= toMonth.Value);
+                individualBookingQuery = individualBookingQuery.Where(dp => dp.NgayNhan <= toMonth.Value);
             }
 
-            // Kết hợp dữ liệu từ cả hai bảng
-            var monthlyStatistics = queryDatPhongDoan
+            var groupBookingData = groupBookingQuery
                 .SelectMany(dp => dp.DatPhongDoanPhongs.Select(dpd => new
                 {
                     Year = dp.NgayDat.Value.Year,
                     Month = dp.NgayDat.Value.Month,
                     RoomId = dpd.MaPhong
-                }))
-                .Concat(
-                    queryDatPhong.Select(dp => new
-                    {
-                        Year = dp.NgayNhan.Value.Year,
-                        Month = dp.NgayNhan.Value.Month,
-                        RoomId = dp.MaPhong
-                    })
-                )
+                }));
+
+            var individualBookingData = individualBookingQuery
+                .Select(dp => new
+                {
+                    Year = dp.NgayNhan.Value.Year,
+                    Month = dp.NgayNhan.Value.Month,
+                    RoomId = dp.MaPhong
+                });
+
+            // Kết hợp dữ liệu
+            var result = groupBookingData
+                .Concat(individualBookingData)
                 .GroupBy(x => new { x.Year, x.Month })
                 .Select(g => new
                 {
                     Date = $"{g.Key.Month:00}/{g.Key.Year}", // Định dạng tháng/năm
-                    TotalRoomsUsed = g.Select(x => x.RoomId).Distinct().Count() // Đếm số lượng phòng đã sử dụng
+                    TotalRoomsUsed = g.Select(x => x.RoomId).Count()
                 })
                 .ToList();
 
-            return View(monthlyStatistics);
+            return View(result);
         }
+
         [Route("RoomUsageStatisticsYear")]
         public IActionResult RoomUsageStatisticsYear(int? fromYear, int? toYear)
         {
@@ -232,7 +234,7 @@ namespace HotelManagement.Areas.Admin.Controllers
                 .Select(g => new
                 {
                     Year = g.Key,
-                    TotalRoomsUsed = g.Select(x => x.RoomId).Distinct().Count() // Đếm số lượng phòng đã sử dụng
+                    TotalRoomsUsed = g.Select(x => x.RoomId).Count() // Đếm số lượng phòng đã sử dụng
                 })
                 .ToList();
 

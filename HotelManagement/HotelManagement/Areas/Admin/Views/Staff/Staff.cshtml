@@ -7,7 +7,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h3 class="m-0 font-weight-bold text-primary">Danh Sách Nhân Viên</h3>
+<h3 class="m-0 font-weight-bold text-primary text-center">Danh Sách Nhân Viên</h3>
 
 <p>
     <a asp-action="AddStaff" class="btn btn-success"> Thêm Nhân Viên</a>
@@ -21,7 +21,13 @@
         </label>
         <label>
             Tìm Phòng Ban
-            <input type="search" name="searchPhongBan" value="@ViewBag.SearchPhongBan" class="form-control form-control-sm" placeholder="Nhập Phòng Ban" aria-controls="dataTableHover">
+            <select type="search" name="searchPhongBan" value="@ViewBag.SearchPhongBan" class="form-control form-control-sm"  aria-controls="dataTableHover">
+                <option value="" disabled selected>Nhập Phòng Ban</option>
+                <option value="Quản Lý">Quản Lý</option>
+                <option value="Lễ Tân">Lễ Tân</option>
+                <option value="Nội Vụ">Nội Vụ</option>
+                <option value="An Ninh">An Ninh</option>
+            </select>
         </label>
      
 
