@@ -264,3 +264,9 @@ E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\refi
 E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\HotelManagement.pdb
 E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\HotelManagement.genruntimeconfig.cache
 E:\Hotel-Management-System\HotelManagement\HotelManagement\obj\Debug\net8.0\ref\HotelManagement.dll
+E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\Hotel-Management-System\HotelManagement\HotelManagement\bin\Debug\net8.0\Microsoft.Extensions.Options.dll

@@ -77,7 +77,16 @@ namespace HotelManagement.Areas.Admin.Controllers
             }
             return View(khachHang);
         }
-
-
+        [Route("CustomerDetails")]
+        [HttpGet]
+        public IActionResult CustomerDetails(int? maKh)
+        {
+            var khachHang = db.KhachHangs.Include(dp => dp.DatPhongs).ThenInclude(dp => dp.MaPhongNavigation)
+                .Include(dpd => dpd.DatPhongDoans).ThenInclude(dpd => dpd.DatPhongDoanPhongs).ThenInclude(p => p.MaPhongNavigation)
+                
+                .FirstOrDefault(kh => kh.MaKh == maKh);
+                
+            return View(khachHang);
+        }
     }
 }

@@ -1,0 +1,110 @@
+﻿@model HotelManagement.Models.KhachHang
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "CustomerDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>CustomerDetails</h1>
+
+<div>
+    <h4>KhachHang</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HoTenKh)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HoTenKh)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NamSinh)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NamSinh)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sdt)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sdt)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.QuocTich)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.QuocTich)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cccd)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cccd)
+        </dd>
+      
+       
+
+    </dl>
+</div>
+
+<h3 class="m-0 font-weight-bold text-primary">Danh sách phòng đã đặt</h3>
+@if (Model.DatPhongDoans != null && Model.DatPhongDoans.Any() || Model.DatPhongs != null && Model.DatPhongs.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Phòng</th>
+                <th>Ngày Đặt</th>
+                <th>Ngày Trả</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.DatPhongDoans != null && Model.DatPhongDoans.Any())
+            {
+                @foreach (var datphongdoan in Model.DatPhongDoans)
+                {
+                    @foreach (var phong in datphongdoan.DatPhongDoanPhongs)
+                    {
+                        if (phong.MaPhongNavigation != null)
+                        {
+                            <tr>
+                                <td>@phong.MaPhongNavigation.SoPhong</td>
+                                <td>@phong.MaDoanNavigation.NgayDat</td>
+                                <td>@phong.MaDoanNavigation.NgayTra</td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+            @if (Model.DatPhongs != null && Model.DatPhongs.Any())
+            {
+                @foreach (var phong in Model.DatPhongs)
+                {
+                    if (phong.MaPhongNavigation != null)
+                    {
+                        <tr>
+                            <td>@phong.MaPhongNavigation.SoPhong</td>
+                            <td>@phong.NgayNhan</td>
+                            <td>@phong.NgayTra</td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Khách hàng này chưa đặt phòng.</p>
+}
+
+<div>
+    
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>

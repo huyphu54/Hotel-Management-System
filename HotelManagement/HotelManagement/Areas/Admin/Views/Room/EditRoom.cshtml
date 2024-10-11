@@ -15,13 +15,7 @@
         <div class="col-md-4">
             <form method="post" asp-action="EditRoom">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="MaPhong" />
-       
-                <div class="form-group">
-                    <label asp-for="MaLp" class="control-label">Loại Phòng</label>
-                    <select asp-for="MaLp" class="form-control" asp-items="ViewBag.MaLp"></select>
-                    <span asp-validation-for="MaLp" class="text-danger"></span>
-                </div>
+                <input type="hidden" asp-for="MaPhong" />         
                 <div class="form-group">
                     <label asp-for="MaTinhTrang" class="control-label">Tình Trạng</label>
                     <select asp-for="MaTinhTrang" class="form-control" asp-items="ViewBag.MaTinhTrang"></select>

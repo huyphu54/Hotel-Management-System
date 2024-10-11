@@ -14,17 +14,25 @@ namespace HotelManagement.Areas.Admin.Controllers
         QlksContext db = new QlksContext();
     
         [Route("Admin/GroupRoomRental")]
-        public IActionResult GroupRoomRental()
+        public IActionResult GroupRoomRental(int? page, string searchDoan)
         {
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
             var datPhongDoan = db.DatPhongDoans
                 .Include(dp => dp.MaKhNavigation)
                 .Include(dp => dp.MaTinhTrangDatNavigation)
                 .Include(dp => dp.MaNvNavigation)
                 .Include(d => d.DatPhongDoanPhongs)
                 .ThenInclude(dpd => dpd.MaPhongNavigation)
-                .ToList();
-
-            return View(datPhongDoan);
+                .AsNoTracking().OrderBy(x => x.NgayDat);
+            if (!string.IsNullOrEmpty(searchDoan))
+            {
+                datPhongDoan = datPhongDoan.Where(pd => pd.TenDoan.Contains(searchDoan))
+                    .OrderBy(x => x.NgayDat);
+            }
+            ViewBag.SearchDoan = searchDoan;
+            PagedList<DatPhongDoan> lst = new PagedList<DatPhongDoan>(datPhongDoan, pageNumber, pageSize);
+            return View(lst);
         }
 
         [Route("Admin/AddGroupRental")]

@@ -15,7 +15,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         [Route("admin/room")]
         public IActionResult Room(int? page, string searchTinhTrang, string searchLoaiPhong, string searchTang)
         {
-            int pageSize = 10;
+            int pageSize = 20;
             int pageNumber = page ?? 1;
             var listPhong = db.Phongs.Include(p => p.MaLpNavigation).Include(p => p.MaTangNavigation).Include(p => p.MaTinhTrangNavigation).AsNoTracking().OrderBy(x => x.MaPhong);
             if (!string.IsNullOrEmpty(searchTinhTrang))

@@ -26,11 +26,25 @@ namespace HotelManagement.Areas.Admin.Controllers
 
         QlksContext db = new QlksContext();
         [Route("Payment")]
-        public IActionResult Payment(int? page)
+        public IActionResult Payment(int? page, DateOnly? searchNgay, string searchKhachHang)
         {
-            int pageSize = 10;
+            int pageSize = 20;
             int pageNumber = page ?? 1;
-            var listHoaDon = db.HoaDons.Include(nv => nv.MaPhieuThueNavigation).AsNoTracking().OrderBy(x => x.MaHoaDon);
+            var listHoaDon = db.HoaDons.Include(nv => nv.MaPhieuThueNavigation).AsNoTracking().OrderBy(x => x.NgayLapPhieu).AsQueryable();
+            if (searchNgay.HasValue)
+            {
+                var ngayLapPhieu = searchNgay.Value; 
+                listHoaDon = listHoaDon.Where(pd => pd.NgayLapPhieu == ngayLapPhieu);
+            }
+            if (!string.IsNullOrEmpty(searchKhachHang))
+            {
+                listHoaDon = listHoaDon
+                     .Where(pd => pd.MaPhieuThueNavigation.MaKhNavigation.HoTenKh.Contains(searchKhachHang) ||
+                                  pd.MaDoanNavigation.MaKhNavigation.HoTenKh.Contains(searchKhachHang))
+                     .OrderBy(x => x.MaPhieuThue);
+            }
+            ViewBag.SearchKhachHang = searchKhachHang;
+            ViewBag.SearchNgay = searchNgay;
             PagedList<HoaDon> lst = new PagedList<HoaDon>(listHoaDon, pageNumber, pageSize);
             return View(lst);
         }

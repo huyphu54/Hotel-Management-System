@@ -16,9 +16,9 @@ namespace HotelManagement.Areas.Admin.Controllers
         //Danh sách phiếu thuê
         [Authentication]
         [Route("admin/Roomrental")]
-        public IActionResult RoomRental(int? page, string searchKhachHang, string searchLoaiHinhDat, string searchTinhTrang)
+        public IActionResult RoomRental(int? page, string searchKhachHang, string searchLoaiHinhDat, string searchTinhTrang,string searchLoaiPhong, DateOnly? startDate, DateOnly? endDate)
         {
-            int pageSize = 10;
+            int pageSize = 20;
             int pageNumber = page ?? 1;
             var listPhieuDat = db.DatPhongs.Include(p => p.MaKhNavigation).Include(p => p.MaNvNavigation).Include(p => p.MaPhongNavigation).ThenInclude(lp => lp.MaLpNavigation)
                 .Include(p => p.MaLoaiHinhDatNavigation).Include(p => p.MaTinhTrangDatNavigation).AsNoTracking().OrderBy(x => x.NgayNhan).AsQueryable();
@@ -33,15 +33,32 @@ namespace HotelManagement.Areas.Admin.Controllers
                 listPhieuDat = listPhieuDat.Where(pd => pd.MaLoaiHinhDatNavigation.TenLoaiHinhDat.Contains(searchLoaiHinhDat))
                     .OrderBy(x => x.MaPhieuThue);
             }
+            if (!string.IsNullOrEmpty(searchLoaiPhong))
+            {
+                listPhieuDat = listPhieuDat.Where(pd => pd.MaPhongNavigation.MaLpNavigation.TenLoaiPhong.Contains(searchLoaiPhong))
+                    .OrderBy(x => x.MaPhieuThue);
+            }
             if (!string.IsNullOrEmpty(searchTinhTrang))
             {
                 listPhieuDat = listPhieuDat.Where(pd => pd.MaTinhTrangDatNavigation.TenTinhTrangDat.Contains(searchTinhTrang))
                     .OrderBy(x => x.MaPhieuThue);
             }
+            if (startDate.HasValue)
+            {
+                var startDateTime = startDate.Value; // Convert to DateTime for comparison
+                listPhieuDat = listPhieuDat.Where(pd => pd.NgayNhan >= startDateTime);
+            }
 
+            if (endDate.HasValue)
+            {
+                var endDateTime = endDate.Value; // Convert to DateTime for comparison
+                listPhieuDat = listPhieuDat.Where(pd => pd.NgayTra == endDateTime);
+            }
             ViewBag.SearchKhachHang = searchKhachHang;
             ViewBag.SearchLoaiHinhDat = searchLoaiHinhDat;
             ViewBag.SearchTinhTrang = searchTinhTrang;
+            ViewBag.StartDate = startDate;
+            ViewBag.EndDate = endDate;
             PagedList<DatPhong> lstPhieuDat = new PagedList<DatPhong>(listPhieuDat, pageNumber, pageSize);
             return View(lstPhieuDat);
         }

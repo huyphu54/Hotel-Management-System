@@ -84,6 +84,7 @@ namespace HotelManagement.Areas.Admin.Controllers
             var nhanVien = db.NhanViens.Find(maNhanVien);
             return View(nhanVien);
         }
+        [Authorization]
         [Route("EditStaff")]
         [HttpPost]
         public IActionResult EditStaff(NhanVien nhanVien, IFormFile? AvatarFile)

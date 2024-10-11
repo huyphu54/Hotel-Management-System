@@ -47,6 +47,7 @@
                                     <th>Số Điện Thoại</th>
                                     <th>Quốc Tịch</th>
                                     <th>CCCD</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tfoot class="thead-light">
@@ -58,6 +59,7 @@
                                     <th>Số Điện Thoại</th>
                                     <th>Quốc Tịch</th>
                                     <th>CCCD</th>
+                                    <th></th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -71,12 +73,14 @@
                                         <td>@item.Sdt</td>
                                         <td>@item.QuocTich</td>
                                         <td>@item.Cccd</td>
+                                        <td> <a asp-action="CustomerDetails" asp-route-maKh="@item.MaKh" class="btn btn-info">Chi Tiết </a></td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-sm-12 col-md-5">
                         <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite">

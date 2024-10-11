@@ -19,13 +19,42 @@
             </label>
             <label>
                 Loại Hình Đặt
-                <input type="search" name="searchLoaiHinhDat" value="@ViewBag.SearchLoaiHinhDat" class="form-control form-control-sm" placeholder="Nhập Loại Hình Đặt" aria-controls="dataTableHover">
+                <select id="searchLoaiHinhDat" name="searchLoaiHinhDat" value="@ViewBag.SearchLoaiHinhDat" class="form-control form-control-sm"  aria-controls="dataTableHover">
+                    <option value="" disabled selected>Chọn Loại Hình Đặt</option>
+                    <option value="Theo Ngày">Theo Ngày</option>
+                    <option value="Theo Giờ">Theo Giờ</option>
+                    <option value="Qua Đêm">Qua Đêm</option>
+                </select>
+            </label>
+            <label>
+                Loại Phòng
+                <select id="searchLoaiPhong" name="searchLoaiPhong" value="@ViewBag.SearchLoaiPhong" class="form-control form-control-sm" aria-controls="dataTableHover">
+                    <option value="" disabled selected>Chọn Loại Phòng</option>
+                    <option value="Single">Single</option>
+                    <option value="Duplex">Duplex</option>
+                    <option value="Vip">Vip</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="Premeum">Premeum</option>
+                </select>
             </label>
             <label>
                 Tình Trạng
-                <input type="search" name="searchTinhTrang" value="@ViewBag.SearchTinhTrang" class="form-control form-control-sm" placeholder="Nhập Tình Trạng" aria-controls="dataTableHover">
+                <select id="searchTinhTrang" name="searchTinhTrang" value="@ViewBag.SearchTinhTrang" class="form-control form-control-sm"  aria-controls="dataTableHover">
+                    <option value="" disabled selected>Chọn Tình Trạng </option>
+                    <option value="Chưa Nhận Phòng">Chưa Nhận Phòng</option>
+                    <option value="Đã Nhận Phòng">Đã Nhận Phòng</option>
+                    <option value="Đã Trả Phòng">Đã Trả Phòng</option>
+                    <option value="Hủy Phòng">Hủy Phòng</option>
+                </select>
             </label>
-
+            <label>
+                 Ngày Nhận
+                <input type="date" name="startDate" value="@ViewBag.StartDate?.ToString("yyyy-MM-dd")" class="form-control form-control-sm" aria-controls="dataTableHover">
+            </label>
+            <label>
+                Ngày Trả
+                <input type="date" name="endDate" value="@ViewBag.EndDate?.ToString("yyyy-MM-dd")" class="form-control form-control-sm" aria-controls="dataTableHover">
+            </label>
             <button type="submit" class="btn btn-primary btn-primary">Search</button>
         </div>
     </form>
@@ -39,9 +68,9 @@
                     Loại Hình Đặt
                 </th>
            
-                <th>
+           @*      <th>
                     Số Phòng
-                </th>
+                </th> *@
                 <th>
                     Loại Phòng
                 </th>
@@ -70,9 +99,9 @@
                 <th>
                     Loại Hình Đặt
                 </th>
-                <th>
+             @*    <th>
                     Số Phòng
-                </th>
+                </th> *@
                 <th>
                     Loại Phòng
                 </th>
@@ -104,9 +133,9 @@
                     @Html.DisplayFor(modelItem => item.MaLoaiHinhDatNavigation.TenLoaiHinhDat)
                 </td>
            
-                <td>
+              @*   <td>
                     @Html.DisplayFor(modelItem => item.MaPhongNavigation.SoPhong)
-                </td>
+                </td> *@
                  <td>
                     @Html.DisplayFor(modelItem => item.MaPhongNavigation.MaLpNavigation.TenLoaiPhong)
                 </td>
@@ -125,48 +154,69 @@
             
                 <td>       
                     <div>
-                            <a asp-action="AddService" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Thêm Dịch Vụ</a>
-                            <a asp-action="Details" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-info">Chi Tiết Phiếu</a>
+                        <a asp-action="AddService" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Thêm Dịch Vụ</a>
+                        <a asp-action="Details" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-info">Chi Tiết Phiếu</a>
                     </div>
-                        <div>
-                            <a asp-action="EditRental" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Cập Nhật Phiếu</a>
-                            <a asp-action="CreateBill" asp-route-maPhieuThue="@item.MaPhieuThue" asp-controller="Payment" asp-area="Admin" class="btn btn-info">Thanh Toán</a>
-                        </div>
+                    <div>
+                        <a asp-action="EditRental" asp-route-maPhieuThue="@item.MaPhieuThue" class="btn btn-success">Cập Nhật Phiếu</a>
+                        <a asp-action="CreateBill" asp-route-maPhieuThue="@item.MaPhieuThue" asp-controller="Payment" asp-area="Admin" class="btn btn-info">Thanh Toán</a>
+                    </div>
 
                 </td>
             </tr>
     }
         </tbody>
     </table>
-    <div class="row">
-        <div class="col-sm-12 col-md-5">
-            <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite">
-                Showing @Model.PageNumber to @Model.PageCount of @Model.TotalItemCount entries
-            </div>
-        </div>
+    <div class="row justify-content-center">
+       
         <div class="col-sm-12 col-md-7">
             <div class="dataTables_paginate paging_simple_numbers" id="dataTableHover_paginate">
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     @if (Model.PageNumber > 1)
                     {
                         <li class="paginate_button page-item previous">
-                            <a class="page-link" href="@Url.Action("RoomRental","RoomRental", new { page = Model.PageNumber - 1 })">Previous</a>
+                            <a class="page-link" href="@Url.Action("RoomRental", "RoomRental", new { page = Model.PageNumber - 1 })">Previous</a>
                         </li>
                     }
-                    @for (int i = 1; i <= Model.PageCount; i++)
+
+                    @{
+                        int maxPagesToShow = 10;
+                        int startPage = Math.Max(1, Model.PageNumber - maxPagesToShow / 2);
+                        int endPage = Math.Min(Model.PageCount, startPage + maxPagesToShow - 1);
+
+                        // Điều chỉnh startPage nếu endPage là cuối cùng
+                        if (endPage == Model.PageCount)
+                        {
+                            startPage = Math.Max(1, endPage - maxPagesToShow + 1);
+                        }
+                    }
+
+                    @for (int i = startPage; i <= endPage; i++)
                     {
                         <li class="paginate_button page-item @(i == Model.PageNumber ? "active" : "")">
-                            <a class="page-link" href="@Url.Action("RoomRental","RoomRental", new { page = i })">@i</a>
+                            <a class="page-link" href="@Url.Action("RoomRental", "RoomRental", new { page = i })">@i</a>
                         </li>
                     }
+
+          
+                    @if (endPage < Model.PageCount)
+                    {
+                    <li class="paginate_button page-item">
+                        <span class="page-link">…</span>
+                    </li>
+                    <li class="paginate_button page-item">
+                        <a class="page-link" href="@Url.Action("RoomRental", "RoomRental", new { page = Model.PageCount })">@Model.PageCount</a>
+                    </li>
+                    }
+
                     @if (Model.PageNumber < Model.PageCount)
                     {
                         <li class="paginate_button page-item next">
-                            <a class="page-link" href="@Url.Action("RoomRental","RoomRental", new { page = Model.PageNumber + 1 })">Next</a>
+                            <a class="page-link" href="@Url.Action("RoomRental", "RoomRental", new { page = Model.PageNumber + 1 })">Next</a>
                         </li>
                     }
                 </ul>
             </div>
         </div>
+
     </div>
-</div>

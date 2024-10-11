@@ -4,7 +4,9 @@
     ViewData["Title"] = "DetailStaff";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+@{
+    var currentUser = Context.Session.GetString("Role");
+}
 <h2 class="m-0 font-weight-bold text-primary text-center">Thông Tin Nhân Viên</h2>
 
 <div>
@@ -71,7 +73,11 @@
        
     </dl>
 </div>
-<div>
-    <a asp-action="EditStaff" asp-route-maNhanVien="@Model.MaNv" class="btn btn-warning">Chỉnh Sửa</a> |
-    <a asp-action="Staff" class="btn btn-primary">Back to List</a>
-</div>
+@if (currentUser=="Admin")
+{
+    <div>
+        <a asp-action="EditStaff" asp-route-maNhanVien="@Model.MaNv" class="btn btn-warning">Chỉnh Sửa</a> |
+        <a asp-action="Staff" class="btn btn-primary">Back to List</a>
+    </div>
+
+}

@@ -1,4 +1,10 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+@{
+    var currentUser = Context.Session.GetString("Role");
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,8 +37,11 @@
             <div class="sidebar-heading">
                Quản Lý Khách Sạn
             </div>
-           <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoomRental"
+            
+            @if (currentUser == "Admin" || currentUser == "ReceptionStaff")
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoomRental"
                    aria-expanded="true" aria-controls="collapseBootstrap">
                     <i class="fas fa-building"></i>
                     <span>Quản Lý Đơn Đặt Phòng Phòng</span>
@@ -45,42 +54,49 @@
                         @* <a class="collapse-item" href="/admin/addgrouprental">Lập Phiếu Đặt Phòng Đoàn</a> *@
                         <a class="collapse-item" href="/admin/grouproomrental">Danh Sánh Phiếu Đặt Đoàn</a>
                         <a class="collapse-item" href="/admin/roomcancelled">Danh Sánh Phòng Hủy</a>
-                        <a class="collapse-item" href="/admin/payment">Danh Sách Hóa Đơn</a>
+                      
                         
                     </div>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseServices" aria-expanded="true"
-                   aria-controls="collapseForm">
-                    <i class="fas fa-concierge-bell"></i>
-                    <span>Quản Lý Dịch Vụ</span>
-                </a>
-                <div id="collapseServices" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Quản Lý Dịch Vụ</h6>
-                        <a class="collapse-item" href="/admin/services">Danh Sách Dịch Vụ</a>
-                        <a class="collapse-item" href="/admin/addservices">Thêm Dịch Vụ</a>
+                </li>
+            }
+            @if (currentUser == "Admin")
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseServices" aria-expanded="true"
+                       aria-controls="collapseForm">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>Quản Lý Dịch Vụ</span>
+                    </a>
+                    <div id="collapseServices" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản Lý Dịch Vụ</h6>
+                            <a class="collapse-item" href="/admin/services">Danh Sách Dịch Vụ</a>
+                            <a class="collapse-item" href="/admin/addservices">Thêm Dịch Vụ</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStaff"
-                   aria-expanded="true" aria-controls="collapseBootstrap">
-                    <i class="fas fa-user"></i>
-                    <span>Quản Lý Nhân Viên</span>
-                </a>
-                <div id="collapseStaff" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Quản Lý Nhân Viên</h6>
-                        <a class="collapse-item" href="/admin/staff">Danh Sách Nhân Viên</a>
-                        <a class="collapse-item" href="/admin/addstaff">Thêm Nhân Viên</a>
-                        <a class="collapse-item" href="/admin/department">Phòng Ban</a>
-                        <a class="collapse-item" href="/admin/account">Quản Lý Tài Khoản</a>
+                </li>
+           
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStaff"
+                       aria-expanded="true" aria-controls="collapseBootstrap">
+                        <i class="fas fa-user"></i>
+                        <span>Quản Lý Nhân Viên</span>
+                    </a>
+                    <div id="collapseStaff" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản Lý Nhân Viên</h6>
+                            <a class="collapse-item" href="/admin/staff">Danh Sách Nhân Viên</a>
+                            <a class="collapse-item" href="/admin/addstaff">Thêm Nhân Viên</a>
+                            <a class="collapse-item" href="/admin/department">Phòng Ban</a>
+                            <a class="collapse-item" href="/admin/account">Quản Lý Tài Khoản</a>
 
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            }
+            @if (currentUser == "Admin" || currentUser == "ReceptionStaff")
+            {
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
                    aria-controls="collapseForm">
@@ -91,10 +107,15 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản Lý Phòng</h6>
                         <a class="collapse-item" href="/admin/room">Danh Sách Phòng</a>
-                        <a class="collapse-item" href="/admin/roomtype">Loại Phòng</a>
+                            @if (currentUser == "Admin")
+                            {
+                                 <a class="collapse-item" href="/admin/roomtype">Loại Phòng</a>
+                            }
                     </div>
                 </div>
             </li>
+
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
                    aria-controls="collapseTable">
@@ -109,64 +130,84 @@
                     </div>
                 </div>
             </li>
-        
-            <hr class="sidebar-divider">
-            <div class="sidebar-heading">
-              Thống Kê Báo Cáo
-            </div>
+            }
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRevenue"
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayment"
                    aria-expanded="true" aria-controls="collapseBootstrap">
-                      <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Thống Kê Doanh Thu</span>
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Quản Lý Hóa Đơn</span>
                 </a>
-                <div id="collapseRevenue" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                <div id="collapsePayment" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Thống Kê Doanh Thu</h6>
-                        <a class="collapse-item" href="/admin/revenuestatistics">
-                          
-                            <span>Doanh Thu Theo Ngày</span>
-                        </a>
-                        <a class="collapse-item" href="/admin/revenuestatisticsmonth">
-                           
-                            <span>Doanh Thu Theo Tháng</span>
-                        </a>
-                        <a class="collapse-item" href="/admin/revenuestatisticsyear">
-                          
-                            <span>Doanh Thu Theo Năm</span>
-                        </a>
+                        <h6 class="collapse-header">Quản Lý Hóa Đơn</h6>
+
+                        <a class="collapse-item" href="/admin/payment">Danh Sách Hóa Đơn</a>
 
                     </div>
                 </div>
             </li>
+            <hr class="sidebar-divider">
+
+            @if(currentUser == "Admin" || currentUser == "FinanceStaff")
+            {
+                <div class="sidebar-heading">
+                    Thống Kê Báo Cáo
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRevenue"
+                       aria-expanded="true" aria-controls="collapseBootstrap">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Thống Kê Doanh Thu</span>
+                    </a>
+                    <div id="collapseRevenue" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Thống Kê Doanh Thu</h6>
+                            <a class="collapse-item" href="/admin/revenuestatistics">
+
+                                <span>Doanh Thu Theo Ngày</span>
+                            </a>
+                            <a class="collapse-item" href="/admin/revenuestatisticsmonth">
+
+                                <span>Doanh Thu Theo Tháng</span>
+                            </a>
+                            <a class="collapse-item" href="/admin/revenuestatisticsyear">
+
+                                <span>Doanh Thu Theo Năm</span>
+                            </a>
+
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoomUsage"
+                       aria-expanded="true" aria-controls="collapseBootstrap">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Thống Kê Mật Độ Sử Dụng Phòng</span>
+                    </a>
+                    <div id="collapseRoomUsage" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Thống Kê Doanh Thu</h6>
+                            <a class="collapse-item" href="/admin/RoomUsageStatistics">
+
+                                <span>Mật Độ Sử Dụng Ngày</span>
+                            </a>
+                            <a class="collapse-item" href="/admin/RoomUsageStatisticsMonth">
+
+                                <span>Mật Độ Sử Dụng Tháng</span>
+                            </a>
+                            <a class="collapse-item" href="/admin/RoomUsageStatisticsYear">
+
+                                <span>Mật Độ Sử Dụng Năm</span>
+                            </a>
+
+                        </div>
+                    </div>
+                </li>
+                <hr class="sidebar-divider">
+                <div class="version" id="version-ruangadmin"></div>
+            }
             
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoomUsage"
-                   aria-expanded="true" aria-controls="collapseBootstrap">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Thống Kê Mật Độ Sử Dụng Phòng</span>
-                </a>
-                <div id="collapseRoomUsage" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Thống Kê Doanh Thu</h6>
-                        <a class="collapse-item" href="/admin/RoomUsageStatistics">
-
-                            <span>Mật Độ Sử Dụng Ngày</span>
-                        </a>
-                        <a class="collapse-item" href="/admin/RoomUsageStatisticsMonth">
-
-                            <span>Mật Độ Sử Dụng Tháng</span>
-                        </a>
-                        <a class="collapse-item" href="/admin/RoomUsageStatisticsYear">
-
-                            <span>Mật Độ Sử Dụng Năm</span>
-                        </a>
-
-                    </div>
-                </div>
-            </li>
-            <hr class="sidebar-divider">
-            <div class="version" id="version-ruangadmin"></div>
         </ul>
         <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
