@@ -8,9 +8,11 @@
 <div class="col-lg-12 col-md-6">
     <h3 class="m-0 font-weight-bold text-primary text-center">Danh Sách Phiếu Đặt Phòng</h3>
     @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
     <p>
         <a asp-action="Booking" asp-controller="RoomRental" class="btn btn-success">Tạo Phiếu Đặt Phòng</a>
     </p>
+ 
     <form asp-action="RoomRental" method="get">
         <div id="dataTableHover_filter" class="dataTables_filter">
             <label>
@@ -220,3 +222,5 @@
         </div>
 
     </div>
+    
+   

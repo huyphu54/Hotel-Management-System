@@ -13,10 +13,7 @@
         <form method="post" asp-action="Booking">
        
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-             <div class="form-group">
-                 <label  class="control-label">Phòng</label>
-                 <select asp-for="MaPhong" class="form-control" asp-items="ViewBag.MaPhong"></select>
-             </div>
+             
             <div class="form-group">
                 <label class="control-label">Tên Khách Hàng</label>
                 <select id="searchCustomer" asp-for="MaKh" class="form-control">
@@ -66,7 +63,10 @@
                 <span asp-validation-for="GioTra" class="text-danger"></span>
             </div>
 
-      
+            <div class="form-group">
+                <label class="control-label">Phòng</label>
+                <select asp-for="MaPhong" class="form-control" asp-items="ViewBag.MaPhong"></select>
+            </div>
             <div class="form-group">
                 <label  class="control-label">Số Người Ở</label>
                 <input asp-for="SoNguoiO" class="form-control" />

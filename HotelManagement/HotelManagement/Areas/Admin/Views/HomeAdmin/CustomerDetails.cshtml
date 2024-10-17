@@ -5,44 +5,43 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>CustomerDetails</h1>
+<h2 class="m-0 font-weight-bold text-primary text-center">Thông Tin Khách Hàng</h2>
 
 <div>
-    <h4>KhachHang</h4>
-    <hr />
+    
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HoTenKh)
+               Họ Tên Khách Hàng
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.HoTenKh)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NamSinh)
+          Năm Sinh
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NamSinh)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+           Email
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sdt)
+          Số Điện Thoại
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Sdt)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.QuocTich)
+           Quốc Tịch
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.QuocTich)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cccd)
+            Số Căn Cước Công Dân
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Cccd)
@@ -53,7 +52,7 @@
     </dl>
 </div>
 
-<h3 class="m-0 font-weight-bold text-primary">Danh sách phòng đã đặt</h3>
+<h3 class="m-0 font-weight-bold text-primary  text-center">Danh sách phòng đã đặt</h3>
 @if (Model.DatPhongDoans != null && Model.DatPhongDoans.Any() || Model.DatPhongs != null && Model.DatPhongs.Any())
 {
     <table class="table">

@@ -45,13 +45,13 @@ namespace HotelManagement.Areas.Admin.Controllers
             }
             if (startDate.HasValue)
             {
-                var startDateTime = startDate.Value; // Convert to DateTime for comparison
+                var startDateTime = startDate.Value; 
                 listPhieuDat = listPhieuDat.Where(pd => pd.NgayNhan >= startDateTime);
             }
 
             if (endDate.HasValue)
             {
-                var endDateTime = endDate.Value; // Convert to DateTime for comparison
+                var endDateTime = endDate.Value; 
                 listPhieuDat = listPhieuDat.Where(pd => pd.NgayTra == endDateTime);
             }
             ViewBag.SearchKhachHang = searchKhachHang;
@@ -67,8 +67,9 @@ namespace HotelManagement.Areas.Admin.Controllers
         [Route("admin/Editrental")]
         [HttpGet]
         public IActionResult EditRental(int? maPhieuThue)
-        {          
-            ViewBag.MaPhong = new SelectList(db.Phongs.ToList(), "MaPhong", "SoPhong");
+        {
+            var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
+            ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
             ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats.ToList(), "MaTinhTrangDat", "TenTinhTrangDat");
             var phieuThue = db.DatPhongs.Find(maPhieuThue);
             return View(phieuThue);
@@ -100,13 +101,13 @@ namespace HotelManagement.Areas.Admin.Controllers
                 return NotFound("Phòng không tồn tại hoặc không hợp lệ.");
             }
 
-
             if (updateStatus.MaTinhTrangDat == 2)
             {
                 if (phongUpdate.MaTinhTrang == 1)
                 {
                     ModelState.AddModelError("", "Phòng này hiện đang có người thuê");
-                    ViewBag.MaPhong = new SelectList(db.Phongs.ToList(), "MaPhong", "SoPhong");
+                    var availableRooms = db.Phongs.Where(p => p.MaTinhTrang == 2).Select(p => new { p.MaPhong, p.SoPhong }).ToList();
+                    ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
                     ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats.ToList(), "MaTinhTrangDat", "TenTinhTrangDat");
                     return View(datPhong);
                 }
@@ -215,7 +216,6 @@ namespace HotelManagement.Areas.Admin.Controllers
             ViewBag.KhachHang = customers;
             ViewBag.MaNv = new SelectList(receptionStaff, "MaNv", "HoTenNv");
             ViewBag.MaLoaiHinhDat = new SelectList(db.LoaiHinhDats, "MaLoaiHinhDat", "TenLoaiHinhDat");
-
             ViewBag.MaPhong = new SelectList(availableRooms, "MaPhong", "SoPhong");
             ViewBag.MaTinhTrangDat = new SelectList(db.TinhTrangDats, "MaTinhTrangDat", "TenTinhTrangDat");
 

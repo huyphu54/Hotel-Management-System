@@ -16,12 +16,20 @@
         Đoàn
         <input type="search" name="searchDoan" value="@ViewBag.SearchDoan" class="form-control form-control-sm" placeholder="Nhập Tên Đoàn" aria-controls="dataTableHover">
     </label>
+        <label>
+            Ngày Nhận
+            <input type="date" name="startDate" value="@ViewBag.StartDate?.ToString("yyyy-MM-dd")" class="form-control form-control-sm" aria-controls="dataTableHover">
+        </label>
+        <label>
+            Ngày Trả
+            <input type="date" name="endDate" value="@ViewBag.EndDate?.ToString("yyyy-MM-dd")" class="form-control form-control-sm" aria-controls="dataTableHover">
+        </label>
     <button type="submit" class="btn btn-primary btn-primary">Search</button>
 </div>
 </form>
 <p style="color:red; font-weight:bold;">@TempData["Message"]</p>
 <table class="table">
-    <thead>
+    <thead class="thead-light">
         <tr>
             <th>
                Tên Đoàn
@@ -31,7 +39,7 @@
                 Khách Hàng Đại Diện
             </th>
             <th>
-                Ngày Đặt
+                Ngày Nhận
             </th>
             <th>
                 Ngày Trả
@@ -48,6 +56,33 @@
             <th></th>
         </tr>
     </thead>
+    <tfoot>
+        <tr>
+            <th>
+                Tên Đoàn
+            </th>
+
+            <th>
+                Khách Hàng Đại Diện
+            </th>
+            <th>
+                Ngày Nhận
+            </th>
+            <th>
+                Ngày Trả
+            </th>
+            <th>
+                Số Người Ở
+            </th>
+            @* <th>
+            Phòng Đặt
+            </th> *@
+            <th>
+                Tình trạng
+            </th>
+            <th></th>
+        </tr>
+    </tfoot>
     <tbody>
 @foreach (var item in Model) {
         <tr>

@@ -3,6 +3,7 @@ using HotelManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Intrinsics.Arm;
 using X.PagedList;
 namespace HotelManagement.Areas.Admin.Controllers
 {
@@ -13,7 +14,7 @@ namespace HotelManagement.Areas.Admin.Controllers
         QlksContext db = new QlksContext();
         //Danh sách phòng
         [Route("admin/room")]
-        public IActionResult Room(int? page, string searchTinhTrang, string searchLoaiPhong, string searchTang)
+        public IActionResult Room(int? page, string searchTinhTrang, string searchLoaiPhong, string searchTang, DateOnly? searchDate)
         {
             int pageSize = 20;
             int pageNumber = page ?? 1;
@@ -36,11 +37,18 @@ namespace HotelManagement.Areas.Admin.Controllers
                 listPhong = listPhong.Where(p => p.MaTangNavigation.TenTang.Contains(searchTang))
                     .OrderBy(x => x.MaPhong);
             }
-
+            if (searchDate.HasValue)
+            {
+                // Giả sử DatPhong có thuộc tính NgayDat kiểu DateOnly  
+                listPhong = (IOrderedQueryable<Phong>)listPhong.Where(p =>
+                    !db.DatPhongs.Any(dp => dp.MaPhong == p.MaPhong && dp.NgayNhan == searchDate.Value )
+                    && !db.DatPhongDoanPhongs.Any(dpd => dpd.MaPhong == p.MaPhong && dpd.MaDoanNavigation.NgayDat == searchDate.Value ) && p.MaTinhTrang == 2);
+            }
             PagedList<Phong> lstPhong = new PagedList<Phong>(listPhong, pageNumber, pageSize);
             ViewBag.SearchTinhTrang = searchTinhTrang;
             ViewBag.SearchLoaiPhong= searchLoaiPhong;
             ViewBag.SearchTang = searchTang;
+            ViewBag.SearchDate = searchDate;
             return View(lstPhong);
 
         }
@@ -126,27 +134,21 @@ namespace HotelManagement.Areas.Admin.Controllers
             if (phongToUpdate == null)
             {
                 return NotFound();
-            }
-
-          
-            phongToUpdate.MaLp = phong.MaLp;
+            }          
             phongToUpdate.MaTinhTrang = phong.MaTinhTrang;
-
             db.Entry(phongToUpdate).State = EntityState.Modified;
 
-            // Cập nhật trạng thái phiếu đặt phòng nếu thay đổi trạng thái phòng
             if (phongToUpdate.MaTinhTrang == 2)
             {
                 // Tìm phiếu đặt phòng tương ứng (nếu có)
                 var datPhongUpdate = db.DatPhongs.FirstOrDefault(dp => dp.MaPhong == phong.MaPhong && dp.MaTinhTrangDat == 2);
-
                 if (datPhongUpdate != null)
                 {
                     datPhongUpdate.MaTinhTrangDat = 3;  // Cập nhật tình trạng đặt phòng
                     db.Entry(datPhongUpdate).State = EntityState.Modified;
                 }
             }
-
+      
             var id = db.SaveChanges();
             if (id > 0)
             {
